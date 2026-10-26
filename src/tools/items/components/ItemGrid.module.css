@@ -1,0 +1,21 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cell {
+  display: flex;
+  min-width: 0;
+}
+
+.cell > * {
+  flex: 1;
+}
+
+.sentinel {
+  height: 1px;
+}
