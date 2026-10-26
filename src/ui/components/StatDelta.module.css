@@ -1,0 +1,25 @@
+.delta {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.arrow {
+  font-size: 0.75em;
+}
+
+.better {
+  color: var(--color-success);
+}
+
+.worse {
+  color: var(--color-danger-text);
+}
+
+.neutral {
+  color: var(--color-text-muted);
+}

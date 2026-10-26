@@ -1,0 +1,14 @@
+.iconButton {
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.md {
+  width: var(--control-height-md);
+  height: var(--control-height-md);
+}
+
+.sm {
+  width: var(--control-height-sm);
+  height: var(--control-height-sm);
+}

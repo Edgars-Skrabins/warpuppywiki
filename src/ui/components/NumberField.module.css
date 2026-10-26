@@ -1,0 +1,15 @@
+.input {
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+.unit {
+  padding-inline-end: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+.decrement {
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
