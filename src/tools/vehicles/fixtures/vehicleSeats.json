@@ -1,0 +1,19 @@
+[
+  {
+    "vehicle": "Vehicle.Variant.Air.Rotary.Havoc.Default",
+    "rules": [
+      {
+        "damageSources": ["Small", "Medium"],
+        "reduction": -90
+      },
+      {
+        "damageSources": ["High"],
+        "reduction": -50
+      },
+      {
+        "damageSources": ["Special"],
+        "reduction": -60
+      }
+    ]
+  }
+]
