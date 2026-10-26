@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25937608",
+  "trees": [
+    {
+      "role": "Driver",
+      "rows": 4,
+      "columns": 9,
+      "shape": "Circle"
+    },
+    {
+      "role": "Infantry",
+      "rows": 4,
+      "columns": 9,
+      "shape": "Circle"
+    },
+    {
+      "role": "Medic",
+      "rows": 4,
+      "columns": 9,
+      "shape": "Circle"
+    }
+  ],
+  "skills": [
+    {
+      "id": "Driver.AimDownSightSpeed.MountedGun",
+      "role": "Driver",
+      "name": "Time-to-ADS speed improvement (Mounted MG - Ground Vehicles)",
+      "description": "Reduces the amount of time it takes to enter ADS whilst using any mounted MG's on ground vehicles.",
+      "layout": {
+        "row": 2,
+        "column": 5,
+        "x": 1198.774,
+        "y": 320.773
+      },
+      "effects": [
+        {
+          "trigger": "Item",
+          "effect": "GE_Weapon_AimTime",
+          "attribute": "Weapon.AimTime",
+          "curve": "AimDownSight_MountedGun",
+          "levels": [
+            {
+              "level": 0,
+              "value": 1
+            },
+            {
+              "level": 2,
+              "value": 0.8
+            },
+            {
+              "level": 3,
+              "value": 0.7
+            },
+            {
+              "level": 4,
+              "value": 0.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Driver.AutoRepair",
+      "role": "Driver",
+      "name": "Can autorepair at petrol stations (Ground Vehicles)",
+      "description": "Unlocks the ability to auto repair ground vehicles at a petrol station.",
+      "layout": {
+        "row": 1,
+        "column": 2,
+        "x": 580.691,
+        "y": 594.642
+      },
+      "effects": []
+    },
+    {
+      "id": "Driver.FuelUsageReduction",
+      "role": "Driver",
+      "name": "Fuel usage rate reduction (Ground Vehicles)",
+      "description": "Reduces the usage of fuel when driving ground vehicles, providing a longer fuel time.",
+      "layout": {
+        "row": 1,
+        "column": 5,
+        "x": 1134.646,
+        "y": 496.965
+      },
+      "effects": [
+        {
+          "trigger": "Vehicle",
+          "effect": "GE_Vehicle_FuelUsageReductionMultiplier",
+          "attribute": "FuelUsageReductionMultiplier",
+          "curve": "FuelUsageReduction",
+          "levels": [
+            {
+              "level": 0,
+              "value": 1
+            },
+            {
+              "level": 2,
+              "value": 0.8
+            },
+            {
+              "level": 3,
+              "value": 0.7
+            },
+            {
+              "level": 4,
+              "value": 0.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Infantry.AimDownSightSpeed.AssaultRifle",
+      "role": "Infantry",
+      "name": "Time-to-ADS speed improvement (Assault Archetype)",
+      "description": "Reduces the time it takes to enter ADS, specifically with weapons within the 'assault' archetype.",
+      "layout": {
+        "row": 2,
+        "column": 3,
+        "x": 685.744,
+        "y": 320.773
+      },
+      "effects": [
+        {
+          "trigger": "Item",
+          "effect": "GE_Weapon_AimTime",
+          "attribute": "Weapon.AimTime",
+          "curve": "AimDownSightSpeed_AssaultRifle",
+          "levels": [
+            {
+              "level": 0,
+              "value": 1
+            },
+            {
+              "level": 2,
+              "value": 0.8
+            },
+            {
+              "level": 3,
+              "value": 0.7
+            },
+            {
+              "level": 4,
+              "value": 0.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Infantry.MeleeDamage",
+      "role": "Infantry",
+      "name": "Melee damage increase",
+      "description": "Increase the damage dealt by the player's melee attacks. This includes fists, melee weapons and weapon 'bashing'.",
+      "layout": {
+        "row": 1,
+        "column": 0,
+        "x": 388.305,
+        "y": 927.865
+      },
+      "effects": []
+    },
+    {
+      "id": "Infantry.SprintBreach",
+      "role": "Infantry",
+      "name": "Sprint-breach through doors",
+      "description": "Unlocks the ability to bash through doors by sprinting into them.",
+      "layout": {
+        "row": 3,
+        "column": 0,
+        "x": 19.002,
+        "y": 862.747
+      },
+      "effects": [
+        {
+          "trigger": "Character",
+          "effect": "GE_GrantSkill_DoorBreach"
+        }
+      ]
+    },
+    {
+      "id": "Infantry.TacticalSprintDuration",
+      "role": "Infantry",
+      "name": "Tac-sprint duration",
+      "description": "Increased duration of tac-sprint before it runs out.",
+      "layout": {
+        "row": 3,
+        "column": 8,
+        "x": 1865.517,
+        "y": 862.747
+      },
+      "effects": [
+        {
+          "trigger": "Character",
+          "effect": "GE_Player_TacSprintStaminaUsageMultiplier",
+          "attribute": "Movement.TacSprintStaminaUsageMultiplier",
+          "curve": "TacticalSprintDuration",
+          "levels": [
+            {
+              "level": 0,
+              "value": 1
+            },
+            {
+              "level": 2,
+              "value": 0.8
+            },
+            {
+              "level": 3,
+              "value": 0.7
+            },
+            {
+              "level": 4,
+              "value": 0.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Infantry.UnarmedSprintSpeed",
+      "role": "Infantry",
+      "name": "Unarmed sprint speed improvement",
+      "description": "Increases the speed a player sprints when they have their fists out.",
+      "layout": {
+        "row": 0,
+        "column": 7,
+        "x": 1267.019,
+        "y": 838.042
+      },
+      "effects": [
+        {
+          "trigger": "Character.HeldItemUpdated",
+          "effect": "GE_Player_SprintSpeedMultiplier",
+          "attribute": "Movement.SprintSpeedMultiplier",
+          "curve": "UnarmedSprintSpeed_SprintSpeed",
+          "levels": [
+            {
+              "level": 0,
+              "value": 1
+            },
+            {
+              "level": 2,
+              "value": 1.2
+            },
+            {
+              "level": 4,
+              "value": 1.4
+            }
+          ]
+        },
+        {
+          "trigger": "Character.HeldItemUpdated",
+          "effect": "GE_Player_SprintSpeedMultiplier",
+          "attribute": "Movement.TacSprintSpeedMultiplier",
+          "curve": "UnarmedSprintSpeed_TacSprintSpeed",
+          "levels": [
+            {
+              "level": 0,
+              "value": 1
+            },
+            {
+              "level": 2,
+              "value": 1.2
+            },
+            {
+              "level": 4,
+              "value": 1.4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Medic.MedkitUsage",
+      "role": "Medic",
+      "name": "Medkits have more uses",
+      "description": "Increases the amount of 'uses' a medkit has before it is depleted (only when you are using it).",
+      "effects": []
+    }
+  ]
+}
