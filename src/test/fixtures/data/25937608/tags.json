@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25937608",
+  "tags": [
+    {
+      "tag": "Attribute.Meta.XP.Role.Driver",
+      "text": "DRIVER",
+      "source": "Roles"
+    },
+    {
+      "tag": "Attribute.Meta.XP.Role.Infantry",
+      "text": "ASSAULT",
+      "source": "Roles"
+    },
+    {
+      "tag": "Attribute.Meta.XP.Role.Medic",
+      "text": "MEDIC",
+      "source": "Roles"
+    },
+    {
+      "tag": "Attribute.Meta.XP.Role.Pilot",
+      "text": "PILOT",
+      "source": "Roles"
+    },
+    {
+      "tag": "Attribute.Meta.XP.Role.Recon",
+      "text": "RECON",
+      "source": "Roles"
+    },
+    {
+      "tag": "Attribute.Meta.XP.Role.Support",
+      "text": "SUPPORT",
+      "source": "Roles"
+    },
+    {
+      "tag": "Item.Archetype.AR",
+      "text": "Assault Rifle",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Item.Archetype.Bobblehead",
+      "text": "Bobblehead",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Item.Archetype.Bow",
+      "text": "Bow",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Item.Archetype.DMR",
+      "text": "DMR",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Item.Archetype.Grenade",
+      "text": "Grenade",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Item.Archetype.Launcher",
+      "text": "Launcher",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Item.Archetype.LMG",
+      "text": "LMG",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Item.Archetype.Melee",
+      "text": "Melee",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Item.Archetype.Parachute",
+      "text": "Parachute",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Item.Archetype.Pistol",
+      "text": "Pistol",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Item.Archetype.Shotgun",
+      "text": "Shotgun",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Item.Archetype.SMG",
+      "text": "SMG",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Item.Archetype.Sniper",
+      "text": "Sniper Rifle",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Meta.Role.Driver",
+      "text": "DRIVER",
+      "source": "Roles"
+    },
+    {
+      "tag": "Meta.Role.Infantry",
+      "text": "ASSAULT",
+      "source": "Roles"
+    },
+    {
+      "tag": "Meta.Role.Medic",
+      "text": "MEDIC",
+      "source": "Roles"
+    },
+    {
+      "tag": "Meta.Role.Pilot",
+      "text": "PILOT",
+      "source": "Roles"
+    },
+    {
+      "tag": "Meta.Role.Recon",
+      "text": "RECON",
+      "source": "Roles"
+    },
+    {
+      "tag": "Meta.Role.Support",
+      "text": "SUPPORT",
+      "source": "Roles"
+    },
+    {
+      "tag": "Meta.Role.Wardog",
+      "text": "WARDOG",
+      "source": "Roles"
+    },
+    {
+      "tag": "Vehicle.Archetype.Air.Rotary",
+      "text": "Rotary",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Vehicle.Archetype.Land.Tracked",
+      "text": "Tracked",
+      "source": "Archetypes"
+    },
+    {
+      "tag": "Vehicle.Archetype.Land.Wheeled",
+      "text": "Wheeled",
+      "source": "Archetypes"
+    }
+  ]
+}

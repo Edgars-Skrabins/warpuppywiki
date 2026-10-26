@@ -1,0 +1,979 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25937608",
+  "items": [
+    {
+      "id": "Id.Item.12g",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/12Guage/ID_12g",
+      "name": "12g",
+      "subtitle": "Ammunition",
+      "description": "- Standard ammunition\n- Deals even damage to all target types",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/T_UI_Icon_ammobox_12g_slug_green.png",
+      "tags": ["Item.Ammo", "Item.Caliber.12g", "Item.Ammo.Type.FMJ.Tracer", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 24,
+      "unlock": null,
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.3xScope",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Weapons/Attachments/Sights/SGHT_024/Content/Data/ID_3xScope",
+      "name": "Spitfire 3X",
+      "subtitle": "Optic",
+      "description": "Specification:\n- 3x magnification\n- Mid range combat\n- Zeroing range (100m-300m)\n\nCons:\n- Moderate ADS speed penalty",
+      "icon": "UI/Shared/Icons/Vendor/Optics/T_UI_Vendor_SGHT_024.png",
+      "tags": ["Item.Context.Equippable", "Item.Attachment.Sight.Medium"],
+      "grid": [2, 1],
+      "maxStack": 1,
+      "weight": 0.26,
+      "unlock": {
+        "role": "Wardog",
+        "level": 31,
+        "cost": 25000
+      },
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.545mm",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/545mm/ID_545mm",
+      "name": "5.45mm",
+      "subtitle": "Ammunition",
+      "description": "- Standard ammunition\n- Deals even damage to all target types",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/T_UI_Icon_ammobox_5_45x39_FMJ.png",
+      "tags": ["Item.Caliber.545mm", "Item.Ammo.Type.FMJ", "Item.Ammo", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 80,
+      "unlock": null,
+      "vendor": [
+        {
+          "tag": "Id.Item.545mm",
+          "price": 15,
+          "amount": 10,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.545mm.ArmorPiercing",
+          "price": 40,
+          "amount": 10,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.545mm.ArmorPiercing.Tracer",
+          "price": 40,
+          "amount": 10,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.545mm.HollowPoint",
+          "price": 25,
+          "amount": 10,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.545mm.HollowPoint.Tracer",
+          "price": 25,
+          "amount": 10,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.545mm.Tracer",
+          "price": 15,
+          "amount": 10,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.545mm.ArmorPiercing",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/545mm/ID_545mm_ArmorPiercing",
+      "name": "5.45mm AP",
+      "subtitle": "Ammunition",
+      "description": "- Increased damage to body armor and vehicles\n- Decreased damage to unarmored body parts",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/T_UI_Icon_ammobox_5_45x39_AP.png",
+      "tags": ["Item.Caliber.545mm", "Item.Ammo.Type.ArmorPiercing", "Item.Ammo", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 80,
+      "unlock": null,
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.545mm.ArmorPiercing.Tracer",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/545mm/ID_545mm_ArmorPiercing_Tracer",
+      "name": "5.45mm AP (T)",
+      "subtitle": "Ammunition",
+      "description": "- Increased damage to body armor and vehicles\n- Decreased damage to unarmored body parts",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/Tracer/T_UI_Icon_ammobox_5_45x39_Ap.png",
+      "tags": ["Item.Caliber.545mm", "Item.Ammo.Type.ArmorPiercing.Tracer", "Item.Ammo", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 80,
+      "unlock": {
+        "role": "Wardog",
+        "level": 90,
+        "cost": 75000
+      },
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.545mm.HollowPoint",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/545mm/ID_545mm_HollowPoint",
+      "name": "5.45mm HP",
+      "subtitle": "Ammunition",
+      "description": "- Increased damage against flesh.\n- Decreased damage against armored targets",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/T_UI_Icon_ammobox_5_45x39_HP.png",
+      "tags": ["Item.Caliber.545mm", "Item.Ammo.Type.HollowPoint", "Item.Ammo", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 80,
+      "unlock": null,
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.545mm.HollowPoint.Tracer",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/545mm/ID_545mm_HollowPoint_Tracer",
+      "name": "5.45mm HP (T)",
+      "subtitle": "Ammunition",
+      "description": "- Increased damage against flesh.\n- Decreased damage against armored targets",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/Tracer/T_UI_Icon_ammobox_5_45x39_HP.png",
+      "tags": ["Item.Caliber.545mm", "Item.Ammo.Type.HollowPoint.Tracer", "Item.Ammo", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 80,
+      "unlock": {
+        "role": "Wardog",
+        "level": 6,
+        "cost": 5000
+      },
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.545mm.Tracer",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/545mm/ID_545mm_Tracer",
+      "name": "5.45mm (T)",
+      "subtitle": "Ammunition",
+      "description": "- Standard ammunition\n- Deals even damage to all target types",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/Tracer/T_UI_Icon_ammobox_5_45x39_FMJ.png",
+      "tags": ["Item.Caliber.545mm", "Item.Ammo.Type.FMJ.Tracer", "Item.Ammo.Type", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 80,
+      "unlock": null,
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.556mm",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/556mm/ID_556mm",
+      "name": "5.56mm",
+      "subtitle": "Ammunition",
+      "description": "- Standard ammunition\n- Deals even damage to all target types",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/T_UI_Icon_ammobox_5_56x45mm_FMJ.png",
+      "tags": ["Item.Caliber.556mm", "Item.Ammo", "Item.Ammo.Type.FMJ.Tracer", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 80,
+      "unlock": null,
+      "vendor": [
+        {
+          "tag": "Id.Item.556mm",
+          "price": 15,
+          "amount": 10,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.556mm.ArmorPiercing",
+          "price": 40,
+          "amount": 10,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.556mm.ArmorPiercing.Tracer",
+          "price": 40,
+          "amount": 10,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.556mm.HollowPoint",
+          "price": 25,
+          "amount": 10,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.556mm.HollowPoint.Tracer",
+          "price": 25,
+          "amount": 10,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.556mm.Tracer",
+          "price": 15,
+          "amount": 10,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.Vehicle.Ammo", "Vendor.Category.AmmoLoose"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.556mm.ArmorPiercing",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/556mm/ID_556mm_ArmorPiercing",
+      "name": "5.56mm AP",
+      "subtitle": "Ammunition",
+      "description": "- Increased damage to body armor and vehicles\n- Decreased damage to unarmored body parts",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/T_UI_Icon_ammobox_5_56x45mm_AP.png",
+      "tags": ["Item.Caliber.556mm", "Item.Ammo", "Item.Ammo.Type.ArmorPiercing", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 80,
+      "unlock": null,
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.556mm.ArmorPiercing.Tracer",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/556mm/ID_556mm_ArmorPiercing_Tracer",
+      "name": "5.56mm AP (T)",
+      "subtitle": "Ammunition",
+      "description": "- Increased damage to body armor and vehicles\n- Decreased damage to unarmored body parts",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/Tracer/T_UI_Icon_ammobox_5_56x45mm_AP.png",
+      "tags": ["Item.Caliber.556mm", "Item.Ammo", "Item.Ammo.Type.ArmorPiercing.Tracer", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 80,
+      "unlock": {
+        "role": "Wardog",
+        "level": 84,
+        "cost": 75000
+      },
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.556mm.HollowPoint",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/556mm/ID_556mm_HollowPoint",
+      "name": "5.56mm HP",
+      "subtitle": "Ammunition",
+      "description": "- Increased damage against flesh.\n- Decreased damage against armored targets",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/T_UI_Icon_ammobox_5_56x45mm_HP.png",
+      "tags": ["Item.Caliber.556mm", "Item.Ammo", "Item.Ammo.Type.HollowPoint", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 80,
+      "unlock": null,
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.556mm.HollowPoint.Tracer",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/556mm/ID_556mm_HollowPoint_Tracer",
+      "name": "5.56mm HP (T)",
+      "subtitle": "Ammunition",
+      "description": "- Increased damage against flesh.\n- Decreased damage against armored targets",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/Tracer/T_UI_Icon_ammobox_5_56x45mm_HP.png",
+      "tags": ["Item.Caliber.556mm", "Item.Ammo", "Item.Ammo.Type.HollowPoint.Tracer", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 80,
+      "unlock": {
+        "role": "Wardog",
+        "level": 13,
+        "cost": 5000
+      },
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.556mm.Tracer",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/556mm/ID_556mm_Tracer",
+      "name": "5.56mm (T)",
+      "subtitle": "Ammunition",
+      "description": "- Standard ammunition\n- Deals even damage to all target types",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/Tracer/T_UI_Icon_ammobox_5_56x45mm_FMJ.png",
+      "tags": ["Item.Caliber.556mm", "Item.Ammo", "Item.Ammo.Type.FMJ.Tracer", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 80,
+      "unlock": null,
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.762x54mm",
+      "kind": "item",
+      "asset": "Content/Items/Resources/Ammo/762x54mm/ID_762x54mm",
+      "name": "7.62x54mm",
+      "subtitle": "Ammunition",
+      "description": "- Standard ammunition\n- Deals even damage to all target types",
+      "icon": "UI/Shared/Icons/Equipment/AmmoBoxes/T_UI_Icon_ammobox_7_62x54R_FMJ.png",
+      "tags": ["Item.Ammo", "Item.Caliber.762x54mm", "Item.Ammo.Type.FMJ.Tracer", "Item.Context.ForceToStorage"],
+      "grid": [2, 1],
+      "maxStack": 40,
+      "unlock": null,
+      "vendor": [
+        {
+          "tag": "Id.Item.762x54mm",
+          "price": 30,
+          "amount": 5,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.762x54mm.ArmorPiercing",
+          "price": 90,
+          "amount": 5,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.762x54mm.ArmorPiercing.Tracer",
+          "price": 90,
+          "amount": 5,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.762x54mm.HollowPoint",
+          "price": 55,
+          "amount": 5,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.762x54mm.HollowPoint.Tracer",
+          "price": 55,
+          "amount": 5,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.AmmoLoose"]
+        },
+        {
+          "tag": "Id.Item.762x54mm.Tracer",
+          "price": 30,
+          "amount": 5,
+          "categories": ["Vendor.Category.Ammo.Type", "Vendor.Category.Vehicle.Ammo", "Vendor.Category.AmmoLoose"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.AK74M",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Weapons/Platforms/WEPN_001/Content/Data/ID_AK74M",
+      "name": "AK74",
+      "subtitle": "Assault Rifle",
+      "description": "- Semi / Full Auto\n- 5.45x39mm",
+      "icon": "UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_001v2.png",
+      "tags": [
+        "Inventory.Slot.Primary",
+        "Inventory.Slot.Secondary",
+        "Item.Archetype.AR",
+        "Item.Weapon.AK74M",
+        "Item.Context.Equippable",
+        "Item.Context.Animation.Type.Rifle",
+        "Item.Context.Animation.Archetype.Rifle"
+      ],
+      "grid": [5, 2],
+      "maxStack": 1,
+      "weight": 3,
+      "unlock": null,
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.AK74MExtendedMagazine",
+      "kind": "item",
+      "asset": "Content/Items/Attachments/Magazines/AR/AK74M_Mag_Extended_60rd/ID_AK74M_Mag_Extended",
+      "name": "AK74 60 RND Magazine",
+      "subtitle": "Magazine",
+      "description": "- 60 Rounds\n- 5.45x39mm ammo\n- AK74 only",
+      "icon": "UI/Shared/Icons/Vendor/Magazines/T_UI_Vendor_MAGZ_016.png",
+      "tags": ["Item.Attachment.Magazine", "Item.Resource.Magazine.Extended"],
+      "grid": [1, 3],
+      "maxStack": 1,
+      "weight": 0.93,
+      "unlock": {
+        "role": "Infantry",
+        "level": 25,
+        "cost": 30000
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.AK74MExtendedMagazine",
+          "price": 150,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine.Size"]
+        },
+        {
+          "tag": "Id.Item.AK74MExtendedMagazine.ArmorPiercing",
+          "price": 390,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MExtendedMagazine.ArmorPiercingTracer",
+          "price": 390,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MExtendedMagazine.FMJ",
+          "price": 240,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MExtendedMagazine.FMJTracer",
+          "price": 240,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MExtendedMagazine.HollowPoint",
+          "price": 300,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MExtendedMagazine.HollowPointTracer",
+          "price": 300,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.AK74MMagazine",
+      "kind": "item",
+      "asset": "Content/Items/Attachments/Magazines/AR/AK74M_Mag_30rd/ID_AK74M_Mag_Standard",
+      "name": "AK74 30 RND Magazine",
+      "subtitle": "Magazine",
+      "description": "- 30 Rounds\n- 5.45x39mm ammo\n- AK74 only",
+      "icon": "UI/Shared/Icons/Vendor/Magazines/T_UI_Vendor_MAGZ_001.png",
+      "tags": ["Item.Attachment.Magazine", "Item.Resource.Magazine.Standard"],
+      "grid": [1, 2],
+      "maxStack": 1,
+      "weight": 0.55,
+      "unlock": null,
+      "vendor": [
+        {
+          "tag": "Id.Item.AK74MMagazine",
+          "price": 35,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine.Size"]
+        },
+        {
+          "tag": "Id.Item.AK74MMagazine.ArmorPiercing",
+          "price": 155,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MMagazine.ArmorPiercingTracer",
+          "price": 155,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MMagazine.FMJ",
+          "price": 80,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MMagazine.FMJTracer",
+          "price": 80,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MMagazine.HollowPoint",
+          "price": 110,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MMagazine.HollowPointTracer",
+          "price": 110,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.AK74MMagazine75rnd",
+      "kind": "item",
+      "asset": "Content/Items/Attachments/Magazines/AR/AK74M_Mag_Drum_75rnd/Data/ID_AK74M_Mag_75rnd",
+      "name": "AK74 75 RND Drum Magazine",
+      "subtitle": "Magazine",
+      "description": "- 75 Rounds \n- 5.45x39mm ammo\n- AK74 only",
+      "icon": "UI/Shared/Icons/Vendor/Magazines/T_UI_Vendor_MAGZ_015.png",
+      "tags": ["Item.Attachment.Magazine", "Item.Resource.Magazine.Drum"],
+      "grid": [2, 2],
+      "maxStack": 1,
+      "weight": 2.08,
+      "unlock": {
+        "role": "Infantry",
+        "level": 36,
+        "cost": 75000
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.AK74MMagazine75rnd",
+          "price": 200,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine.Size"]
+        },
+        {
+          "tag": "Id.Item.AK74MMagazine75rnd.ArmorPiercing",
+          "price": 500,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MMagazine75rnd.ArmorPiercingTracer",
+          "price": 500,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MMagazine75rnd.FMJ",
+          "price": 312,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MMagazine75rnd.FMJTracer",
+          "price": 312,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MMagazine75rnd.HollowPoint",
+          "price": 387.5,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        },
+        {
+          "tag": "Id.Item.AK74MMagazine75rnd.HollowPointTracer",
+          "price": 387.5,
+          "amount": 1,
+          "categories": ["Vendor.Category.Magazine"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.AK74MMagazinePlum130rnd",
+      "kind": "item",
+      "asset": "Content/Items/Attachments/Magazines/AR/AK74M_Mag_Plum/ID_AK74M_Mag_Plum_130rnd",
+      "name": "AK74-M Extended Mag",
+      "tags": ["Item.Attachment.Magazine"],
+      "grid": [1, 2],
+      "maxStack": 1,
+      "unlock": null,
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.ArtilleryBarrelTest",
+      "kind": "item",
+      "asset": "Content/Items/Weapons/Launcher/VehicleBarrelLaunchersTests/ID_ArtilleryBarrelTest",
+      "name": "Artillery Barrel Test",
+      "developer": true,
+      "tags": [
+        "Inventory.Slot.Primary",
+        "Inventory.Slot.Secondary",
+        "Item.Archetype.Launcher",
+        "Item.Weapon",
+        "Item.Context.Equippable",
+        "Item.Context.Animation.Type.Rifle"
+      ],
+      "grid": [1, 1],
+      "maxStack": 1,
+      "weight": 50,
+      "unlock": null,
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.HeavyArmor",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Items/Armor/Content/Data/ID_HeavyArmor",
+      "name": "Level 3 Armor",
+      "subtitle": "Armor",
+      "description": "- High Damage Reduction\n- Protects the Upper and Lower Torso",
+      "icon": "UI/Shared/Icons/Vendor/Gear/T_UI_Vendor_Armor_003.png",
+      "tags": ["Inventory.Slot.Armor", "Item.Context.Equippable"],
+      "grid": [4, 5],
+      "maxStack": 1,
+      "weight": 10.5,
+      "unlock": {
+        "role": "Wardog",
+        "level": 70,
+        "cost": 100000
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.HeavyArmor",
+          "price": 2500,
+          "amount": 1,
+          "categories": ["Vendor.Category.Gear.Armor"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.HeavyHelmet",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Items/Armor/Content/Data/ID_HeavyHelmet",
+      "name": "Level 3 Helmet",
+      "subtitle": "Armor",
+      "description": "- High Damage Reduction\n- Protects the Head and Neck\n- Low Suppression Reduction",
+      "icon": "UI/Shared/Icons/Vendor/Gear/T_UI_Vendor_Helmet_003.png",
+      "tags": ["Inventory.Slot.Helmet", "Item.Context.Equippable"],
+      "grid": [2, 2],
+      "maxStack": 1,
+      "weight": 3,
+      "unlock": {
+        "role": "Wardog",
+        "level": 70,
+        "cost": 75000
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.HeavyHelmet",
+          "price": 2000,
+          "amount": 1,
+          "categories": ["Vendor.Category.Gear.Helmet"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.LightArmor",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Items/Armor/Content/Data/ID_LightArmor",
+      "name": "Level 1 Armor",
+      "subtitle": "Armor",
+      "description": "- Low Damage Reduction\n- Protects the Upper and Lower Torso",
+      "icon": "UI/Shared/Icons/Vendor/Gear/T_UI_Vendor_Armor_001.png",
+      "tags": ["Inventory.Slot.Armor", "Item.Context.Equippable"],
+      "grid": [3, 4],
+      "maxStack": 1,
+      "weight": 3,
+      "unlock": {
+        "role": "Wardog",
+        "level": 3,
+        "cost": 10000
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.LightArmor",
+          "price": 400,
+          "amount": 1,
+          "categories": ["Vendor.Category.Gear.Armor"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.LightHelmet",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Items/Armor/Content/Data/ID_LightHelmet",
+      "name": "Level 1 Helmet",
+      "subtitle": "Armor",
+      "description": "- Low Damage Reduction\n- Protects the Head",
+      "icon": "UI/Shared/Icons/Vendor/Gear/T_UI_Vendor_Helmet_001.png",
+      "tags": ["Inventory.Slot.Helmet", "Item.Context.Equippable"],
+      "grid": [2, 2],
+      "maxStack": 1,
+      "unlock": {
+        "role": "Wardog",
+        "level": 3,
+        "cost": 7500
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.LightHelmet",
+          "price": 200,
+          "amount": 1,
+          "categories": ["Vendor.Category.Gear.Helmet"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.M4",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Weapons/Platforms/WEPN_002/Content/Data/ID_M4",
+      "name": "M4",
+      "subtitle": "Assault Rifle",
+      "description": "- Semi / Full Auto\n- 5.56x45mm",
+      "icon": "UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_002.png",
+      "tags": [
+        "Inventory.Slot.Primary",
+        "Inventory.Slot.Secondary",
+        "Item.Archetype.AR",
+        "Item.Weapon.M4",
+        "Item.Context.Equippable",
+        "Item.Context.Animation.Type.Rifle",
+        "Item.Context.Animation.Archetype.Rifle"
+      ],
+      "grid": [5, 2],
+      "maxStack": 1,
+      "weight": 2.92,
+      "unlock": {
+        "role": "Infantry",
+        "level": 28,
+        "cost": 150000
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.M4",
+          "price": 2800,
+          "amount": 1,
+          "categories": ["Vendor.Category.Weapon.Primary"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.M500",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Weapons/Platforms/WEPN_011/Content/Data/ID_M500",
+      "name": "M500",
+      "subtitle": "Shotgun",
+      "description": "- Semi automatic\n- 12 Gauge",
+      "icon": "UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_011.png",
+      "tags": [
+        "Inventory.Slot.Primary",
+        "Inventory.Slot.Secondary",
+        "Item.Archetype.Shotgun",
+        "Item.Weapon.M500",
+        "Item.Context.Equippable",
+        "Item.Context.Animation.Type.Rifle",
+        "Item.Context.Animation.Archetype.Rifle"
+      ],
+      "grid": [4, 2],
+      "maxStack": 1,
+      "weight": 3.52,
+      "unlock": {
+        "role": "Support",
+        "level": 10,
+        "cost": 50000
+      },
+      "vendor": []
+    },
+    {
+      "id": "Id.Item.MediumArmor",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Items/Armor/Content/Data/ID_MediumArmor",
+      "name": "Level 2 Armor",
+      "subtitle": "Armor",
+      "description": "- Medium Damage Reduction\n- Protects the Upper and Lower Torso",
+      "icon": "UI/Shared/Icons/Vendor/Gear/T_UI_Vendor_Armor_002.png",
+      "tags": ["Inventory.Slot.Armor", "Item.Context.Equippable"],
+      "grid": [3, 4],
+      "maxStack": 1,
+      "weight": 4.5,
+      "unlock": {
+        "role": "Wardog",
+        "level": 30,
+        "cost": 50000
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.MediumArmor",
+          "price": 1000,
+          "amount": 1,
+          "categories": ["Vendor.Category.Gear.Armor"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.MediumHelmet",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Items/Armor/Content/Data/ID_MediumHelmet",
+      "name": "Level 2 Helmet",
+      "subtitle": "Armor",
+      "description": "- Medium Damage Reduction\n- Protects the Head",
+      "icon": "UI/Shared/Icons/Vendor/Gear/T_UI_Vendor_Helmet_002.png",
+      "tags": ["Inventory.Slot.Helmet", "Item.Context.Equippable"],
+      "grid": [2, 2],
+      "maxStack": 1,
+      "weight": 1.6,
+      "unlock": {
+        "role": "Wardog",
+        "level": 30,
+        "cost": 37500
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.MediumHelmet",
+          "price": 500,
+          "amount": 1,
+          "categories": ["Vendor.Category.Gear.Helmet"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.Mosin",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Weapons/Platforms/WEPN_017/Content/Data/ID_WEPN_017",
+      "name": "Mosin Nagant",
+      "subtitle": "Sniper Rifle",
+      "description": "- Bolt-action\n- 7.62x54mm",
+      "icon": "UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_017.png",
+      "tags": [
+        "Inventory.Slot.Primary",
+        "Inventory.Slot.Secondary",
+        "Item.Archetype.Sniper",
+        "Item.Context.Equippable",
+        "Item.Context.Animation.Type.Rifle",
+        "Item.Context.Animation.Archetype.Rifle",
+        "Item.Weapon"
+      ],
+      "grid": [6, 2],
+      "maxStack": 1,
+      "weight": 4.1,
+      "unlock": {
+        "role": "Recon",
+        "level": 10,
+        "cost": 50000
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.Mosin",
+          "price": 4500,
+          "amount": 1,
+          "categories": ["Vendor.Category.Weapon.Primary"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.SuperHeavyArmor",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Items/Armor/Content/Data/ID_SuperHeavyArmor",
+      "name": "Level 4 Armor",
+      "subtitle": "Armor",
+      "description": "- Very High Damage Reduction\n- Protects the Upper and Lower Torso, Upper Arms and Pelvis",
+      "icon": "UI/Shared/Icons/Vendor/Gear/T_UI_Vendor_Armor_004.png",
+      "tags": ["Inventory.Slot.Armor", "Item.Context.Equippable"],
+      "grid": [4, 5],
+      "maxStack": 1,
+      "weight": 18,
+      "unlock": {
+        "role": "Wardog",
+        "level": 100,
+        "cost": 200000
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.SuperHeavyArmor",
+          "price": 5000,
+          "amount": 1,
+          "categories": ["Vendor.Category.Gear.Armor"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.SuperHeavyHelmet",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Items/Armor/Content/Data/ID_SuperHeavyHelmet",
+      "name": "Level 4 Helmet",
+      "subtitle": "Armor",
+      "description": "- Very High Damage Reduction\n- Protects the Head and Neck\n- High Suppression Reduction\n- Strongly muffles the sounds around you",
+      "icon": "UI/Shared/Icons/Vendor/Gear/T_UI_Vendor_Helmet_004.png",
+      "tags": ["Inventory.Slot.Helmet", "Item.Context.Equippable"],
+      "grid": [2, 2],
+      "maxStack": 1,
+      "weight": 4.5,
+      "unlock": {
+        "role": "Wardog",
+        "level": 100,
+        "cost": 150000
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.SuperHeavyHelmet",
+          "price": 4500,
+          "amount": 1,
+          "categories": ["Vendor.Category.Gear.Helmet"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.SV98",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Weapons/Platforms/WEPN_008/Content/Data/ID_SV98",
+      "name": "SV98",
+      "subtitle": "Sniper Rifle",
+      "description": "- Bolt-action / Magazine fed\n- 7.62x54mm",
+      "icon": "UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_008.png",
+      "tags": [
+        "Inventory.Slot.Primary",
+        "Inventory.Slot.Secondary",
+        "Item.Weapon.SV98",
+        "Item.Archetype.Sniper",
+        "Item.Context.Equippable",
+        "Item.Context.Animation.Type.Rifle",
+        "Item.Context.Animation.Archetype.Rifle"
+      ],
+      "grid": [6, 2],
+      "maxStack": 1,
+      "weight": 5.8,
+      "unlock": {
+        "role": "Recon",
+        "level": 18,
+        "cost": 100000
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.SV98",
+          "price": 5200,
+          "amount": 1,
+          "categories": ["Vendor.Category.Weapon.Primary"]
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.WEPN_028",
+      "kind": "item",
+      "asset": "Plugins/GameFeatures/Weapons/Platforms/WEPN_028/Content/Data/ID_WEPN_028",
+      "name": "MP5",
+      "subtitle": "Submachine Gun",
+      "description": "- Semi / Full Auto\n- 9x19mm",
+      "icon": "UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_028.png",
+      "tags": [
+        "Inventory.Slot.Primary",
+        "Inventory.Slot.Secondary",
+        "Item.Archetype.SMG",
+        "Item.Context.Equippable",
+        "Item.Context.Animation.Type.Rifle",
+        "Item.Context.Animation.Archetype.Rifle",
+        "Item.Weapon"
+      ],
+      "grid": [3, 2],
+      "maxStack": 1,
+      "weight": 2.54,
+      "unlock": {
+        "role": "Medic",
+        "level": 4,
+        "cost": 25000
+      },
+      "vendor": [
+        {
+          "tag": "Id.Item.WEPN_028",
+          "price": 1800,
+          "amount": 1,
+          "categories": ["Vendor.Category.Weapon.Primary"]
+        }
+      ]
+    },
+    {
+      "id": "Vehicle.Variant.Land.Wheeled.Humvee.Default",
+      "kind": "vehicle",
+      "asset": "Plugins/GameFeatures/Vehicles/WHL_05/Content/Variants/ID_WHL_05_Default",
+      "name": "Humvee",
+      "subtitle": "SUV",
+      "description": "4 Seat Light-Armored Wheeled Vehicle. Best Suited For Off Road Travel",
+      "icon": "UI/Shared/Icons/Vehicles/3D/T_UI_Vehicle_transport_Humvee_Temp_512x512.png",
+      "tags": [],
+      "grid": [4, 3],
+      "maxStack": 1,
+      "unlock": {
+        "role": "Driver",
+        "level": 14,
+        "cost": 75000
+      },
+      "vendor": [
+        {
+          "tag": "Vehicle.Variant.Land.Wheeled.Humvee.Default",
+          "price": 3000,
+          "amount": 1,
+          "categories": ["Vendor.Category.Vehicle.Land", "Vendor.Category.Vehicle.Blueprints"]
+        }
+      ]
+    }
+  ]
+}

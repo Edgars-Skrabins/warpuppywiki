@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25937608",
+  "units": "meters",
+  "projectiles": [
+    {
+      "id": "Item.Caliber.545mm",
+      "asset": "Content/GameMechanics/Inventory/Equipment/Caliber/545mm/DA_545mm_ProjectileData",
+      "damage": 26,
+      "damageType": "Meta.Damage.Bullet.545mm",
+      "damageContext": ["Meta.Damage.Arms.Medium"],
+      "massKg": 0.0034,
+      "diameterMm": 5.6,
+      "lengthMm": 17.1704,
+      "drag": {
+        "coefficient": 1.4,
+        "model": "G7 (Boat Tail)"
+      },
+      "typicalSpeed": 300,
+      "suppression": 0.3,
+      "items": [
+        "Id.Item.545mm",
+        "Id.Item.545mm.ArmorPiercing",
+        "Id.Item.545mm.ArmorPiercing.Tracer",
+        "Id.Item.545mm.HollowPoint",
+        "Id.Item.545mm.HollowPoint.Tracer",
+        "Id.Item.545mm.Tracer"
+      ]
+    },
+    {
+      "id": "Item.Caliber.556mm",
+      "asset": "Content/GameMechanics/Inventory/Equipment/Caliber/556mm/DA_556mm_ProjectileData",
+      "damage": 28,
+      "damageType": "Meta.Damage.Bullet.556mm",
+      "damageContext": ["Meta.Damage.Arms.Medium"],
+      "massKg": 0.0041,
+      "diameterMm": 5.7,
+      "lengthMm": 12.696,
+      "drag": {
+        "coefficient": 1.26,
+        "model": "G7 (Boat Tail)"
+      },
+      "typicalSpeed": 404,
+      "penetration": {
+        "exitSpeedMultiplier": 0.18
+      },
+      "suppression": 0.3,
+      "items": [
+        "Id.Item.556mm",
+        "Id.Item.556mm.ArmorPiercing",
+        "Id.Item.556mm.ArmorPiercing.Tracer",
+        "Id.Item.556mm.HollowPoint",
+        "Id.Item.556mm.HollowPoint.Tracer",
+        "Id.Item.556mm.Tracer"
+      ]
+    },
+    {
+      "id": "Item.Caliber.762x54mm",
+      "asset": "Content/GameMechanics/Inventory/Equipment/Caliber/762x54mm/DA_762x54mm_ProjectileData",
+      "damage": 44,
+      "damageType": "Meta.Damage.Bullet.762x54mm",
+      "damageContext": ["Meta.Damage.Arms.High"],
+      "massKg": 0.011729,
+      "diameterMm": 7.9248,
+      "lengthMm": 30.48,
+      "drag": {
+        "coefficient": 0.9,
+        "model": "G7 (Boat Tail)"
+      },
+      "typicalSpeed": 430,
+      "penetration": {
+        "exitSpeedMultiplier": 0.14
+      },
+      "suppression": 0.65,
+      "items": [
+        "Id.Item.762x54mm",
+        "Id.Item.762x54mm.ArmorPiercing",
+        "Id.Item.762x54mm.ArmorPiercing.Tracer",
+        "Id.Item.762x54mm.HollowPoint",
+        "Id.Item.762x54mm.HollowPoint.Tracer",
+        "Id.Item.762x54mm.Tracer"
+      ]
+    },
+    {
+      "id": "Item.Caliber.7mmBuck",
+      "asset": "Content/GameMechanics/Inventory/Equipment/Caliber/7mm_Buckshot/DA_7mmBuckshot_ProjectileData",
+      "damage": 25,
+      "damageType": "Meta.Damage.Bullet.12g.7mmBuckshot",
+      "damageContext": ["Meta.Damage.Arms.Small"],
+      "massKg": 0.004,
+      "diameterMm": 8.3282,
+      "lengthMm": 7,
+      "drag": {
+        "coefficient": 1.3,
+        "model": "GA (Pellet)"
+      },
+      "typicalSpeed": 292,
+      "penetration": {
+        "exitSpeedMultiplier": 0.28
+      },
+      "suppression": 0.2,
+      "items": ["Id.Item.12g", "Id.Item.12g.7mmBuck"]
+    }
+  ]
+}

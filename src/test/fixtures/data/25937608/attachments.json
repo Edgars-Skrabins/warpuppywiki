@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25937608",
+  "attachments": [
+    {
+      "id": "Id.Item.3xScope",
+      "name": "Spitfire 3X",
+      "type": "Sight",
+      "contexts": ["Item.Context.Equippable", "Item.Attachment.Sight.Medium"],
+      "modifiers": [
+        {
+          "attribute": "Weapon.AdsZoomMultiplier",
+          "op": "override",
+          "value": 3
+        },
+        {
+          "attribute": "Weapon.MinZeroingRange",
+          "op": "override",
+          "value": 100
+        },
+        {
+          "attribute": "Weapon.MaxZeroingRange",
+          "op": "override",
+          "value": 300
+        },
+        {
+          "attribute": "Weapon.AimTime",
+          "op": "multiplyCompound",
+          "value": 1.1
+        }
+      ],
+      "characterModifiers": [
+        {
+          "attribute": "Character.WeaponSway.StabilizationTimeMultiplier",
+          "op": "multiply",
+          "value": 1.35
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.AK74MExtendedMagazine",
+      "name": "AK74 60 RND Magazine",
+      "type": "Magazine",
+      "contexts": ["Item.Attachment.Magazine", "Item.Resource.Magazine.Extended"],
+      "modifiers": [
+        {
+          "attribute": "Weapon.AimTime",
+          "op": "multiplyCompound",
+          "value": 1.19
+        },
+        {
+          "attribute": "Weapon.VerticalRecoilMultiplier",
+          "op": "multiplyCompound",
+          "value": 1.19
+        },
+        {
+          "attribute": "Weapon.HorizontalRecoilMultiplier",
+          "op": "multiplyCompound",
+          "value": 1.21
+        },
+        {
+          "attribute": "Weapon.EquipSpeedMultiplier",
+          "op": "multiplyCompound",
+          "value": 0.93
+        }
+      ],
+      "characterModifiers": [
+        {
+          "attribute": "Character.AimSwayScaleMultiplier",
+          "op": "multiplyCompound",
+          "value": 1.21
+        }
+      ],
+      "magazine": {
+        "capacity": 60,
+        "calibers": ["545mm"]
+      }
+    },
+    {
+      "id": "Id.Item.AK74MMagazine",
+      "name": "AK74 30 RND Magazine",
+      "type": "Magazine",
+      "contexts": ["Item.Attachment.Magazine", "Item.Resource.Magazine.Standard"],
+      "modifiers": [],
+      "characterModifiers": [],
+      "magazine": {
+        "capacity": 30,
+        "calibers": ["545mm"]
+      }
+    },
+    {
+      "id": "Id.Item.AK74MMagazine75rnd",
+      "name": "AK74 75 RND Drum Magazine",
+      "type": "Magazine",
+      "contexts": ["Item.Attachment.Magazine", "Item.Resource.Magazine.Drum"],
+      "modifiers": [
+        {
+          "attribute": "Weapon.AimTime",
+          "op": "multiplyCompound",
+          "value": 1.26
+        },
+        {
+          "attribute": "Weapon.VerticalRecoilMultiplier",
+          "op": "multiplyCompound",
+          "value": 1.22
+        },
+        {
+          "attribute": "Weapon.HorizontalRecoilMultiplier",
+          "op": "multiplyCompound",
+          "value": 1.24
+        },
+        {
+          "attribute": "Weapon.EquipSpeedMultiplier",
+          "op": "multiplyCompound",
+          "value": 0.93
+        }
+      ],
+      "characterModifiers": [
+        {
+          "attribute": "Character.AimSwayScaleMultiplier",
+          "op": "multiplyCompound",
+          "value": 1.24
+        }
+      ],
+      "magazine": {
+        "capacity": 75,
+        "calibers": ["545mm"]
+      }
+    }
+  ]
+}

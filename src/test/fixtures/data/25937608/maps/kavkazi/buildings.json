@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "world": "Kavkazi",
+  "gameBuild": "25937608",
+  "units": "meters",
+  "shape": "axis-aligned bounding box",
+  "count": 10,
+  "buildings": [
+    {
+      "id": "e78bdbc09893",
+      "kind": "bungalow",
+      "class": "B_Residential_Bungalow_02_C",
+      "min": [-12464.55, -11846.92, -726.83],
+      "max": [-12443.04, -11821.23, -717.52],
+      "parts": 52
+    },
+    {
+      "id": "0dc9f8a6ef52",
+      "kind": "bungalow",
+      "class": "B_Residential_Bungalow_02_C",
+      "min": [-12463.76, -11692.03, -737.98],
+      "max": [-12442.05, -11666.33, -728.67],
+      "parts": 52
+    },
+    {
+      "id": "166c86c92049",
+      "kind": "house",
+      "class": "B_Residential_House_01_C",
+      "min": [-12446.14, -11789.65, -726.82],
+      "max": [-12430.45, -11769.45, -713.55],
+      "parts": 67
+    },
+    {
+      "id": "29e4f854a0c7",
+      "kind": "garage",
+      "class": "BP_Garage_Closed_03a_C",
+      "min": [-12410.77, -11789.4, -731.21],
+      "max": [-12402.37, -11779.46, -727.06],
+      "parts": 2
+    },
+    {
+      "id": "470d5b619f1e",
+      "kind": "bungalow",
+      "class": "B_Residential_Bungalow_03_C",
+      "min": [-12407.31, -11774.11, -732.55],
+      "max": [-12390.28, -11757.92, -723.73],
+      "parts": 38
+    },
+    {
+      "id": "9b0c048f1859",
+      "kind": "house",
+      "class": "B_Residential_House_04_C",
+      "min": [-12348.85, -11862.19, -735.23],
+      "max": [-12326.02, -11840.03, -721.97],
+      "parts": 70
+    },
+    {
+      "id": "5a31da44a12a",
+      "kind": "garage",
+      "class": "BP_Garage_Closed_03a_C",
+      "min": [-12337.84, -11828.05, -734.13],
+      "max": [-12327.94, -11819.26, -729.98],
+      "parts": 2
+    },
+    {
+      "id": "a9f3b753c302",
+      "kind": "house",
+      "class": "B_Residential_House_05_C",
+      "min": [-12313.88, -11965.42, -723.93],
+      "max": [-12291.21, -11942.68, -710.66],
+      "parts": 69
+    },
+    {
+      "id": "24e81fab6b7d",
+      "kind": "bungalow",
+      "class": "B_Residential_Bungalow_01_C",
+      "min": [-12259.74, -11966.63, -726.18],
+      "max": [-12238.45, -11944.46, -716.41],
+      "parts": 48
+    },
+    {
+      "id": "6d8c31b70b85",
+      "kind": "bungalow",
+      "class": "B_Residential_Bungalow_01_C",
+      "min": [-12233.79, -11645.44, -738.29],
+      "max": [-12212.51, -11624.43, -728.52],
+      "parts": 48
+    }
+  ]
+}
