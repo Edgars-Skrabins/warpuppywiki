@@ -13,7 +13,7 @@ const allowTo = (from, types) => ({
 });
 
 export default defineConfig(
-  { ignores: ["dist", "coverage", "public"] },
+  { ignores: ["dist", "coverage", "public", ".claude"] },
   js.configs.recommended,
   tseslint.configs.recommendedTypeChecked,
   {

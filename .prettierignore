@@ -3,3 +3,4 @@ coverage
 public/data
 public/assets
 pnpm-lock.yaml
+.claude
