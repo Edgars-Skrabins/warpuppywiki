@@ -1,0 +1,113 @@
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.tree {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.ring {
+  fill: none;
+  stroke: var(--color-border);
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+}
+
+.base {
+  stroke: var(--color-border);
+  stroke-width: 1;
+}
+
+.node {
+  cursor: pointer;
+  outline: none;
+}
+
+.node:focus-visible {
+  box-shadow: none;
+}
+
+.halo {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 2;
+}
+
+.dot {
+  fill: var(--color-surface);
+  stroke: var(--color-border-control);
+  stroke-width: 2;
+  transition:
+    fill var(--duration-fast) var(--easing),
+    stroke var(--duration-fast) var(--easing);
+}
+
+.node[data-filled] .dot {
+  fill: var(--color-text-muted);
+  stroke: var(--color-text-muted);
+}
+
+.node:hover .dot {
+  stroke: var(--color-text);
+}
+
+.node[data-filled]:hover .dot {
+  fill: var(--color-text);
+}
+
+.node[data-selected] .halo {
+  stroke: var(--color-accent);
+}
+
+.node:focus-visible .halo {
+  stroke: var(--focus-ring-color);
+  stroke-dasharray: 3 3;
+}
+
+.label {
+  fill: var(--color-text-muted);
+  font-family: var(--font-condensed);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.02em;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.node[data-selected] .label,
+.node:hover .label {
+  fill: var(--color-text);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--color-border-control);
+  border-radius: 50%;
+  background: var(--color-surface);
+}
+
+.swatchFilled {
+  border-color: var(--color-text-muted);
+  background: var(--color-text-muted);
+}
