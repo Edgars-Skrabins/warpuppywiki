@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "world": "Kavkazi",
+  "gameBuild": "25937608",
+  "units": "meters",
+  "shape": "axis-aligned bounding box",
+  "count": 5,
+  "buildings": [
+    {
+      "id": "a9f3b753c302",
+      "kind": "house",
+      "class": "B_Residential_House_05_C",
+      "min": [-12313.88, -11965.42, -723.93],
+      "max": [-12291.21, -11942.68, -710.66],
+      "parts": 69
+    },
+    {
+      "id": "5254d00f0814",
+      "kind": "warehouse",
+      "class": "BP_Warehouse_Small_Hut_02a_C",
+      "min": [-9242.78, -11197.34, -923.13],
+      "max": [-9238.06, -11188.03, -916.18],
+      "parts": 7
+    },
+    {
+      "id": "78a4fcbc48f8",
+      "kind": "warehouse",
+      "class": "BP_Warehouse_Small_02a_C",
+      "min": [-8460.11, -11310.7, -948.23],
+      "max": [-8442.26, -11292.84, -941.91],
+      "parts": 14
+    },
+    {
+      "id": "8ca5c2cae2c6",
+      "kind": "house",
+      "class": "B_Residential_House_03_C",
+      "min": [-8214.88, -10541.48, -950.65],
+      "max": [-8190.97, -10522.43, -937.38],
+      "parts": 67
+    },
+    {
+      "id": "7b1777eebdc8",
+      "kind": "bungalow",
+      "class": "B_Residential_Bungalow_02_C",
+      "min": [-7587.1, -11184.42, -920.15],
+      "max": [-7563.64, -11168.03, -910.84],
+      "parts": 52
+    }
+  ]
+}
