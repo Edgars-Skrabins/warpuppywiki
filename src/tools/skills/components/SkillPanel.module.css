@@ -1,0 +1,48 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.description {
+  color: var(--color-text);
+  font-size: var(--text-md);
+  line-height: var(--line-height-normal);
+}
+
+.note {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.effect {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.effectHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.effectTitle {
+  color: var(--color-text);
+  font-family: var(--font-condensed);
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-caps);
+  text-transform: uppercase;
+}
+
+.trigger {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
