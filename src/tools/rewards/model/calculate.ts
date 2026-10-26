@@ -42,6 +42,9 @@ function calculateResource(resource: RewardResource, situation: Situation, curve
       }
       return entry?.value ?? undefined;
     });
+    if (!Number.isFinite(amount)) {
+      throw new FormulaEvaluationError("the result is not a finite number");
+    }
     return { resource: resource.resource, formula: resource.formula, expr, amount, error: null, working };
   } catch (error) {
     return {
