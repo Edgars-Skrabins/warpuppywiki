@@ -1,0 +1,37 @@
+.sheet {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-top: 2px solid var(--color-accent);
+  border-radius: var(--radius-md);
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
+.title {
+  font-size: var(--text-xl);
+}
+
+.count {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.armor {
+  display: flex;
+  flex-direction: column;
+}
+
+.source {
+  font-weight: var(--font-weight-medium);
+}
