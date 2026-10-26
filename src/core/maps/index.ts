@@ -5,3 +5,4 @@ export * from "./heightmap";
 export * from "./profile";
 export * from "./lineOfSight";
 export * from "./notes";
+export * from "./useHeightmap";
