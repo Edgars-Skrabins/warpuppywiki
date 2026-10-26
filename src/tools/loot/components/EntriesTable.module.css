@@ -1,0 +1,23 @@
+.unknown {
+  display: flex;
+  flex-direction: column;
+}
+
+.unknownLabel,
+.none {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.icon {
+  display: block;
+  width: 72px;
+}
+
+.extras {
+  min-width: 240px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+}
