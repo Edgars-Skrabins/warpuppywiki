@@ -10,7 +10,6 @@ warpuppywiki is a fan project. It is not affiliated with or endorsed by Bulkhead
 - **Styling:** CSS Modules.
 - **Tests:** Vitest with Testing Library and jsdom.
 - **Linting and formatting:** ESLint and Prettier.
-- **CI:** GitHub Actions runs the checks and the build on every push and pull request.
 
 ## Project structure
 
@@ -58,6 +57,6 @@ pnpm test
 - `pnpm lint`: run ESLint.
 - `pnpm typecheck`: type-check the app, the configs and the scripts.
 - `pnpm format`: format all files with Prettier (`pnpm format:check` only checks).
-- `pnpm check`: type-check, lint, check formatting and run the tests, as CI does.
+- `pnpm check`: type-check, lint, check formatting and run the tests.
 - `pnpm build`: production build into `dist/`.
 - `pnpm preview`: serve the production build locally.
