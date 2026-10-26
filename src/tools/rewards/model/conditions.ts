@@ -1,15 +1,6 @@
+import { hasTag } from "@/core/catalog";
 import { tagLabel } from "./contextTags";
 import type { Condition, ConditionGroup } from "./types";
-
-function tagMatches(tag: string, query: string): boolean {
-  const lowerTag = tag.toLowerCase();
-  const lowerQuery = query.toLowerCase();
-  return lowerTag === lowerQuery || lowerTag.startsWith(`${lowerQuery}.`);
-}
-
-function tagIsOn(tags: readonly string[], query: string): boolean {
-  return tags.some((tag) => tagMatches(tag, query));
-}
 
 function holds(match: Condition["match"], results: boolean[]): boolean {
   switch (match) {
@@ -25,13 +16,13 @@ function holds(match: Condition["match"], results: boolean[]): boolean {
 function groupHolds(group: ConditionGroup, tags: readonly string[]): boolean {
   return holds(
     group.match,
-    group.tags.map((query) => tagIsOn(tags, query)),
+    group.tags.map((query) => hasTag(tags, query)),
   );
 }
 
 export function conditionHolds(when: Condition, tags: readonly string[]): boolean {
   return holds(when.match, [
-    ...(when.tags ?? []).map((query) => tagIsOn(tags, query)),
+    ...(when.tags ?? []).map((query) => hasTag(tags, query)),
     ...(when.of ?? []).map((group) => groupHolds(group, tags)),
   ]);
 }

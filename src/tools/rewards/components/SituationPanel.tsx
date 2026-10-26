@@ -1,3 +1,4 @@
+import { sameId } from "@/core/catalog";
 import { Checkbox, NumberField } from "@/ui";
 import type { SituationFields } from "../model/contextTags";
 import type { Situation } from "../model/types";
@@ -9,13 +10,9 @@ interface SituationPanelProps {
   onChange: (next: Situation) => void;
 }
 
-function hasTag(tags: readonly string[], tag: string): boolean {
-  return tags.some((entry) => entry.toLowerCase() === tag.toLowerCase());
-}
-
 export function SituationPanel({ fields, situation, onChange }: SituationPanelProps) {
   const setTag = (tag: string, on: boolean) => {
-    const others = situation.tags.filter((entry) => entry.toLowerCase() !== tag.toLowerCase());
+    const others = situation.tags.filter((entry) => !sameId(entry, tag));
     onChange({ ...situation, tags: on ? [...others, tag] : others });
   };
   const numberFields = [
@@ -31,7 +28,7 @@ export function SituationPanel({ fields, situation, onChange }: SituationPanelPr
           {fields.tags.map((field) => (
             <Checkbox
               key={field.tag}
-              isSelected={hasTag(situation.tags, field.tag)}
+              isSelected={situation.tags.some((entry) => sameId(entry, field.tag))}
               onChange={(on) => setTag(field.tag, on)}
             >
               {field.label}

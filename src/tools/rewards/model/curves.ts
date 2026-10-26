@@ -1,8 +1,9 @@
+import { normalizeId } from "@/core/catalog";
 import type { RewardCurve } from "@/core/data";
 
 export function curveLookup(curves: readonly RewardCurve[]): (id: string) => RewardCurve | undefined {
-  const byId = new Map(curves.map((curve) => [curve.id.toLowerCase(), curve]));
-  return (id) => byId.get(id.toLowerCase());
+  const byId = new Map(curves.map((curve) => [normalizeId(curve.id), curve]));
+  return (id) => byId.get(normalizeId(id));
 }
 
 function smoothstep(t: number): number {

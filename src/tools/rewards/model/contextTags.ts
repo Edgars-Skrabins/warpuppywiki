@@ -1,3 +1,4 @@
+import { sameId } from "@/core/catalog";
 import type { ChallengeReward } from "@/core/data";
 
 const CONTEXT_PREFIX = "challenges.context.";
@@ -63,7 +64,7 @@ export function defaultGameValue(name: string): number {
 }
 
 function addUnique(list: string[], value: string): void {
-  if (!list.some((entry) => entry.toLowerCase() === value.toLowerCase())) {
+  if (!list.some((entry) => sameId(entry, value))) {
     list.push(value);
   }
 }
@@ -107,7 +108,7 @@ export function situationFields(reward: ChallengeReward): SituationFields {
 }
 
 export function isCash(resource: string): boolean {
-  return resource.toLowerCase() === "currency.cash";
+  return sameId(resource, "Currency.Cash");
 }
 
 export function resourceLabel(resource: string): string {
