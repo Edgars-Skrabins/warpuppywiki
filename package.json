@@ -22,10 +22,14 @@
     "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test"
   },
   "dependencies": {
+    "@fontsource/barlow": "5.3.0",
+    "@fontsource/barlow-condensed": "5.3.0",
     "fflate": "0.8.3",
     "react": "19.3.1",
+    "react-aria-components": "1.22.1",
     "react-dom": "19.3.1",
     "react-router": "8.5.0",
+    "recharts": "3.10.1",
     "zod": "4.6.7"
   },
   "devDependencies": {
