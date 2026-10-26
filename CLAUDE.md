@@ -30,6 +30,7 @@ src/core/           shared, framework-light domain code used by more than one to
   damage/           per-hit damage model, shots to kill, time to kill
   maps/             world and pixel coordinates, heightmap sampling, line of sight
   state/            URL state codecs and local storage helpers
+  tool/             the ToolDefinition type and tool categories
 src/ui/             the UI kit: tokens, theme and reusable components
 src/tools/<tool>/   one folder per tool, with an index.ts that exports its ToolDefinition
 specs/              specs (see below)
@@ -39,7 +40,7 @@ specs/              specs (see below)
 
 - `scripts/sync-data.ts` downloads every published build's small data zip into `public/data/<build>/` and writes `public/data/builds.json`. `scripts/sync-assets.ts` downloads the latest full zip once into a shared cache outside the repo and extracts tiles, icons and a converted heightmap into `public/assets/`.
 - `src/core/data` loads files from `public/data/<build>/`, validates them with zod and exposes typed hooks. Tools always read game data through it, never with their own `fetch`.
-- Each tool's `src/tools/<id>/index.ts` exports its `ToolDefinition` (id, name, summary, category, icon, lazy component). `src/app/toolRegistry.ts` discovers them with `import.meta.glob`, and the router and the home page are built from that list. Adding or removing a tool means adding or removing its folder; no shared file changes.
+- Each tool's `src/tools/<id>/index.ts` exports `tool`, its `ToolDefinition` from `@/core/tool` (id equal to the folder name, name, summary, category, an icon name from the UI kit's `Icon`, optional `status: "beta"`, and `component: lazy(() => import("./Tool"))`). `src/app/toolRegistry.ts` discovers them with `import.meta.glob`, and the router, the Tools menu and the home page are built from that list. Routes are `#/<id>`; the shell renders the tool's heading, summary and error boundary. Adding or removing a tool means adding or removing its folder; no shared file changes.
 - Import boundaries, enforced by ESLint: `src/tools/X` may import from `src/core` and `src/ui` only; `src/core` may not import from `src/ui`, `src/app` or `src/tools`; `src/ui` may not import from `src/app` or `src/tools`.
 - Game ids and tags are compared case-insensitively through the helpers in `src/core/catalog`, never with `===` on raw strings.
 

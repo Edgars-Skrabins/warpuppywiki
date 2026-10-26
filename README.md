@@ -20,6 +20,15 @@ warpuppywiki is a fan project. It is not affiliated with or endorsed by Bulkhead
 - `scripts/`: Node scripts that download and prepare game data and assets.
 - `public/data/` and `public/assets/`: synced game data and assets (not committed).
 
+## Adding a tool
+
+Create a folder `src/tools/<id>/`, where `<id>` is lowercase and hyphenated, with two files:
+
+- `index.ts` exports `tool`, a `ToolDefinition` from `@/core/tool`: id (the folder name), name, one-line summary, category, icon name, optional `status: "beta"`, and `component: lazy(() => import("./Tool"))`.
+- `Tool.tsx` default-exports the tool's page.
+
+The shell finds the folder on its own: the tool gets a card on the home page, an entry in the Tools menu and the route `#/<id>`. No shared file changes. The registry test checks the id, category and icon.
+
 ## Prerequisites
 
 - Node 22 or newer (pinned in `.nvmrc`).
