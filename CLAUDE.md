@@ -63,7 +63,9 @@ pnpm assets:sync      download map tiles, icons and heightmaps (large, cached)
 pnpm dev              run the app
 pnpm test             run the tests once
 pnpm lint             ESLint
-pnpm typecheck        tsc --noEmit
+pnpm typecheck        tsc on the app (tsconfig.json) and on configs and scripts (tsconfig.node.json)
+pnpm format           Prettier
+pnpm check            typecheck, lint, format check and tests, as CI runs them
 pnpm build            production build into dist/
 ```
 
