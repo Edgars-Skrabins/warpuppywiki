@@ -1,5 +1,6 @@
 export { latestBuild } from "./builds";
-export { createQueryClient, DataProvider } from "./DataProvider";
+export { DataProvider } from "./DataProvider";
+export { createQueryClient } from "./queryClient";
 export { DataMissingError, DataNetworkError, DataValidationError, isDataError, type DataError } from "./fetchJson";
 export {
   BUILD_FILE_KEYS,

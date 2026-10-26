@@ -2,7 +2,8 @@ import { render, type RenderResult } from "@testing-library/react";
 import type { ReactElement } from "react";
 import { vi } from "vitest";
 import { dataRoot } from "./builds";
-import { createQueryClient, DataProvider } from "./DataProvider";
+import { DataProvider } from "./DataProvider";
+import { createQueryClient } from "./queryClient";
 
 const FIXTURE_PREFIX = "/src/test/fixtures/data/";
 
