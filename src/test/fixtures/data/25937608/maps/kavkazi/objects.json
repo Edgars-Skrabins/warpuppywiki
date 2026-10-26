@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "world": "Kavkazi",
+  "gameBuild": "25937608",
+  "units": "meters",
+  "count": 5,
+  "objects": [
+    {
+      "id": "1bf6af5910a1",
+      "kind": "equipment-vendor",
+      "class": "B_EquipmentVendor_C",
+      "position": [-12357.18, -11814.245, -733.3098],
+      "yaw": -282.85,
+      "faction": "Charlie"
+    },
+    {
+      "id": "4987097ffe90",
+      "kind": "vehicle-vendor",
+      "class": "B_VehicleVendor_C",
+      "position": [-12323.314, -11780.528, -737.6802],
+      "yaw": -234.69,
+      "faction": "Charlie"
+    },
+    {
+      "id": "c27f8a1b2f12",
+      "kind": "garage-vendor",
+      "class": "B_GarageVendor_C",
+      "position": [-12293.834, -11755.35, -735.4928],
+      "yaw": 125.35,
+      "scale": [82.8488, 49, 5],
+      "faction": "Charlie"
+    },
+    {
+      "id": "e1f5e765c5be",
+      "kind": "safe-zone",
+      "class": "B_SafeZone_C",
+      "position": [-12282.184, -11751.152, -608.4713],
+      "yaw": -257.64,
+      "scale": [750, 750, 750],
+      "faction": "Charlie",
+      "tags": ["State.Location.SafeZone.Charlie"]
+    },
+    {
+      "id": "68528b2cb051",
+      "kind": "spawn-volume",
+      "class": "WDSpawnVolume",
+      "position": [-12356.144, -11759.892, -735.2754],
+      "yaw": 303.81,
+      "scale": [0.431, 0.2084, 1],
+      "faction": "Charlie",
+      "allowedVehicles": ["Vehicle.Variant.Land.Tracked.SpawnVehicle.Manticore"],
+      "disallowedVehicles": [
+        "Vehicle.Archetype.Air.Rotary",
+        "Vehicle.Archetype.Land.Wheeled",
+        "Vehicle.Variant.Air.Airplane",
+        "Vehicle.Variant.Air.Rotary",
+        "Vehicle.Variant.Land.Tracked.TNK_01",
+        "Vehicle.Variant.Land.Wheeled.Azar",
+        "Vehicle.Variant.Land.Wheeled.Bobcat",
+        "Vehicle.Variant.Land.Wheeled.Kodiak"
+      ]
+    }
+  ]
+}

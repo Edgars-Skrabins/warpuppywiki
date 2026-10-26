@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "latest": "25937608",
+  "builds": [
+    {
+      "build": "25937608",
+      "publishedAt": "2026-10-15T19:57:06Z",
+      "name": "Game build 25937608"
+    },
+    {
+      "build": "25677108",
+      "publishedAt": "2026-10-10T14:09:49Z",
+      "name": "Game build 25677108"
+    }
+  ]
+}

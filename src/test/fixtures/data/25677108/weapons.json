@@ -1,0 +1,974 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25677108",
+  "units": "meters",
+  "weapons": [
+    {
+      "id": "Id.Item.AK74M",
+      "name": "AK74",
+      "asset": "Plugins/GameFeatures/Weapons/Platforms/WEPN_001/Content/Data/DA_AK74M_Stats",
+      "fireModes": ["Automatic", "SemiAutomatic"],
+      "rpm": 650,
+      "calibers": ["545mm"],
+      "muzzleVelocity": 880,
+      "effectiveRange": 500,
+      "damageFalloff": [
+        {
+          "distance": 0,
+          "multiplier": 1
+        },
+        {
+          "distance": 500,
+          "multiplier": 1
+        },
+        {
+          "distance": 1200,
+          "multiplier": 0.2
+        }
+      ],
+      "accuracy": 0.825,
+      "randomDeviation": 13,
+      "adsTime": 0.8,
+      "zeroing": {
+        "max": 1000
+      },
+      "meleeDamage": 35,
+      "recoil": {
+        "pattern": [
+          {
+            "x": 0.01,
+            "y": 0.717554
+          },
+          {
+            "x": -0.02,
+            "y": 0.936807
+          },
+          {
+            "x": 0.025,
+            "y": 1.07633
+          },
+          {
+            "x": 0.045,
+            "y": 1.146093
+          },
+          {
+            "x": 0.07,
+            "y": 1.215855
+          },
+          {
+            "x": 0.085,
+            "y": 1.245753
+          },
+          {
+            "x": 0.08,
+            "y": 1.225821
+          },
+          {
+            "x": 0.07,
+            "y": 1.195923
+          },
+          {
+            "x": 0.06,
+            "y": 1.175991
+          },
+          {
+            "x": 0.055,
+            "y": 1.156059
+          },
+          {
+            "x": 0.045,
+            "y": 1.146093
+          },
+          {
+            "x": 0.04,
+            "y": 1.136127
+          },
+          {
+            "x": 0.03,
+            "y": 1.12616
+          },
+          {
+            "x": 0.025,
+            "y": 1.116195
+          },
+          {
+            "x": -0.03,
+            "y": 1.096263
+          },
+          {
+            "x": -0.055,
+            "y": 1.096263
+          },
+          {
+            "x": -0.065,
+            "y": 1.086296
+          },
+          {
+            "x": -0.06,
+            "y": 1.07633
+          },
+          {
+            "x": -0.05,
+            "y": 1.086296
+          },
+          {
+            "x": -0.04,
+            "y": 1.07633
+          },
+          {
+            "x": -0.03,
+            "y": 1.066365
+          },
+          {
+            "x": -0.02,
+            "y": 1.066365
+          },
+          {
+            "x": 0.015,
+            "y": 1.056399
+          },
+          {
+            "x": 0.035,
+            "y": 1.056399
+          },
+          {
+            "x": 0.055,
+            "y": 1.046432
+          },
+          {
+            "x": 0.065,
+            "y": 1.036466
+          },
+          {
+            "x": 0.06,
+            "y": 1.026501
+          },
+          {
+            "x": 0.05,
+            "y": 1.016535
+          },
+          {
+            "x": 0.04,
+            "y": 1.006568
+          },
+          {
+            "x": 0.03,
+            "y": 0.946772
+          }
+        ],
+        "patternResetTime": 0.65,
+        "viewKickMultiplier": 1.1,
+        "afterPatternPitch": [0.45, 0.75],
+        "afterPatternYaw": [-0.28, 0.28]
+      },
+      "slots": [
+        {
+          "slot": "Chamber",
+          "items": [],
+          "contexts": ["Item.Caliber.545mm"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": ["Item.Caliber.556mm"],
+          "hidden": true
+        },
+        {
+          "slot": "Sight",
+          "items": ["Id.Item.3xScope", "Id.Item.4xElcanSpectr", "Id.Item.SGHT_030"],
+          "contexts": ["Item.Attachment.Sight.Short", "Item.Attachment.Sight.Medium"],
+          "filter": "BlockPriority",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": false
+        },
+        {
+          "slot": "Magazine",
+          "items": ["Id.Item.AK74MMagazine", "Id.Item.AK74MExtendedMagazine", "Id.Item.AK74MMagazine75rnd"],
+          "contexts": ["Item.Attachment.Magazine.AK74M"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "default": "Id.Item.AK74MMagazine",
+          "hidden": false
+        },
+        {
+          "slot": "Stock",
+          "items": [],
+          "contexts": ["Item.Attachment.Stock.AK74M"],
+          "filter": "BlockPriority",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Grip",
+          "items": [],
+          "contexts": ["Item.Attachment.Grip.AK74M"],
+          "filter": "BlockPriority",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Barrel",
+          "items": ["Id.Item.AK74MBarrel", "ID.Item.AR_01_BRL_02"],
+          "contexts": [],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Underbarrel",
+          "items": [],
+          "contexts": ["Item.Attachment.Underbarrel"],
+          "filter": "BlockPriority",
+          "blockedItems": [],
+          "blockedContexts": ["Item.Attachment.Bipod.Attached"],
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.M4",
+      "name": "M4",
+      "asset": "Plugins/GameFeatures/Weapons/Platforms/WEPN_002/Content/Data/DA_M4_Stats",
+      "fireModes": ["Automatic", "SemiAutomatic"],
+      "rpm": 800,
+      "calibers": ["556mm"],
+      "muzzleVelocity": 910,
+      "effectiveRange": 500,
+      "damageFalloff": [
+        {
+          "distance": 0,
+          "multiplier": 1
+        },
+        {
+          "distance": 500,
+          "multiplier": 1
+        },
+        {
+          "distance": 1200,
+          "multiplier": 0.2
+        }
+      ],
+      "accuracy": 0.84,
+      "randomDeviation": 10,
+      "zeroing": {
+        "max": 500
+      },
+      "meleeDamage": 35,
+      "recoil": {
+        "pattern": [
+          {
+            "x": 0.037,
+            "y": 0.693
+          },
+          {
+            "x": -0.007,
+            "y": 0.891
+          },
+          {
+            "x": -0.079,
+            "y": 1.0395
+          },
+          {
+            "x": -0.122,
+            "y": 1.089
+          },
+          {
+            "x": -0.137,
+            "y": 1.1385
+          },
+          {
+            "x": -0.107,
+            "y": 1.1682
+          },
+          {
+            "x": -0.065,
+            "y": 1.1385
+          },
+          {
+            "x": -0.007,
+            "y": 1.1088
+          },
+          {
+            "x": 0.023,
+            "y": 1.089
+          },
+          {
+            "x": 0.022,
+            "y": 1.0692
+          },
+          {
+            "x": 0.007,
+            "y": 1.0494
+          },
+          {
+            "x": -0.035,
+            "y": 1.0296
+          },
+          {
+            "x": -0.108,
+            "y": 1.0494
+          },
+          {
+            "x": -0.122,
+            "y": 1.0395
+          },
+          {
+            "x": -0.122,
+            "y": 1.0197
+          },
+          {
+            "x": -0.093,
+            "y": 0.9999
+          },
+          {
+            "x": -0.065,
+            "y": 1.0098
+          },
+          {
+            "x": -0.021,
+            "y": 0.99
+          },
+          {
+            "x": 0.008,
+            "y": 0.9702
+          },
+          {
+            "x": 0.022,
+            "y": 0.9504
+          },
+          {
+            "x": 0.008,
+            "y": 0.9405
+          },
+          {
+            "x": -0.007,
+            "y": 0.9504
+          },
+          {
+            "x": -0.065,
+            "y": 0.9603
+          },
+          {
+            "x": -0.107,
+            "y": 0.9504
+          },
+          {
+            "x": -0.122,
+            "y": 0.9405
+          },
+          {
+            "x": -0.108,
+            "y": 0.9306
+          },
+          {
+            "x": -0.093,
+            "y": 0.9207
+          },
+          {
+            "x": -0.065,
+            "y": 0.9108
+          },
+          {
+            "x": -0.007,
+            "y": 0.9009
+          },
+          {
+            "x": 0.008,
+            "y": 0.891
+          }
+        ],
+        "patternResetTime": 0.55,
+        "viewKickMultiplier": 1.08,
+        "afterPatternPitch": [0.4, 0.65],
+        "afterPatternYaw": [-0.26, 0.26]
+      },
+      "slots": [
+        {
+          "slot": "Chamber",
+          "items": [],
+          "contexts": ["Item.Caliber.556mm"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": ["Item.Caliber.556mm"],
+          "hidden": true
+        },
+        {
+          "slot": "Sight",
+          "items": ["Id.Item.3xScope", "Id.Item.4xElcanSpectr", "Id.Item.SGHT_030"],
+          "contexts": ["Item.Attachment.Sight.Short", "Item.Attachment.Sight.Medium"],
+          "filter": "BlockPriority",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": false
+        },
+        {
+          "slot": "Magazine",
+          "items": ["Id.Item.STANAGMagazine", "Id.Item.STANAGExtendedMagazine", "Id.Item.STANAGMagazine20rd"],
+          "contexts": ["Item.Attachment.Magazine.AR"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "default": "Id.Item.STANAGMagazine",
+          "hidden": false
+        },
+        {
+          "slot": "Grip",
+          "items": [],
+          "contexts": ["Item.Attachment.Grip.M4"],
+          "filter": "BlockPriority",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Stock",
+          "items": [],
+          "contexts": ["Item.Attachment.Stock.M4"],
+          "filter": "BlockPriority",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Barrel",
+          "items": [],
+          "contexts": ["Item.Attachment.Barrel.M4"],
+          "filter": "BlockPriority",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Underbarrel",
+          "items": [],
+          "contexts": ["Item.Attachment.Underbarrel"],
+          "filter": "BlockPriority",
+          "blockedItems": [],
+          "blockedContexts": ["Item.Attachment.Bipod.Attached"],
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.M500",
+      "name": "M500",
+      "asset": "Plugins/GameFeatures/Weapons/Platforms/WEPN_011/Content/Data/DA_M12G_Stats",
+      "fireModes": ["SemiAutomatic"],
+      "rpm": 120,
+      "calibers": ["12g", "7mmBuck"],
+      "muzzleVelocity": 480,
+      "effectiveRange": 70,
+      "accuracy": 1.5,
+      "randomDeviation": 24,
+      "meleeDamage": 35,
+      "recoil": {
+        "pattern": [
+          {
+            "x": 0.11,
+            "y": 1.8
+          },
+          {
+            "x": 0.18,
+            "y": 2
+          },
+          {
+            "x": -0.28,
+            "y": 2.2
+          },
+          {
+            "x": -0.38,
+            "y": 2.1
+          },
+          {
+            "x": -0.32,
+            "y": 2
+          },
+          {
+            "x": 0.15,
+            "y": 1.9
+          },
+          {
+            "x": 0.26,
+            "y": 1.8
+          }
+        ],
+        "patternResetTime": 1,
+        "viewKickMultiplier": 1.6,
+        "afterPatternPitch": [0.9, 1.6],
+        "afterPatternYaw": [-0.5, 0.5]
+      },
+      "shotgun": {
+        "chokeFactor": 0.5,
+        "outerConeHalfAngle": 1.56,
+        "randomConeHalfAngleRange": [0, 2]
+      },
+      "slots": [
+        {
+          "slot": "Chamber",
+          "items": [],
+          "contexts": ["Item.Caliber.12g"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": ["Item.Caliber.556mm"],
+          "hidden": true
+        },
+        {
+          "slot": "Magazine",
+          "items": ["Id.Item.M500Magazine"],
+          "contexts": [],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Grip",
+          "items": [],
+          "contexts": ["Item.Attachment.Grip.M500"],
+          "filter": "BlockPriority",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Stock",
+          "items": ["Id.Item.M500Stock"],
+          "contexts": [],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Barrel",
+          "items": ["Id.Item.M500Barrel"],
+          "contexts": [],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Sight",
+          "items": [],
+          "contexts": ["Item.Attachment.Sight.Short", "Item.Attachment.Sight.Medium"],
+          "filter": "BlockPriority",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": false
+        },
+        {
+          "slot": "Underbarrel",
+          "items": [],
+          "contexts": ["Item.Attachment.Underbarrel"],
+          "filter": "BlockPriority",
+          "blockedItems": ["Id.Item.FGP_04"],
+          "blockedContexts": ["Item.Attachment.Bipod.Attached"],
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.Mosin",
+      "name": "Mosin Nagant",
+      "asset": "Plugins/GameFeatures/Weapons/Sniper/Mosin/Content/Data/DA_Mosin_Stats",
+      "fireModes": ["SemiAutomatic"],
+      "rpm": 46,
+      "calibers": ["762x54mm"],
+      "muzzleVelocity": 865,
+      "effectiveRange": 500,
+      "damageFalloff": [
+        {
+          "distance": 0,
+          "multiplier": 1
+        },
+        {
+          "distance": 500,
+          "multiplier": 1
+        },
+        {
+          "distance": 1200,
+          "multiplier": 0.4
+        }
+      ],
+      "accuracy": 0.78,
+      "randomDeviation": 4,
+      "zeroing": {
+        "min": 200,
+        "max": 800
+      },
+      "meleeDamage": 40,
+      "slots": [
+        {
+          "slot": "Chamber",
+          "items": [],
+          "contexts": ["Item.Caliber.762x54mm"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Sight",
+          "items": [],
+          "contexts": ["Item.Attachment.Sight"],
+          "filter": "AllowList",
+          "blockedItems": [
+            "Id.Item.BasicRedDot",
+            "Id.Item.EotechHoloSight",
+            "Id.Item.4xElcanSpectr",
+            "Id.Item.10xScopeMoa",
+            "Id.Item.10xScopeMrad",
+            "Id.Item.SniperScope10x"
+          ],
+          "blockedContexts": [],
+          "hidden": false
+        },
+        {
+          "slot": "Magazine",
+          "items": ["Id.Item.MosinMagazine"],
+          "contexts": ["Item.Attachment.Magazine.Sniper"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "default": "Id.Item.MosinMagazine",
+          "hidden": true
+        },
+        {
+          "slot": "Barrel",
+          "items": ["Id.Item.MosinBarrel"],
+          "contexts": [],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Stock",
+          "items": ["Id.Item.MosinStock"],
+          "contexts": [],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Underbarrel",
+          "items": [],
+          "contexts": [],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.SV98",
+      "name": "SV98",
+      "asset": "Plugins/GameFeatures/Weapons/Platforms/WEPN_008/Content/Data/DA_SV98_Stats",
+      "fireModes": ["SemiAutomatic"],
+      "rpm": 46,
+      "calibers": ["762x54mm"],
+      "muzzleVelocity": 830,
+      "effectiveRange": 1000,
+      "damageFalloff": [
+        {
+          "distance": 0,
+          "multiplier": 1
+        },
+        {
+          "distance": 1000,
+          "multiplier": 1
+        },
+        {
+          "distance": 1500,
+          "multiplier": 0.4
+        }
+      ],
+      "accuracy": 0.56,
+      "randomDeviation": 4,
+      "meleeDamage": 40,
+      "slots": [
+        {
+          "slot": "Chamber",
+          "items": [],
+          "contexts": ["Item.Caliber.762x54mm"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Sight",
+          "items": [],
+          "contexts": ["Item.Attachment.Sight"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": false
+        },
+        {
+          "slot": "Magazine",
+          "items": ["Id.Item.SV98Magazine", "Id.Item.SV98ExtendedMagazine"],
+          "contexts": ["Item.Attachment.Magazine.Sniper"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "default": "Id.Item.SV98Magazine",
+          "hidden": false
+        },
+        {
+          "slot": "Stock",
+          "items": ["Id.Item.SV98Stock"],
+          "contexts": [],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Barrel",
+          "items": ["Id.Item.SV98Barrel"],
+          "contexts": [],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Underbarrel",
+          "items": ["Id.Item.FGRP_009"],
+          "contexts": [],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "Id.Item.WEPN_028",
+      "name": "MP5",
+      "asset": "Plugins/GameFeatures/Weapons/Platforms/WEPN_028/Content/Data/DA_WEPN_028_Stats",
+      "fireModes": ["Automatic", "SemiAutomatic"],
+      "rpm": 800,
+      "calibers": ["9mm"],
+      "muzzleVelocity": 400,
+      "effectiveRange": 200,
+      "damageFalloff": [
+        {
+          "distance": 0,
+          "multiplier": 1
+        },
+        {
+          "distance": 200,
+          "multiplier": 1,
+          "interpolation": "Cubic"
+        },
+        {
+          "distance": 300,
+          "multiplier": 0.6,
+          "interpolation": "Cubic"
+        },
+        {
+          "distance": 1200,
+          "multiplier": 0.1
+        }
+      ],
+      "accuracy": 1.16,
+      "randomDeviation": 20,
+      "zeroing": {
+        "min": 25,
+        "step": 25
+      },
+      "meleeDamage": 20,
+      "recoil": {
+        "pattern": [
+          {
+            "x": 0.0132,
+            "y": 0.7161
+          },
+          {
+            "x": 0.0308,
+            "y": 0.8778
+          },
+          {
+            "x": 0.0495,
+            "y": 0.924
+          },
+          {
+            "x": 0.0638,
+            "y": 0.924
+          },
+          {
+            "x": 0.0715,
+            "y": 0.92169
+          },
+          {
+            "x": 0.0682,
+            "y": 0.91476
+          },
+          {
+            "x": -0.0495,
+            "y": 0.89859
+          },
+          {
+            "x": -0.1265,
+            "y": 0.88011
+          },
+          {
+            "x": -0.1925,
+            "y": 0.860475
+          },
+          {
+            "x": -0.2398,
+            "y": 0.84084
+          },
+          {
+            "x": -0.2695,
+            "y": 0.825825
+          },
+          {
+            "x": -0.2805,
+            "y": 0.814275
+          },
+          {
+            "x": -0.2695,
+            "y": 0.80388
+          },
+          {
+            "x": -0.2398,
+            "y": 0.79464
+          },
+          {
+            "x": -0.1925,
+            "y": 0.78771
+          },
+          {
+            "x": -0.1298,
+            "y": 0.78309
+          },
+          {
+            "x": 0.0088,
+            "y": 0.77616
+          },
+          {
+            "x": 0.1078,
+            "y": 0.77154
+          },
+          {
+            "x": 0.1925,
+            "y": 0.768075
+          },
+          {
+            "x": 0.2552,
+            "y": 0.76461
+          },
+          {
+            "x": 0.2838,
+            "y": 0.7623
+          },
+          {
+            "x": 0.2805,
+            "y": 0.75999
+          },
+          {
+            "x": 0.2552,
+            "y": 0.75768
+          },
+          {
+            "x": 0.2145,
+            "y": 0.75537
+          },
+          {
+            "x": 0.1782,
+            "y": 0.74844
+          },
+          {
+            "x": 0.1628,
+            "y": 0.73689
+          },
+          {
+            "x": 0.1628,
+            "y": 0.721875
+          },
+          {
+            "x": 0.1562,
+            "y": 0.70686
+          },
+          {
+            "x": 0.1408,
+            "y": 0.69069
+          },
+          {
+            "x": 0.1155,
+            "y": 0.6699
+          }
+        ],
+        "viewKickMultiplier": 1.1,
+        "afterPatternPitch": [0.35, 0.58],
+        "afterPatternYaw": [-0.32, 0.32]
+      },
+      "slots": [
+        {
+          "slot": "Chamber",
+          "items": [],
+          "contexts": ["Item.Caliber.9mm"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Sight",
+          "items": [],
+          "contexts": ["Item.Attachment.Sight.Short"],
+          "filter": "BlockPriority",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": false
+        },
+        {
+          "slot": "Underbarrel",
+          "items": [],
+          "contexts": ["Item.Attachment.Underbarrel"],
+          "filter": "BlockPriority",
+          "blockedItems": ["Id.Item.FGRP_014"],
+          "blockedContexts": ["Item.Attachment.Bipod.Attached"],
+          "hidden": false
+        },
+        {
+          "slot": "Magazine",
+          "items": ["Id.Item.MAGZ_004", "Id.Item.MAGZ_056", "Id.Item.MAGZ_064"],
+          "contexts": ["Item.Attachment.Magazine.SMG"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": false
+        },
+        {
+          "slot": "Stock",
+          "items": ["Id.Item.STOK_003"],
+          "contexts": [],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        },
+        {
+          "slot": "Barrel",
+          "items": ["ID.Item.BARL_005"],
+          "contexts": ["Item.Attachment.Barrel.WEPN_028"],
+          "filter": "AllowList",
+          "blockedItems": [],
+          "blockedContexts": [],
+          "hidden": true
+        }
+      ]
+    }
+  ]
+}
