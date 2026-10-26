@@ -39,13 +39,21 @@ describe.skipIf(!builds)("weapon index against real data", () => {
     }),
   });
 
-  it("gives every player weapon an ammo option with a projectile unless its chamber accepts nothing", () => {
-    const withoutAmmo = index.playerWeapons.filter((weapon) => index.ammoOptions(weapon).length === 0);
-    console.info(`Chamber accepts nothing: ${withoutAmmo.map((weapon) => weapon.id).join(", ") || "none"}`);
-    const missingProjectile = index.playerWeapons
-      .filter((weapon) => index.ammoOptions(weapon).length > 0)
+  it("gives every player weapon with a caliber an ammo option with a projectile", () => {
+    const anomalies = index.playerWeapons.flatMap((weapon) =>
+      index
+        .ammoOptions(weapon)
+        .filter((option) => option.projectile === null || option.price === null)
+        .map(
+          (option) =>
+            `${weapon.id}: ${option.item.id}${option.projectile ? "" : " (no projectile)"}${option.price ? "" : " (not sold)"}`,
+        ),
+    );
+    console.info(`Ammo anomalies: ${anomalies.join(", ") || "none"}`);
+    const missing = index.playerWeapons
+      .filter((weapon) => weapon.stats.calibers.length > 0)
       .filter((weapon) => !index.ammoOptions(weapon).some((option) => option.projectile !== null))
       .map((weapon) => weapon.id);
-    expect(missingProjectile).toEqual([]);
+    expect(missing).toEqual([]);
   });
 });
