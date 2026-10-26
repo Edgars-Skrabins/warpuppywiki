@@ -20,6 +20,15 @@ warpuppywiki is a fan project. It is not affiliated with or endorsed by Bulkhead
 - `scripts/`: Node scripts that download and prepare game data and assets.
 - `public/data/` and `public/assets/`: synced game data and assets (not committed).
 
+## Adding a tool
+
+Create a folder `src/tools/<id>/`, where `<id>` is lowercase and hyphenated, with two files:
+
+- `index.ts` exports `tool`, a `ToolDefinition` from `@/core/tool`: id (the folder name), name, one-line summary, category, icon name, optional `status: "beta"`, and `component: lazy(() => import("./Tool"))`.
+- `Tool.tsx` default-exports the tool's page.
+
+The shell finds the folder on its own: the tool gets a card on the home page, an entry in the Tools menu and the route `#/<id>`. No shared file changes. The registry test checks the id, category and icon.
+
 ## Prerequisites
 
 - Node 22 or newer (pinned in `.nvmrc`).
@@ -79,3 +88,18 @@ pnpm test
 - `pnpm check`: type-check, lint, check formatting and run the tests.
 - `pnpm build`: production build into `dist/`.
 - `pnpm preview`: serve the production build locally.
+
+## Deployment
+
+The workflow `.github/workflows/deploy.yml` publishes the app to GitHub Pages at `https://<owner>.github.io/warpuppywiki/`. It runs on every push to `main`, by hand ("Run workflow" in the Actions tab) and once a day at 06:00 UTC.
+
+Each run installs the dependencies, runs `pnpm check`, syncs the game data and all map tile levels, builds the app and writes `dist/deploy.json` with the commit, the synced builds and a fingerprint of both. The full-zip download is cached between runs per game build. A failed check or sync stops the run before anything is deployed, so the live site stays as it was.
+
+The daily run picks up new game builds from `warpuppies/wardogs-data` without a code change. It compares its fingerprint with the live site's `deploy.json` and skips the deploy when neither the commit nor the builds changed.
+
+To turn on deployment:
+
+1. In the repository settings, open **Pages** and set **Source** to **GitHub Actions**. Pages from a private repository needs a paid GitHub plan.
+2. Under **Secrets and variables → Actions → Variables**, add the repository variable `PAGES_ENABLED` with the value `true`.
+
+While `PAGES_ENABLED` is unset, the build still runs on every trigger and the deploy job is skipped.

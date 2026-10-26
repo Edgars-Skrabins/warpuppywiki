@@ -1,0 +1,22 @@
+.title {
+  font-family: var(--font-condensed);
+  letter-spacing: var(--letter-spacing-caps);
+  text-transform: uppercase;
+}
+
+.link {
+  color: var(--color-text);
+  font-family: var(--font-condensed);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-caps);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-decoration-thickness: 2px;
+  text-transform: uppercase;
+  text-underline-offset: 4px;
+}
+
+.link:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
