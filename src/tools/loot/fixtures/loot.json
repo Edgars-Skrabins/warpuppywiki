@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25937608",
+  "tables": [
+    {
+      "id": "AbandonedTower",
+      "spawnChance": 50,
+      "spawnByDefault": false,
+      "spawnByPoints": true,
+      "initialSpawnTime": 0,
+      "initialSpawnPoints": 10,
+      "canRespawn": true,
+      "respawnTime": 300,
+      "neverSelectPreviousItem": true,
+      "spawnInsideControlZoneOnly": true,
+      "items": [
+        {
+          "item": "Id.Item.Bandage",
+          "amount": 3,
+          "weight": 1,
+          "subItems": [
+            {
+              "item": "Id.Item.M67Grenade",
+              "chance": 100,
+              "amount": 2
+            },
+            {
+              "item": "Id.Item.BasicRedDot",
+              "chance": 100,
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "item": "Id.Item.3xScope",
+          "amount": 1,
+          "weight": 1,
+          "subItems": [
+            {
+              "item": "Id.Item.RK6ForeGrip",
+              "chance": 100,
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "item": "Id.Item.SuperBandage",
+          "amount": 2,
+          "weight": 1,
+          "subItems": [
+            {
+              "item": "Id.Item.StimPen",
+              "chance": 100,
+              "amount": 3
+            },
+            {
+              "item": "Id.Item.SGHT_009",
+              "chance": 100,
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "item": "Id.Item.Bandage",
+          "amount": 5,
+          "weight": 1,
+          "subItems": [
+            {
+              "item": "Id.Item.Resuscitator.Standard",
+              "chance": 100,
+              "amount": 2
+            },
+            {
+              "item": "ID.Item.SmokeGrenade.White",
+              "chance": 100,
+              "amount": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Bow",
+      "spawnChance": 100,
+      "spawnByDefault": true,
+      "spawnByPoints": false,
+      "initialSpawnTime": 0,
+      "initialSpawnPoints": 0,
+      "canRespawn": true,
+      "respawnTime": 1,
+      "neverSelectPreviousItem": false,
+      "spawnInsideControlZoneOnly": false,
+      "items": [
+        {
+          "item": "Id.Item.CombatBow",
+          "amount": 1,
+          "weight": 1,
+          "subItems": [
+            {
+              "item": "Id.Item.Arrow",
+              "chance": 100,
+              "amount": 10
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
