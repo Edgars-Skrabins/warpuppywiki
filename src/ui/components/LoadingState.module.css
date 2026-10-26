@@ -1,0 +1,16 @@
+.loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.skeleton {
+  width: 100%;
+  background: var(--color-skeleton);
+  border-radius: var(--radius-sm);
+}
+
+.line {
+  height: 14px;
+}

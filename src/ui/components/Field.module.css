@@ -1,0 +1,248 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.label {
+  color: var(--color-text-muted);
+  font-family: var(--font-condensed);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-caps);
+  text-transform: uppercase;
+}
+
+.description {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.shell {
+  display: flex;
+  align-items: center;
+  height: var(--control-height-md);
+  min-width: 0;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-control);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--easing);
+}
+
+.shell:hover {
+  border-color: var(--color-text-muted);
+}
+
+.shell:focus-within {
+  border-color: var(--color-text-muted);
+}
+
+.shell[data-focus-visible] {
+  box-shadow: var(--focus-ring);
+}
+
+.shell[data-disabled] {
+  opacity: 0.5;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 var(--space-3);
+  background: transparent;
+  border: none;
+  font-size: var(--text-md);
+}
+
+.input:focus-visible,
+.input[data-focus-visible] {
+  box-shadow: none;
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  height: var(--control-height-md);
+  padding: 0 var(--space-2) 0 var(--space-3);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-control);
+  border-radius: var(--radius-md);
+  font-size: var(--text-md);
+  text-align: start;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--easing);
+}
+
+.trigger[data-hovered] {
+  border-color: var(--color-text-muted);
+}
+
+.trigger[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.value[data-placeholder] {
+  color: var(--color-text-muted);
+}
+
+.chevron {
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+}
+
+.shellButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.shellButton[data-hovered] {
+  color: var(--color-text);
+  background: var(--color-surface-hover);
+}
+
+.shellButton[data-disabled] {
+  cursor: not-allowed;
+}
+
+.popover {
+  min-width: var(--trigger-width);
+  max-width: min(480px, calc(100vw - var(--space-4)));
+  overflow: auto;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-2);
+}
+
+.listBox {
+  max-height: inherit;
+  padding: var(--space-1) 0;
+  overflow: auto;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 32px;
+  padding: var(--space-1) var(--space-3);
+  color: var(--color-text);
+  font-size: var(--text-md);
+  cursor: pointer;
+}
+
+.option[data-focused],
+.option[data-hovered] {
+  background: var(--color-surface-hover);
+}
+
+.option[data-focus-visible] {
+  box-shadow: inset 0 0 0 2px var(--focus-ring-color);
+}
+
+.option[data-selected] {
+  box-shadow: inset 2px 0 0 var(--color-accent);
+}
+
+.option[data-selected][data-focus-visible] {
+  box-shadow:
+    inset 2px 0 0 var(--color-accent),
+    inset 0 0 0 2px var(--focus-ring-color);
+}
+
+.option[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.optionCheck {
+  flex-shrink: 0;
+  margin-inline-start: auto;
+  color: var(--color-text-muted);
+  visibility: hidden;
+}
+
+.option[data-selected] .optionCheck {
+  visibility: visible;
+}
+
+.optionContent {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.optionLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.optionSecondary {
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.section:not(:first-child) .sectionHeader {
+  border-top: 1px solid var(--color-border);
+}
+
+.sectionHeader {
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  background: var(--color-surface-raised);
+  color: var(--color-text-muted);
+  font-family: var(--font-condensed);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-caps);
+  text-transform: uppercase;
+}
+
+.empty {
+  padding: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.optionWithIcon {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.optionIcon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
