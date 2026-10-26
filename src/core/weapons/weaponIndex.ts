@@ -68,6 +68,7 @@ export interface WeaponIndexInput {
 }
 
 const AMMO_TAG = "Item.Ammo";
+const CALIBER_PREFIX = "Item.Caliber";
 const CHAMBER_SLOT = "Chamber";
 const MAGAZINE_SLOT = "Magazine";
 const MAGAZINE_TYPE = "Magazine";
@@ -147,6 +148,21 @@ export function buildWeaponIndex({ weapons, ammo, attachments, catalog }: Weapon
   const projectileOf = (item: Item): Projectile | null =>
     ammo.projectiles.find((projectile) => projectile.items.some((id) => sameId(id, item.id))) ?? null;
 
+  const ammoItemsFor = (weapon: PlayerWeapon): Item[] => {
+    const chamber = findSlot(weapon, CHAMBER_SLOT);
+    const byCaliber = ammoItems.filter((item) =>
+      weapon.stats.calibers.some((caliber) => hasTag(item.tags, `${CALIBER_PREFIX}.${caliber}`)),
+    );
+    if (!chamber) {
+      return byCaliber;
+    }
+    if (byCaliber.length === 0) {
+      return ammoItems.filter((item) => fitsSlot(item, chamber));
+    }
+    const narrowed = byCaliber.filter((item) => fitsSlot(item, chamber));
+    return narrowed.length > 0 ? narrowed : byCaliber;
+  };
+
   const fittingAttachments = (weapon: PlayerWeapon, slotName: string): PlayerAttachment[] => {
     const slot = findSlot(weapon, slotName);
     if (!slot) {
@@ -166,21 +182,14 @@ export function buildWeaponIndex({ weapons, ammo, attachments, catalog }: Weapon
         const attachment = slot.hidden && slot.default ? attachmentsById.get(slot.default) : undefined;
         return attachment ? [{ slot: slot.slot, attachment, hiddenDefault: true }] : [];
       }),
-    ammoOptions: (weapon) => {
-      const chamber = findSlot(weapon, CHAMBER_SLOT);
-      if (!chamber) {
-        return [];
-      }
-      return ammoItems
-        .filter((item) => fitsSlot(item, chamber))
-        .map((item) => ({
-          item,
-          projectile: projectileOf(item),
-          ammoType: ammoTypeOf(item),
-          price: catalog.price(item.id),
-          unlock: catalog.unlock(item),
-        }));
-    },
+    ammoOptions: (weapon) =>
+      ammoItemsFor(weapon).map((item) => ({
+        item,
+        projectile: projectileOf(item),
+        ammoType: ammoTypeOf(item),
+        price: catalog.price(item.id),
+        unlock: catalog.unlock(item),
+      })),
     magazineOptions: (weapon) =>
       fittingAttachments(weapon, MAGAZINE_SLOT).flatMap(({ attachment, item }): MagazineOption[] => {
         const magazine = attachment.magazine;

@@ -65,6 +65,39 @@ describe("buildWeaponIndex", () => {
     expect(options.every((option) => option.price?.soldWith === "Id.Item.545mm")).toBe(true);
   });
 
+  it("offers the M4 its six 5.56 mm rounds although its chamber blocks its own caliber", () => {
+    const options = index.ammoOptions(weapon("Id.Item.M4"));
+    expect(options.map((option) => option.item.id)).toHaveLength(6);
+    expect(options.every((option) => option.projectile?.id === "Item.Caliber.556mm")).toBe(true);
+    expect(options.map((option) => option.ammoType).sort()).toEqual([
+      "ArmorPiercing",
+      "ArmorPiercing.Tracer",
+      "FMJ",
+      "HollowPoint",
+      "HollowPoint.Tracer",
+      "Tracer",
+    ]);
+  });
+
+  it("narrows caliber options by the chamber rules when that leaves some", () => {
+    const chamber = {
+      slot: "Chamber",
+      items: ["Id.Item.556mm"],
+      contexts: [],
+      filter: "AllowList",
+      blockedItems: [],
+      blockedContexts: [],
+      hidden: true,
+    };
+    const m4 = weapon("Id.Item.M4");
+    const narrowed = index.ammoOptions({ ...m4, stats: { ...m4.stats, slots: [chamber] } });
+    expect(narrowed.map((option) => option.item.id)).toEqual(["Id.Item.556mm"]);
+  });
+
+  it("returns no ammo for a weapon whose calibers and chamber match nothing", () => {
+    expect(index.ammoOptions({ ...ak74, stats: { ...ak74.stats, calibers: ["9mm"], slots: [] } })).toEqual([]);
+  });
+
   it("keeps 5.56 mm out of the AK74 chamber", () => {
     expect(index.ammoOptions(ak74).some((option) => option.item.id.includes("556"))).toBe(false);
   });
