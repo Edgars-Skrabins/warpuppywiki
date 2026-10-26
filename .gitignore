@@ -1,2 +1,9 @@
 /specs/personal/*
 !/specs/personal/.keep
+node_modules/
+dist/
+coverage/
+public/data/
+public/assets/
+*.local
+.DS_Store
