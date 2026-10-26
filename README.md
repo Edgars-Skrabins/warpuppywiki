@@ -33,6 +33,25 @@ In the repository root:
 pnpm install
 ```
 
+Download the game data for every published build into `public/data/` (about 8 MB per build):
+
+```bash
+pnpm data:sync
+```
+
+Optionally, download the map tiles, map overviews, item icons and heightmaps of the latest build into `public/assets/` (about 375 MB). The app works without them and shows placeholders instead:
+
+```bash
+pnpm assets:sync
+```
+
+It downloads the build's full zip (about 700 MB) once into a shared cache. Options: `--max-zoom <0-6>` extracts fewer tile levels (default 6), `--worlds kavkazi,europe` limits the worlds (default all) and `--build <id>` picks a build other than the latest.
+
+Both commands verify every download's SHA-256 and can be re-run safely; a second run only fetches what changed.
+
+- The download cache is `~/.cache/warpuppywiki/`, shared by every checkout. Set `WARPUPPY_CACHE_DIR` to use another folder.
+- Set `GITHUB_TOKEN` to send a token with GitHub API requests, which raises the rate limit (useful in CI).
+
 ## Running the app
 
 In the repository root:
