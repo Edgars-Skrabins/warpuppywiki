@@ -1,0 +1,28 @@
+.tooltip {
+  max-width: 280px;
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-text);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-2);
+  color: var(--color-bg);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-sm);
+  line-height: var(--line-height-tight);
+}
+
+.arrow svg {
+  display: block;
+  fill: var(--color-text);
+}
+
+.arrow[data-placement="bottom"] svg {
+  transform: rotate(180deg);
+}
+
+.arrow[data-placement="left"] svg {
+  transform: rotate(-90deg);
+}
+
+.arrow[data-placement="right"] svg {
+  transform: rotate(90deg);
+}
