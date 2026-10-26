@@ -1,7 +1,15 @@
 import { act, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createQueryClient, DataProvider } from "./DataProvider";
-import { useAssetsManifest, useGameData, useGameDataMany, useWorldData, type DataState } from "./hooks";
+import {
+  useAssetsManifest,
+  useGameData,
+  useGameDataMany,
+  useRawGameDataMany,
+  useRawWorldDataMany,
+  useWorldData,
+  type DataState,
+} from "./hooks";
 import { renderWithData, stubDataFetch } from "./testing";
 
 afterEach(() => {
@@ -41,6 +49,24 @@ function ItemsAndVehicles() {
 function KavkaziObjects() {
   const state = useWorldData("kavkazi", "objects");
   return <p>{describeState(state, (data) => String(data.objects.length))}</p>;
+}
+
+function RawFiles({ build }: { build: string }) {
+  const states = useRawGameDataMany(["weapons", "vehicles"], { build });
+  return (
+    <p>{states.map((state) => describeState(state, (data) => (data as { gameBuild: string }).gameBuild)).join(", ")}</p>
+  );
+}
+
+function RawWorldFiles() {
+  const states = useRawWorldDataMany(
+    [
+      { world: "kavkazi", key: "objects" },
+      { world: "europe", key: "objects" },
+    ],
+    { build: "25937608" },
+  );
+  return <p>{states.map((state) => describeState(state, (data) => (data as { world: string }).world)).join(", ")}</p>;
 }
 
 function Manifest() {
@@ -109,6 +135,22 @@ describe("useWorldData", () => {
   it("returns a world file of the latest build", async () => {
     renderWithData(<KavkaziObjects />);
     expect(await screen.findByText("success 5")).toBeInTheDocument();
+  });
+});
+
+describe("useRawGameDataMany", () => {
+  it("returns one state per file without schema validation", async () => {
+    renderWithData(<RawFiles build="25677108" />, {
+      fixtures: { "25677108/weapons.json": { gameBuild: "25677108", weapons: "not an array" } },
+    });
+    expect(await screen.findByText("success 25677108, error missing")).toBeInTheDocument();
+  });
+});
+
+describe("useRawWorldDataMany", () => {
+  it("returns one state per world file", async () => {
+    renderWithData(<RawWorldFiles />);
+    expect(await screen.findByText("success Kavkazi, error missing")).toBeInTheDocument();
   });
 });
 
