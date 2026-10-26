@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { normalizeId, sameId } from "@/core/catalog";
 import { useGameDataMany, type ChallengeRewardsFile, type RewardsFile } from "@/core/data";
 import { useUrlState } from "@/core/state";
 import { DataStateView, EmptyState, Panel, Tab, TabList, TabPanel, Tabs } from "@/ui";
@@ -24,12 +25,12 @@ function RewardCalculator({
   const [state, setState] = useUrlState(rewardsState);
 
   const eventFor = useMemo(() => {
-    const byId = new Map(challengeRewards.events.map((event) => [event.id.toLowerCase(), event]));
-    return (id: string) => byId.get(id.toLowerCase());
+    const byId = new Map(challengeRewards.events.map((event) => [normalizeId(event.id), event]));
+    return (id: string) => byId.get(normalizeId(id));
   }, [challengeRewards]);
   const curves = useMemo(() => curveLookup(challengeRewards.curves), [challengeRewards]);
   const reward =
-    challengeRewards.rewards.find((entry) => entry.id.toLowerCase() === state.event.toLowerCase()) ??
+    challengeRewards.rewards.find((entry) => sameId(entry.id, state.event)) ??
     challengeRewards.rewards.find((entry) => entry.id === DEFAULT_EVENT) ??
     challengeRewards.rewards[0];
   const fields = useMemo(() => (reward ? situationFields(reward) : null), [reward]);
@@ -51,7 +52,11 @@ function RewardCalculator({
                   rewards={challengeRewards.rewards}
                   eventFor={eventFor}
                   selectedId={reward.id}
-                  onSelect={(id) => setState({ event: id, tags: [], game: {}, scaling: {} })}
+                  onSelect={(id) => {
+                    if (!sameId(id, reward.id)) {
+                      setState({ event: id, tags: [], game: {}, scaling: {} });
+                    }
+                  }}
                 />
               </Panel>
               <Panel title="Situation">
