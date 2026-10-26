@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25937608",
+  "rewards": [
+    {
+      "action": "BuildableBuilt",
+      "context": "DefaultReward",
+      "resource": "Cash",
+      "base": 1,
+      "modifiers": {
+        "FriendlyModifier": 1,
+        "NeutralModifier": 0,
+        "OwnerModifier": 0.5,
+        "ModifierCZ": 1,
+        "ModifierHZ": 1,
+        "ModifierHZM": 1,
+        "InstigatorLocationRatioModifier": 0,
+        "TargetLocationRatioModifier": 1,
+        "AssistBaseModifier": 0,
+        "AssistScalingModifier": 0,
+        "CrewAssistModifier": 0,
+        "LogisticAssistModifier": 0
+      }
+    },
+    {
+      "action": "BuildableBuilt",
+      "context": "Id.Buildable.HBlock",
+      "resource": "Cash",
+      "base": 1,
+      "modifiers": {
+        "FriendlyModifier": 1,
+        "NeutralModifier": 0,
+        "OwnerModifier": 0.5,
+        "ModifierCZ": 1,
+        "ModifierHZ": 1,
+        "ModifierHZM": 1,
+        "InstigatorLocationRatioModifier": 0,
+        "TargetLocationRatioModifier": 1,
+        "AssistBaseModifier": 0,
+        "AssistScalingModifier": 0,
+        "CrewAssistModifier": 0,
+        "LogisticAssistModifier": 0
+      }
+    },
+    {
+      "action": "PlayerKill",
+      "context": "DefaultReward",
+      "description": "Kill reward if a the instigator kills another player",
+      "resource": "Cash",
+      "base": 250,
+      "modifiers": {
+        "FriendlyModifier": -6,
+        "NeutralModifier": 0,
+        "OwnerModifier": 1,
+        "ModifierCZ": 4,
+        "ModifierHZ": 8,
+        "ModifierHZM": 8,
+        "InstigatorLocationRatioModifier": 0.5,
+        "TargetLocationRatioModifier": 0.5,
+        "AssistBaseModifier": 0.1,
+        "AssistScalingModifier": 0.9,
+        "CrewAssistModifier": 1,
+        "LogisticAssistModifier": 0.5
+      }
+    },
+    {
+      "action": "PlayerKill",
+      "context": "Vehicle.Variant.Land.Tracked.TNK_01.Artillery",
+      "description": "Kill reward if the instigator kills another player while in artillery and the instighator is in no mans land",
+      "resource": "Cash",
+      "base": 5000,
+      "modifiers": {
+        "FriendlyModifier": -1,
+        "NeutralModifier": 0,
+        "OwnerModifier": 1,
+        "ModifierCZ": 1.1,
+        "ModifierHZ": 1.25,
+        "ModifierHZM": 1.25,
+        "InstigatorLocationRatioModifier": 0,
+        "TargetLocationRatioModifier": 1,
+        "AssistBaseModifier": 0.1,
+        "AssistScalingModifier": 0.9,
+        "CrewAssistModifier": 1,
+        "LogisticAssistModifier": 0.25
+      }
+    },
+    {
+      "action": "PlayerKill",
+      "context": "DefaultReward.Vehicle.InZone",
+      "description": "Kill reward if the instigator kills another player while in artillery is in the zone",
+      "resource": "Cash",
+      "base": 100,
+      "modifiers": {
+        "FriendlyModifier": -50,
+        "NeutralModifier": 0,
+        "OwnerModifier": 1,
+        "ModifierCZ": 1,
+        "ModifierHZ": 1,
+        "ModifierHZM": 1,
+        "InstigatorLocationRatioModifier": 1,
+        "TargetLocationRatioModifier": 0,
+        "AssistBaseModifier": 0.1,
+        "AssistScalingModifier": 0.9,
+        "CrewAssistModifier": 1,
+        "LogisticAssistModifier": 0.25
+      }
+    }
+  ]
+}
