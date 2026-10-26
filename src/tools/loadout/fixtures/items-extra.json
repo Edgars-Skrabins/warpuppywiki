@@ -1,0 +1,164 @@
+[
+  {
+    "id": "Id.Item.Bandage",
+    "kind": "item",
+    "asset": "Content/Items/Consumables/Bandage/ID_Bandage",
+    "name": "Bandage",
+    "subtitle": "Medical // Quick Slot",
+    "description": "- Used to heal Self/Teammates\n- Heals a Small Amount",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Vendor_Bandage.png",
+    "tags": [
+      "Item.Context.QuickSlot",
+      "Item.Context.Medical",
+      "Item.Context.Animation.Archetype.EquipRightHand",
+      "Item.Context.Animation.Type.Unarmed"
+    ],
+    "grid": [1, 1],
+    "maxStack": 5,
+    "weight": 0.08,
+    "unlock": null,
+    "vendor": [
+      {
+        "tag": "Id.Item.Bandage",
+        "price": 200,
+        "amount": 1,
+        "categories": ["Vendor.Category.Utility"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.StimPen",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Items/StimPen/Content/Data/ID_StimPen",
+    "name": "Stim Pen",
+    "subtitle": "Medical // Quick Slot",
+    "description": "- Unlimited Tactical Sprint for Short Time\n- Reduces Equipment Weight Class\n- Single-Use item",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Item_Stim_BC.png",
+    "tags": [
+      "Item.Context.UtilityItem",
+      "Item.Context.QuickSlot",
+      "Item.Context.Animation.Type.Unarmed",
+      "Item.Context.Animation.Archetype.EquipRightHand",
+      "Item.Context.Medical"
+    ],
+    "grid": [1, 1],
+    "maxStack": 3,
+    "weight": 0.06,
+    "unlock": {
+      "role": "Medic",
+      "level": 16,
+      "cost": 25000
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.StimPen",
+        "price": 250,
+        "amount": 1,
+        "categories": ["Vendor.Category.Utility"]
+      }
+    ]
+  },
+  {
+    "id": "ID.Item.BuildTool.Hammer.Large",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Items/Buildables/Content/Data/LargeHammer/ID_LargeHammer",
+    "name": "Large Hammer",
+    "subtitle": "Build Tool // Spec. Item",
+    "description": "- Can Build ALL Buildables\n- Fast Build Speed\n- Requires Build Supplies to Use",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Vendor_Build3.png",
+    "tags": [
+      "Item.Context.UtilityItem",
+      "Inventory.Slot.Specialist",
+      "Item.Context.Equippable",
+      "Item.Context.BuildingTool",
+      "Inventory.Slot.Secondary",
+      "Item.Context.Animation.Archetype.EquipTwoHandsHeavy",
+      "Item.Context.Animation.Type.LargeHammer"
+    ],
+    "grid": [4, 2],
+    "maxStack": 1,
+    "weight": 3.18,
+    "durability": 3000,
+    "unlock": {
+      "role": "Support",
+      "level": 8,
+      "cost": 75000
+    },
+    "vendor": [
+      {
+        "tag": "ID.Item.BuildTool.Hammer.Large",
+        "price": 2400,
+        "amount": 1,
+        "categories": ["Vendor.Category.Weapon.Specialist", "Vendor.Category.Utility"]
+      }
+    ]
+  },
+  {
+    "id": "ID.Item.VehicleSupplyCrate.Small",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Vehicles/SupplyCrates/Content/ItemID/ID_SmallSupplyCrate",
+    "name": "Small Supply Crate",
+    "description": "- Unarmored resupply crate\n- 24 Slots available\n- Will be destroyed by high-speed impacts (approx. 60m free-fall max.)",
+    "icon": "SupplyCrates/UI/Textures/ID_Item_VehicleSupplyCrate_Small.png",
+    "tags": ["Inventory.Type.Storage", "Inventory.Slot.SupplyContainer"],
+    "grid": [1, 3],
+    "maxStack": 1,
+    "unlock": null,
+    "vendor": [
+      {
+        "tag": "ID.Item.VehicleSupplyCrate.Small",
+        "price": 150,
+        "amount": 1,
+        "categories": ["Vendor.Category.Vehicle.SupplyCrate"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.MediumTacVest",
+    "kind": "item",
+    "asset": "Content/Items/Clothing/Vests/ID_MediumTacVest",
+    "name": "Medium Tac Vest",
+    "subtitle": "Vest",
+    "description": "- Unlocks Quickslots 5 to 8\n- Moderate Increase to Reload Speed\n- Moderate Increase to Utility Equip & Holster Speed\n- Does not give extra item storage",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Icon_Utility_MediumWebbing_Textured_512x512.png",
+    "tags": ["Inventory.Slot.Vest", "Item.Context.Equippable"],
+    "grid": [4, 3],
+    "maxStack": 1,
+    "weight": 1.65,
+    "unlock": {
+      "role": "Wardog",
+      "level": 14,
+      "cost": 10000
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.MediumTacVest",
+        "price": 250,
+        "amount": 1,
+        "categories": ["Vendor.Category.Gear.Vest"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.SmallBackpack",
+    "kind": "item",
+    "asset": "Content/Items/Clothing/Backpacks/ID_SmallBackpack",
+    "name": "Small Backpack",
+    "subtitle": "Backpack",
+    "description": "- Grid: 4x2 Item Storage Slots\n- Number of Slots: 8",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Icon_SmallBackpack.png",
+    "tags": ["Inventory.Slot.Backpack", "Item.Context.Equippable"],
+    "grid": [2, 4],
+    "maxStack": 1,
+    "weight": 0.5,
+    "unlock": null,
+    "vendor": [
+      {
+        "tag": "Id.Item.SmallBackpack",
+        "price": 350,
+        "amount": 1,
+        "categories": ["Vendor.Category.Gear.Backpack"]
+      }
+    ]
+  }
+]
