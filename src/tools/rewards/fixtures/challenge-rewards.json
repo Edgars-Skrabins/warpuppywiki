@@ -1,0 +1,909 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25937608",
+  "events": [
+    {
+      "id": "PlayerKill",
+      "name": "Player Kill",
+      "description": "Award resources to (or take from) a player when they kill another player."
+    },
+    {
+      "id": "PlayerKill.Assist",
+      "name": "Player Kill Assist",
+      "description": "Award resources to (or take from) a player when they assisted in the death of another player."
+    },
+    {
+      "id": "PlayerKill.Assist.CrewAssist",
+      "name": "Player Kill Assist Crew Assist",
+      "description": "Award resources to (or take from) a crew player when their pilot/driver/gunner assists in the death of another player."
+    },
+    {
+      "id": "PlayerKill.Assist.FOBSuppliedAssist",
+      "name": "Player Kill Assist FOB Supplied Assist"
+    },
+    {
+      "id": "PlayerKill.Assist.LogisticAssist",
+      "name": "Player Kill Assist Logistic Assist"
+    },
+    {
+      "id": "PlayerKill.Assist.ReviveAssist",
+      "name": "Player Kill Assist Revive Assist"
+    },
+    {
+      "id": "PlayerKill.Assist.SupplyCrateAssist",
+      "name": "Player Kill Assist Supply Crate Assist",
+      "description": "Award resources to the player who sold the damage causer."
+    },
+    {
+      "id": "PlayerKill.CrewAssist",
+      "name": "Player Kill Crew Assist",
+      "description": "Award resources to (or take from) a crew player when their pilot/driver/gunner kills another player."
+    },
+    {
+      "id": "PlayerKill.FOBSuppliedAssist",
+      "name": "Player Kill FOB Supplied Assist"
+    },
+    {
+      "id": "PlayerKill.LogisticAssist",
+      "name": "Player Kill Logisitic Assist"
+    },
+    {
+      "id": "PlayerKill.ReviveAssist",
+      "name": "Player Kill Revive Assist"
+    },
+    {
+      "id": "PlayerKill.SupplyCrateAssist",
+      "name": "Player Kill Supply Crate Assist",
+      "description": "Award resources to the player who sold the damage causer."
+    }
+  ],
+  "rewards": [
+    {
+      "id": "PlayerKill",
+      "resources": [
+        {
+          "resource": "Currency.Cash",
+          "formula": "(1 - (clamp(LastVictimCount, 0, LastVictimCountMax) * LastVictimReductionModifier)) * ((((BaseReward + (clamp(KillStreak - 1, 0, KillStreakMax) * KillStreakValue)) * InstigatorZoneModifier * InstigatorWeight) + ((BaseReward + (clamp(KillStreak - 1, 0, KillStreakMax) * KillStreakValue)) * TargetZoneModifier * TargetWeight)) * DistanceToTarget * RevengeModifier * KillStreakStoppedModifier) * FriendlyModifier * pow(CrewPenaltyModifier, clamp(CrewCount - 1, 0, CrewCountMax))",
+          "inputs": [
+            {
+              "name": "LastVictimCount",
+              "default": "LastVictimCount",
+              "options": [
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.FriendlyKill"]
+                  },
+                  "use": "EmptyFactor"
+                }
+              ]
+            },
+            {
+              "name": "LastVictimCountMax",
+              "default": "LastVictimCountMax",
+              "options": []
+            },
+            {
+              "name": "LastVictimReductionModifier",
+              "default": "LastVictimReductionMultiplier",
+              "options": []
+            },
+            {
+              "name": "BaseReward",
+              "default": "DefaultReward",
+              "options": [
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.PrecisionArtilleryStrikeKill"]
+                  },
+                  "use": "ArtilleryReward"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.AirVehicleKill"]
+                  },
+                  "use": "AirVehicleReward"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.AssaultKill", "Challenges.Context.Headshot"]
+                  },
+                  "use": "AssaultHeadshotReward"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.AssaultKill"]
+                  },
+                  "use": "AssaultReward"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "of": [
+                      {
+                        "match": "all",
+                        "tags": ["Challenges.Context.Headshot"]
+                      },
+                      {
+                        "match": "none",
+                        "tags": ["Challenges.Context.PrecisionArtilleryStrikeKill"]
+                      }
+                    ]
+                  },
+                  "use": "HeadshotReward"
+                }
+              ]
+            },
+            {
+              "name": "InstigatorZoneModifier",
+              "default": "DefaultFactor",
+              "options": [
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.FriendlyKill", "Challenges.Context.Instigator.InHotZone"]
+                  },
+                  "use": "TargetFriendlyHotZoneFactor"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.FriendlyKill", "Challenges.Context.Instigator.InControlZone"]
+                  },
+                  "use": "TargetFriendlyControlZoneFactor"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.Instigator.InHotZone", "Challenges.Context.HotZoneMagnetActive"]
+                  },
+                  "use": "HotZoneMagnetFactor"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.Instigator.InHotZone"]
+                  },
+                  "use": "HotZoneFactor"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.Instigator.InControlZone"]
+                  },
+                  "use": "ControlZoneFactor"
+                }
+              ]
+            },
+            {
+              "name": "InstigatorWeight",
+              "default": "InstigatorFactor",
+              "options": [
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.ExplosiveKill"]
+                  },
+                  "use": "ExplosiveInstigatorFactor"
+                },
+                {
+                  "when": {
+                    "match": "any",
+                    "of": [
+                      {
+                        "match": "any",
+                        "tags": ["Challenges.Context.PrecisionArtilleryStrikeKill"]
+                      },
+                      {
+                        "match": "any",
+                        "tags": ["Challenges.Context.SniperKill"]
+                      }
+                    ]
+                  },
+                  "use": "DistanceInstigatorFactor"
+                }
+              ]
+            },
+            {
+              "name": "TargetZoneModifier",
+              "default": "DefaultFactor",
+              "options": [
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.FriendlyKill", "Challenges.Context.Target.InHotZone"]
+                  },
+                  "use": "TargetFriendlyHotZoneFactor"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.FriendlyKill", "Challenges.Context.Target.InControlZone"]
+                  },
+                  "use": "TargetFriendlyControlZoneFactor"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.Target.InHotZone", "Challenges.Context.HotZoneMagnetActive"]
+                  },
+                  "use": "HotZoneMagnetFactor"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.Target.InHotZone"]
+                  },
+                  "use": "HotZoneFactor"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.Target.InControlZone"]
+                  },
+                  "use": "ControlZoneFactor"
+                }
+              ]
+            },
+            {
+              "name": "TargetWeight",
+              "default": "TargetFactor",
+              "options": [
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.ExplosiveKill"]
+                  },
+                  "use": "ExplosiveTargetFactor"
+                },
+                {
+                  "when": {
+                    "match": "any",
+                    "of": [
+                      {
+                        "match": "any",
+                        "tags": ["Challenges.Context.PrecisionArtilleryStrikeKill"]
+                      },
+                      {
+                        "match": "any",
+                        "tags": ["Challenges.Context.SniperKill"]
+                      }
+                    ]
+                  },
+                  "use": "DistanceTargetFactor"
+                }
+              ]
+            },
+            {
+              "name": "DistanceToTarget",
+              "default": "DefaultFactor",
+              "options": [
+                {
+                  "when": {
+                    "match": "all",
+                    "of": [
+                      {
+                        "match": "any",
+                        "tags": ["Challenges.Context.SniperKill"]
+                      },
+                      {
+                        "match": "none",
+                        "tags": ["Challenges.Context.FriendlyKill"]
+                      }
+                    ]
+                  },
+                  "use": "DistanceFactor"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "of": [
+                      {
+                        "match": "any",
+                        "tags": ["Challenges.Context.PrecisionArtilleryStrikeKill"]
+                      },
+                      {
+                        "match": "none",
+                        "tags": ["Challenges.Context.FriendlyKill"]
+                      }
+                    ]
+                  },
+                  "use": "DistanceFactorArtillery"
+                }
+              ]
+            },
+            {
+              "name": "RevengeModifier",
+              "default": "DefaultFactor",
+              "options": [
+                {
+                  "when": {
+                    "match": "all",
+                    "of": [
+                      {
+                        "match": "all",
+                        "tags": ["Challenges.Context.RevengeKill"]
+                      },
+                      {
+                        "match": "none",
+                        "tags": [
+                          "Challenges.Context.FriendlyKill",
+                          "Challenges.Context.SniperKill",
+                          "Challenges.Context.PrecisionArtilleryStrikeKill"
+                        ]
+                      }
+                    ]
+                  },
+                  "use": "RevengeFactor"
+                }
+              ]
+            },
+            {
+              "name": "FriendlyModifier",
+              "default": "DefaultFactor",
+              "options": [
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.FriendlyKill"]
+                  },
+                  "use": "FriendlyFactor"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.RessedByEnemy"]
+                  },
+                  "use": "RessedByEnemyFactor"
+                }
+              ]
+            },
+            {
+              "name": "KillStreakStoppedModifier",
+              "default": "DefaultFactor",
+              "options": [
+                {
+                  "when": {
+                    "match": "all",
+                    "of": [
+                      {
+                        "match": "all",
+                        "tags": ["Challenges.Context.KillStreakStopped"]
+                      },
+                      {
+                        "match": "none",
+                        "tags": [
+                          "Challenges.Context.FriendlyKill",
+                          "Challenges.Context.SniperKill",
+                          "Challenges.Context.PrecisionArtilleryStrikeKill"
+                        ]
+                      }
+                    ]
+                  },
+                  "use": "KillStreakStoppedFactor"
+                }
+              ]
+            },
+            {
+              "name": "KillStreak",
+              "default": "KillStreak",
+              "options": [
+                {
+                  "when": {
+                    "match": "any",
+                    "of": [
+                      {
+                        "match": "all",
+                        "tags": ["Challenges.Context.SniperKill", "Challenges.Context.Instigator.InHotZone"]
+                      },
+                      {
+                        "match": "all",
+                        "tags": ["Challenges.Context.SniperKill", "Challenges.Context.Instigator.InControlZone"]
+                      }
+                    ]
+                  },
+                  "use": "KillStreak"
+                },
+                {
+                  "when": {
+                    "match": "any",
+                    "of": [
+                      {
+                        "match": "any",
+                        "tags": [
+                          "Challenges.Context.FriendlyKill",
+                          "Challenges.Context.PrecisionArtilleryStrikeKill",
+                          "Challenges.Context.AirVehicleKill",
+                          "Challenges.Context.ExplosiveKill",
+                          "Challenges.Context.SniperKill"
+                        ]
+                      }
+                    ]
+                  },
+                  "use": "EmptyFactor"
+                }
+              ]
+            },
+            {
+              "name": "KillStreakMax",
+              "default": "KillStreakMax",
+              "options": []
+            },
+            {
+              "name": "KillStreakValue",
+              "default": "KillStreakValue",
+              "options": []
+            },
+            {
+              "name": "CrewPenaltyModifier",
+              "default": "CrewPenaltyModifier",
+              "options": []
+            },
+            {
+              "name": "CrewCount",
+              "default": "EmptyFactor",
+              "options": [
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.CrewAssistPenalty"]
+                  },
+                  "use": "CrewCount"
+                }
+              ]
+            },
+            {
+              "name": "CrewCountMax",
+              "default": "CrewCountMax",
+              "options": []
+            }
+          ],
+          "variables": [
+            {
+              "name": "FriendlyFactor",
+              "type": "literal",
+              "value": -3
+            },
+            {
+              "name": "ControlZoneFactor",
+              "type": "literal",
+              "value": 5
+            },
+            {
+              "name": "HotZoneFactor",
+              "type": "literal",
+              "value": 10
+            },
+            {
+              "name": "HotZoneMagnetFactor",
+              "type": "literal",
+              "value": 10
+            },
+            {
+              "name": "DefaultFactor",
+              "type": "literal",
+              "value": 1
+            },
+            {
+              "name": "InstigatorFactor",
+              "type": "literal",
+              "value": 0.5
+            },
+            {
+              "name": "TargetFactor",
+              "type": "literal",
+              "value": 0.5
+            },
+            {
+              "name": "ArtilleryReward",
+              "type": "literal",
+              "value": 250
+            },
+            {
+              "name": "DefaultReward",
+              "type": "literal",
+              "value": 300
+            },
+            {
+              "name": "LastVictimCount",
+              "type": "game",
+              "game": "LastVictimCount"
+            },
+            {
+              "name": "LastVictimReductionMultiplier",
+              "type": "literal",
+              "value": 0.24
+            },
+            {
+              "name": "DistanceFactor",
+              "type": "scaling",
+              "input": "DistanceToTarget",
+              "curve": "LiveCurves.Challenges.SessionEvents.PlayerKill.DistanceScalar"
+            },
+            {
+              "name": "LastVictimCountMax",
+              "type": "literal",
+              "value": 4
+            },
+            {
+              "name": "HeadshotReward",
+              "type": "literal",
+              "value": 350
+            },
+            {
+              "name": "RevengeFactor",
+              "type": "literal",
+              "value": 2
+            },
+            {
+              "name": "DistanceFactorArtillery",
+              "type": "scaling",
+              "input": "DistanceToTarget",
+              "curve": "LiveCurves.Challenges.SessionEvents.PlayerKill.DistanceScalar.Artillery"
+            },
+            {
+              "name": "ExplosiveTargetFactor",
+              "type": "literal",
+              "value": 1
+            },
+            {
+              "name": "ExplosiveInstigatorFactor",
+              "type": "literal",
+              "value": 0
+            },
+            {
+              "name": "KillStreakStoppedFactor",
+              "type": "literal",
+              "value": 1.5
+            },
+            {
+              "name": "TargetFriendlyHotZoneFactor",
+              "type": "literal",
+              "value": 4
+            },
+            {
+              "name": "TargetFriendlyControlZoneFactor",
+              "type": "literal",
+              "value": 2
+            },
+            {
+              "name": "AirVehicleReward",
+              "type": "literal",
+              "value": 300
+            },
+            {
+              "name": "DistanceTargetFactor",
+              "type": "literal",
+              "value": 1
+            },
+            {
+              "name": "DistanceInstigatorFactor",
+              "type": "literal",
+              "value": 0
+            },
+            {
+              "name": "RessedByEnemyFactor",
+              "type": "literal",
+              "value": 0.01
+            },
+            {
+              "name": "KillStreak",
+              "type": "game",
+              "game": "KillStreak"
+            },
+            {
+              "name": "KillStreakMax",
+              "type": "literal",
+              "value": 5
+            },
+            {
+              "name": "KillStreakValue",
+              "type": "literal",
+              "value": 50
+            },
+            {
+              "name": "EmptyFactor",
+              "type": "literal",
+              "value": 0
+            },
+            {
+              "name": "CrewCount",
+              "type": "game",
+              "game": "CrewCount"
+            },
+            {
+              "name": "CrewPenaltyModifier",
+              "type": "literal",
+              "value": 0.8
+            },
+            {
+              "name": "CrewCountMax",
+              "type": "literal",
+              "value": 5
+            },
+            {
+              "name": "AssaultReward",
+              "type": "literal",
+              "value": 400
+            },
+            {
+              "name": "AssaultHeadshotReward",
+              "type": "literal",
+              "value": 450
+            }
+          ]
+        },
+        {
+          "resource": "XP.Role",
+          "formula": "(1 - (clamp(LastVictimCount, 0, LastVictimCountMax) * LastVictimReductionModifier)) * (BaseReward)",
+          "inputs": [
+            {
+              "name": "BaseReward",
+              "default": "DefaultReward",
+              "options": [
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.FriendlyKill"]
+                  },
+                  "use": "FriendlyReward"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "tags": ["Challenges.Context.RessedByEnemy"]
+                  },
+                  "use": "RessedByEnemyFactor"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "of": [
+                      {
+                        "match": "any",
+                        "tags": ["Challenges.Context.PrecisionArtilleryStrikeKill"]
+                      },
+                      {
+                        "match": "none",
+                        "tags": ["Challenges.Context.FriendlyKill"]
+                      }
+                    ]
+                  },
+                  "use": "ArtilleryReward"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "of": [
+                      {
+                        "match": "any",
+                        "tags": ["Challenges.Context.SniperKill"]
+                      },
+                      {
+                        "match": "none",
+                        "tags": ["Challenges.Context.FriendlyKill"]
+                      }
+                    ]
+                  },
+                  "use": "SniperDistanceReward"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "of": [
+                      {
+                        "match": "all",
+                        "tags": ["Challenges.Context.RevengeKill"]
+                      },
+                      {
+                        "match": "none",
+                        "tags": ["Challenges.Context.FriendlyKill"]
+                      }
+                    ]
+                  },
+                  "use": "RevengeReward"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "of": [
+                      {
+                        "match": "all",
+                        "tags": ["Challenges.Context.KillStreakStopped"]
+                      },
+                      {
+                        "match": "none",
+                        "tags": ["Challenges.Context.FriendlyKill"]
+                      }
+                    ]
+                  },
+                  "use": "KillStreakStoppedReward"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "of": [
+                      {
+                        "match": "any",
+                        "tags": ["Challenges.Context.AirVehicleKill"]
+                      },
+                      {
+                        "match": "none",
+                        "tags": ["Challenges.Context.FriendlyKill"]
+                      }
+                    ]
+                  },
+                  "use": "AirVehicleReward"
+                },
+                {
+                  "when": {
+                    "match": "all",
+                    "of": [
+                      {
+                        "match": "any",
+                        "tags": ["Challenges.Context.Headshot"]
+                      },
+                      {
+                        "match": "none",
+                        "tags": ["Challenges.Context.FriendlyKill"]
+                      }
+                    ]
+                  },
+                  "use": "HeadshotReward"
+                }
+              ]
+            },
+            {
+              "name": "LastVictimCount",
+              "default": "LastVictimCount",
+              "options": []
+            },
+            {
+              "name": "LastVictimCountMax",
+              "default": "LastVictimCountMax",
+              "options": []
+            },
+            {
+              "name": "LastVictimReductionModifier",
+              "default": "LastVictimReductionMultiplier",
+              "options": []
+            }
+          ],
+          "variables": [
+            {
+              "name": "DefaultReward",
+              "type": "literal",
+              "value": 250
+            },
+            {
+              "name": "FriendlyReward",
+              "type": "literal",
+              "value": 0
+            },
+            {
+              "name": "HeadshotReward",
+              "type": "literal",
+              "value": 275
+            },
+            {
+              "name": "RevengeReward",
+              "type": "literal",
+              "value": 300
+            },
+            {
+              "name": "KillStreakStoppedReward",
+              "type": "literal",
+              "value": 300
+            },
+            {
+              "name": "SniperDistanceReward",
+              "type": "literal",
+              "value": 350
+            },
+            {
+              "name": "AirVehicleReward",
+              "type": "literal",
+              "value": 250
+            },
+            {
+              "name": "ArtilleryReward",
+              "type": "literal",
+              "value": 350
+            },
+            {
+              "name": "RessedByEnemyFactor",
+              "type": "literal",
+              "value": 0
+            },
+            {
+              "name": "LastVictimReductionMultiplier",
+              "type": "literal",
+              "value": 0.24
+            },
+            {
+              "name": "LastVictimCountMax",
+              "type": "literal",
+              "value": 4
+            },
+            {
+              "name": "LastVictimCount",
+              "type": "game",
+              "game": "LastVictimCount"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "curves": [
+    {
+      "id": "LiveCurves.Challenges.SessionEvents.PlayerKill.DistanceScalar",
+      "points": [
+        {
+          "input": 0,
+          "value": 1,
+          "interpolation": "constant"
+        },
+        {
+          "input": 30000,
+          "value": 1.5,
+          "interpolation": "constant"
+        },
+        {
+          "input": 40000,
+          "value": 2,
+          "interpolation": "constant"
+        },
+        {
+          "input": 50000,
+          "value": 2.5,
+          "interpolation": "constant"
+        },
+        {
+          "input": 60000,
+          "value": 3,
+          "interpolation": "constant"
+        },
+        {
+          "input": 70000,
+          "value": 3.25,
+          "interpolation": "constant"
+        },
+        {
+          "input": 80000,
+          "value": 3.5,
+          "interpolation": "constant"
+        },
+        {
+          "input": 90000,
+          "value": 4,
+          "interpolation": "constant"
+        }
+      ]
+    },
+    {
+      "id": "LiveCurves.Challenges.SessionEvents.PlayerKill.DistanceScalar.Artillery",
+      "points": [
+        {
+          "input": 0,
+          "value": 1,
+          "interpolation": "constant"
+        },
+        {
+          "input": 50000,
+          "value": 1.25,
+          "interpolation": "constant"
+        },
+        {
+          "input": 150000,
+          "value": 1.5,
+          "interpolation": "constant"
+        }
+      ]
+    }
+  ]
+}
