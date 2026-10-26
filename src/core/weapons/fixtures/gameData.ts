@@ -1,4 +1,4 @@
-import type { Attachment, Weapon } from "@/core/data";
+import type { Attachment, Item, Weapon } from "@/core/data";
 import { buildCatalog, sameId } from "@/core/catalog";
 import { AmmoFile } from "@/core/data/schemas/ammo";
 import { AttachmentsFile } from "@/core/data/schemas/attachments";
@@ -23,6 +23,14 @@ export const fixtureCatalog = buildCatalog({
   tags: TagsFile.parse(tagsJson),
   roles: RolesFile.parse(rolesJson),
 });
+
+export function fixtureItem(id: string): Item {
+  const item = itemsFile.items.find((candidate) => sameId(candidate.id, id));
+  if (item === undefined) {
+    throw new Error(`No fixture item ${id}`);
+  }
+  return item;
+}
 
 export function fixtureWeapon(id: string): Weapon {
   const weapon = weaponsFile.weapons.find((candidate) => sameId(candidate.id, id));
