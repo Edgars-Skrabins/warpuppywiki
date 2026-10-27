@@ -9,11 +9,17 @@ export interface FieldChange {
 
 export type EntityStatus = "added" | "removed" | "changed";
 
+export interface FieldValue {
+  path: string;
+  value: unknown;
+}
+
 export interface EntityDiff {
   key: string;
   name: string;
   status: EntityStatus;
   changes: FieldChange[];
+  fields?: FieldValue[];
 }
 
 export interface CategoryCounts {
