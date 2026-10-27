@@ -6,22 +6,30 @@ import { categoryLabel } from "../../categories";
 import { toolIcon } from "../../toolIcon";
 import { ToolStatusBadge } from "../../ToolStatusBadge";
 import styles from "./BriefingLayout.module.css";
+import { ART, FEATURED } from "./featuredArt";
 
-const FEATURED = ["loadout", "ttk", "map"] as const;
-
-const ART: Record<string, { path: string; kind: "render" | "map" }> = {
-  loadout: { path: "icons/UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_001v2.png", kind: "render" },
-  ttk: { path: "icons/UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_008.png", kind: "render" },
-  map: { path: "maps/kavkazi/tiles/2/1/2.webp", kind: "map" },
-};
-
-function FeatureCard({ tool, hasAssets }: { tool: ToolDefinition; hasAssets: boolean }) {
+function FeatureCard({
+  tool,
+  hasAssets,
+  webp,
+  priority,
+}: {
+  tool: ToolDefinition;
+  hasAssets: boolean;
+  webp: boolean;
+  priority: boolean;
+}) {
   const art = ART[tool.id];
+  const artPath = art && webp ? art.path.replace(/\.png$/i, ".webp") : art?.path;
   return (
     <Link to={`/${tool.id}`} className={styles.feature}>
       <span className={art?.kind === "map" ? styles.artMap : styles.art}>
         {hasAssets && art ? (
-          <img src={`${import.meta.env.BASE_URL}assets/${art.path}`} alt="" loading="lazy" />
+          <img
+            src={`${import.meta.env.BASE_URL}assets/${artPath}`}
+            alt=""
+            fetchPriority={priority ? "high" : undefined}
+          />
         ) : (
           <Icon name={toolIcon(tool)} size={48} className={styles.fallbackIcon} />
         )}
@@ -41,6 +49,7 @@ function FeatureCard({ tool, hasAssets }: { tool: ToolDefinition; hasAssets: boo
 export function BriefingLayout({ tools }: { tools: readonly ToolDefinition[] }) {
   const assets = useAssetsManifest();
   const hasAssets = assets.status === "success" && assets.data !== null;
+  const webp = assets.status === "success" && assets.data?.iconFormat === "webp";
   const featured = FEATURED.map((id) => tools.find((tool) => tool.id === id)).filter(
     (tool): tool is ToolDefinition => tool !== undefined,
   );
@@ -50,8 +59,8 @@ export function BriefingLayout({ tools }: { tools: readonly ToolDefinition[] }) 
     <div className={styles.briefing}>
       {featured.length > 0 && (
         <section aria-label="Featured tools" className={styles.features}>
-          {featured.map((tool) => (
-            <FeatureCard key={tool.id} tool={tool} hasAssets={hasAssets} />
+          {featured.map((tool, index) => (
+            <FeatureCard key={tool.id} tool={tool} hasAssets={hasAssets} webp={webp} priority={index === 0} />
           ))}
         </section>
       )}

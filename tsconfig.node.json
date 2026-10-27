@@ -18,5 +18,5 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["vite.config.ts", "eslint.boundaries.test.ts", "scripts"]
+  "include": ["vite.config.ts", "eslint.boundaries.test.ts", "scripts", "vite"]
 }

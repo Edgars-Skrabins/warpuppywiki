@@ -34,7 +34,7 @@ describe("Ballistics", () => {
     setup();
     const table = await rangeCard();
     expect(within(table).getAllByRole("row").length).toBeGreaterThan(10);
-    expect(within(table).getByRole("columnheader", { name: /Holdover/ })).toBeTruthy();
+    expect(within(table).getByRole("columnheader", { name: /Holdover/ })).toBeInTheDocument();
   });
 
   it("changes the drop at 300 m when the zero changes", async () => {
@@ -54,7 +54,7 @@ describe("Ballistics", () => {
         projectiles: ammoJson.projectiles.map((projectile) => ({ ...projectile, drag: null })),
       },
     });
-    expect(await screen.findByText("Not enough ballistic data for this projectile")).toBeTruthy();
+    expect(await screen.findByText("Not enough ballistic data for this projectile")).toBeInTheDocument();
     expect(screen.queryByRole("grid", { name: "Range card" })).toBeNull();
   });
 
@@ -64,9 +64,9 @@ describe("Ballistics", () => {
     await rangeCard();
     await user.click(screen.getByRole("button", { name: "Add comparison" }));
     const table = await rangeCard();
-    await waitFor(() => expect(within(table).getByRole("columnheader", { name: /Drop B/ })).toBeTruthy());
+    await waitFor(() => expect(within(table).getByRole("columnheader", { name: /Drop B/ })).toBeInTheDocument());
     for (const header of [/Drop A/, /Flight time A/, /Flight time B/]) {
-      expect(within(table).getByRole("columnheader", { name: header })).toBeTruthy();
+      expect(within(table).getByRole("columnheader", { name: header })).toBeInTheDocument();
     }
   });
 });
