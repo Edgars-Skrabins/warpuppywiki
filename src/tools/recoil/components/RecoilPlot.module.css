@@ -1,0 +1,92 @@
+.plot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.grid line {
+  stroke: var(--chart-grid);
+  stroke-width: 1;
+}
+
+.frame {
+  fill: none;
+  stroke: var(--color-border);
+  stroke-width: 1;
+}
+
+.axes line {
+  stroke: var(--color-border-strong);
+  stroke-width: 1;
+}
+
+.ticks text {
+  fill: var(--chart-axis);
+  font-size: 11px;
+}
+
+.axisTitle {
+  fill: var(--color-text-muted);
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.path {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.cone {
+  fill-opacity: 0.12;
+  stroke: none;
+}
+
+.coneEdge {
+  fill: none;
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  stroke-opacity: 0.7;
+}
+
+.coneLabel,
+.shotLabel {
+  fill: var(--color-text-muted);
+  font-size: 11px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.swatch {
+  width: 16px;
+  height: 2px;
+}
