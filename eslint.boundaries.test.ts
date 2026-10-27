@@ -83,6 +83,20 @@ const cases: Array<{ name: string; from: string; alias: string; relative: string
     relative: "../tools/__fixture_alpha/a",
     allowed: true,
   },
+  {
+    name: "sw to its own file",
+    from: "src/sw/importer.ts",
+    alias: "@/sw/strategy",
+    relative: "./strategy",
+    allowed: true,
+  },
+  {
+    name: "sw to core",
+    from: "src/sw/importer.ts",
+    alias: "@/core/__fixture/sample",
+    relative: "../core/__fixture/sample",
+    allowed: false,
+  },
 ];
 
 describe("import boundaries", () => {

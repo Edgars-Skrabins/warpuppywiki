@@ -8,10 +8,15 @@ export default defineConfig({
   plugins: [react(), preloadsPlugin()],
   build: {
     rolldownOptions: {
+      input: {
+        index: fileURLToPath(new URL("./index.html", import.meta.url)),
+        sw: fileURLToPath(new URL("./src/sw/sw.ts", import.meta.url)),
+      },
       treeshake: {
         moduleSideEffects: (id: string) => !/src[\\/]ui[\\/]components[\\/]charts[\\/]/.test(id),
       },
       output: {
+        entryFileNames: (chunk) => (chunk.name === "sw" ? "sw.js" : "assets/[name]-[hash].js"),
         codeSplitting: {
           groups: [
             {

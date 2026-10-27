@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b tsconfig.json tsconfig.node.json && vite build",
+    "build": "tsc -b tsconfig.json tsconfig.node.json src/sw/tsconfig.json && vite build",
     "preview": "vite preview",
     "data:sync": "tsx scripts/sync-data.ts",
     "assets:sync": "tsx scripts/sync-assets.ts",
@@ -18,7 +18,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "tsc -b tsconfig.json tsconfig.node.json --noEmit",
+    "typecheck": "tsc -b tsconfig.json tsconfig.node.json src/sw/tsconfig.json --noEmit",
     "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test"
   },
   "dependencies": {

@@ -21,7 +21,7 @@ export default defineConfig(
       ecmaVersion: 2023,
       globals: { ...globals.browser, ...globals.node },
       parserOptions: {
-        project: ["./tsconfig.json", "./tsconfig.node.json"],
+        project: ["./tsconfig.json", "./tsconfig.node.json", "./src/sw/tsconfig.json"],
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -45,7 +45,7 @@ export default defineConfig(
         typescript: {
           alwaysTryTypes: true,
           noWarnOnMultipleProjects: true,
-          project: ["./tsconfig.json", "./tsconfig.node.json"],
+          project: ["./tsconfig.json", "./tsconfig.node.json", "./src/sw/tsconfig.json"],
         },
       },
       "boundaries/elements": [
@@ -55,6 +55,7 @@ export default defineConfig(
         { type: "tool", pattern: "src/tools/*", capture: ["toolId"], partialMatch: false },
         { type: "scripts", pattern: "scripts/**", partialMatch: false },
         { type: "test", pattern: "src/test/**", partialMatch: false },
+        { type: "sw", pattern: "src/sw/**", partialMatch: false },
       ],
     },
     rules: {
@@ -75,6 +76,7 @@ export default defineConfig(
             },
             allowTo("scripts", ["scripts", "core"]),
             allowTo("test", ["core", "test"]),
+            allowTo("sw", ["sw"]),
           ],
         },
       ],
