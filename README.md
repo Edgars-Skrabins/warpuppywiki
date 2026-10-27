@@ -6,19 +6,30 @@ warpuppywiki is a fan project. It is not affiliated with or endorsed by Bulkhead
 
 ## Tech stack
 
-- **Frontend:** React with TypeScript, built with Vite.
-- **Styling:** CSS Modules.
+- **Frontend:** React with TypeScript, built with Vite. React Router with a hash router, so the static build works on any host.
+- **Data:** static JSON game data loaded with TanStack Query and validated with zod. No backend.
+- **Map and charts:** Leaflet (through react-leaflet) and Recharts.
+- **Styling:** CSS Modules with design tokens. No CSS framework.
 - **Tests:** Vitest with Testing Library and jsdom.
 - **Linting and formatting:** ESLint and Prettier.
 
 ## Project structure
 
 - `src/app/`: the shell: routing, layout and the tool registry.
-- `src/core/`: shared domain code used by more than one tool.
+- `src/core/`: shared domain code used by more than one tool:
+  - `data/`: loading and validating the game data files.
+  - `catalog/`: items, display names, tags, prices and unlocks.
+  - `modifiers/`: applying attribute modifiers.
+  - `weapons/`: attachment and ammo compatibility, damage falloff and effective weapon stats.
+  - `damage/`: the damage model: damage per hit, shots to kill and time to kill.
+  - `maps/`: map coordinates, heightmaps and line of sight.
+  - `state/`: URL and local storage state.
+  - `tool/`: the `ToolDefinition` type every tool exports.
 - `src/ui/`: the UI kit: design tokens, theme and reusable components.
 - `src/tools/`: one folder per tool. Tools import from `src/core` and `src/ui` only, never from each other; lint enforces this.
 - `scripts/`: Node scripts that download and prepare game data and assets.
 - `public/data/` and `public/assets/`: synced game data and assets (not committed).
+- `src/test/fixtures/`: trimmed real game data used by the tests.
 
 ## Adding a tool
 
@@ -78,6 +89,8 @@ In the repository root:
 ```bash
 pnpm test
 ```
+
+Tests run on trimmed fixtures in `src/test/fixtures/`, so they don't need synced data. The `realData.test.ts` files also check the code against the full game data, and run only after `pnpm data:sync`.
 
 ## Commands
 
