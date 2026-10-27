@@ -22,7 +22,7 @@ export function assetsUpToDate(
   hasHeightmap: (world: string) => boolean,
 ): boolean {
   if (!isRecord(manifest) || !isRecord(manifest.sync) || !isRecord(manifest.worlds)) return false;
-  if (manifest.build !== request.build || manifest.icons !== true) return false;
+  if (manifest.build !== request.build || manifest.icons !== true || manifest.iconFormat !== "webp") return false;
   if (manifest.sync.maxZoom !== request.maxZoom || !sameWorlds(manifest.sync.worlds, request.worlds)) return false;
   return Object.keys(manifest.worlds).every((world) => hasHeightmap(world));
 }
