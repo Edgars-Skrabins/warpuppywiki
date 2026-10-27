@@ -37,6 +37,22 @@ describe("loadout URL codec", () => {
     });
   });
 
+  it("fills the lethality view with defaults for a link without one", () => {
+    const withoutView: Partial<Loadout> = setSlotItem(emptyLoadout(10_000), "primary", "Id.Item.M4");
+    delete withoutView.view;
+    const decoded = decodeState(codec, encodeState(codec, withoutView as Loadout));
+    expect(decoded.error).toBe(false);
+    expect(decoded.state.view.lethality).toEqual({
+      tab: "weapons",
+      targetArmor: 2,
+      targetHelmet: 1,
+      placement: "upper-chest",
+      threatWeaponId: "Id.Item.M4",
+      threatAmmoType: null,
+      threatPlacement: "upper-chest",
+    });
+  });
+
   it("defaults to an empty loadout with the starting budget", () => {
     expect(decodeState(codec, null).state).toEqual(emptyLoadout(10_000));
   });

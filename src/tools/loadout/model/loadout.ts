@@ -38,6 +38,24 @@ export const GearEntry = z.object({
   quantity: z.number().int().min(1).max(MAX_GEAR_QUANTITY),
 });
 
+export const ARMOR_LEVELS = [0, 1, 2, 3, 4] as const;
+
+const ArmorLevel = z.number().int().min(0).max(4);
+
+export const LethalityView = z.object({
+  tab: z.enum(["weapons", "armor"]).default("weapons"),
+  targetArmor: ArmorLevel.default(2),
+  targetHelmet: ArmorLevel.default(1),
+  placement: z.enum(["upper-chest", "head", "mixed"]).default("upper-chest"),
+  threatWeaponId: z.string().default("Id.Item.M4"),
+  threatAmmoType: z.string().nullable().default(null),
+  threatPlacement: z.enum(["upper-chest", "head"]).default("upper-chest"),
+});
+
+export const LoadoutView = z.object({
+  lethality: LethalityView.default(LethalityView.parse({})),
+});
+
 export const Loadout = z.object({
   version: z.literal(1),
   name: z.string().max(60).default(""),
@@ -52,11 +70,14 @@ export const Loadout = z.object({
     backpack: z.string().nullable(),
   }),
   gear: z.array(GearEntry).max(MAX_GEAR_ROWS),
+  view: LoadoutView.default(LoadoutView.parse({})),
 });
 
 export type SlotId = z.infer<typeof SlotId>;
 export type WeaponSetup = z.infer<typeof WeaponSetup>;
 export type GearEntry = z.infer<typeof GearEntry>;
+export type LethalityView = z.infer<typeof LethalityView>;
+export type LoadoutView = z.infer<typeof LoadoutView>;
 export type Loadout = z.infer<typeof Loadout>;
 
 export function emptyLoadout(budget: number): Loadout {
@@ -74,7 +95,12 @@ export function emptyLoadout(budget: number): Loadout {
       backpack: null,
     },
     gear: [],
+    view: LoadoutView.parse({}),
   };
+}
+
+export function setLethalityView(loadout: Loadout, changes: Partial<LethalityView>): Loadout {
+  return { ...loadout, view: { ...loadout.view, lethality: { ...loadout.view.lethality, ...changes } } };
 }
 
 export function startingBudget(meta: MetaFile): number {
