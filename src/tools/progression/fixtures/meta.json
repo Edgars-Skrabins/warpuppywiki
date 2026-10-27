@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25937608",
+  "currencies": [
+    {
+      "id": "Cash",
+      "name": "Cash",
+      "initialBalance": 10000
+    },
+    {
+      "id": "GoldBars",
+      "name": "Gold Bars",
+      "initialBalance": 0
+    }
+  ],
+  "currentSeason": 1,
+  "goldMarket": [],
+  "passiveMissions": [],
+  "achievements": []
+}
