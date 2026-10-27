@@ -7,5 +7,6 @@ export const tool: ToolDefinition = {
   summary: "Every role's skill tree with descriptions and per-level effects.",
   category: "progression",
   icon: "tree",
+  status: "unreleased",
   component: lazy(() => import("./Tool")),
 };

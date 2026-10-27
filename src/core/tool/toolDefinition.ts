@@ -8,6 +8,6 @@ export interface ToolDefinition {
   summary: string;
   category: ToolCategory;
   icon: string;
-  status?: "beta";
+  status?: "beta" | "unreleased";
   component: LazyExoticComponent<ComponentType>;
 }

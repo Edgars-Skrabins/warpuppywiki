@@ -3,10 +3,11 @@ import { Input, SearchField } from "react-aria-components";
 import { Link } from "react-router";
 import { useBuilds } from "@/core/data";
 import type { ToolDefinition } from "@/core/tool";
-import { Badge, EmptyState, Icon } from "@/ui";
+import { EmptyState, Icon } from "@/ui";
 import { buildSummary } from "../buildSummary";
 import { filterTools, groupTools } from "../groupTools";
 import { toolIcon } from "../toolIcon";
+import { ToolStatusBadge } from "../ToolStatusBadge";
 import styles from "./HomePage.module.css";
 
 function BuildLine() {
@@ -28,7 +29,7 @@ function ToolCard({ tool }: { tool: ToolDefinition }) {
       <span className={styles.cardText}>
         <span className={styles.cardName}>
           {tool.name}
-          {tool.status === "beta" && <Badge tone="tag">Beta</Badge>}
+          <ToolStatusBadge status={tool.status} />
         </span>
         <span className={styles.cardSummary}>{tool.summary}</span>
       </span>
