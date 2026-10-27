@@ -104,11 +104,9 @@ Tests run on trimmed fixtures in `src/test/fixtures/`, so they don't need synced
 
 ## Deployment
 
-The workflow `.github/workflows/deploy.yml` publishes the app to GitHub Pages at `https://<owner>.github.io/warpuppywiki/`. It runs on every push to `main`, by hand ("Run workflow" in the Actions tab) and once a day at 06:00 UTC.
+The workflow `.github/workflows/deploy.yml` publishes the app to GitHub Pages at `https://<owner>.github.io/warpuppywiki/`. It runs on every push to the `deployment` branch and by hand ("Run workflow" in the Actions tab). Work is merged into `main`; a release is made by merging `main` into `deployment` and pushing it.
 
 Each run installs the dependencies, runs `pnpm check`, syncs the game data and all map tile levels, builds the app and writes `dist/deploy.json` with the commit, the synced builds and a fingerprint of both. The full-zip download is cached between runs per game build. A failed check or sync stops the run before anything is deployed, so the live site stays as it was.
-
-The daily run picks up new game builds from `warpuppies/wardogs-data` without a code change. It compares its fingerprint with the live site's `deploy.json` and skips the deploy when neither the commit nor the builds changed.
 
 To turn on deployment:
 
