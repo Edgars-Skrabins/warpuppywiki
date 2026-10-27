@@ -1,8 +1,11 @@
 import { Input, SearchField } from "react-aria-components";
 import { Button, EmptyState, ErrorState, LoadingState, Panel, SegmentedControl, formatNumber } from "@/ui";
+import type { EntityDiff } from "../diff/types";
+import { toMarkdown } from "../export/markdown";
 import type { CategoryResult } from "../hooks/useCategoryDiff";
 import { filterEntities, type EntityFilter } from "../state";
 import styles from "./CategoryView.module.css";
+import { CopyMarkdownButton } from "./CopyMarkdownButton";
 import { EntityRow } from "./EntityRow";
 
 export interface CategoryViewProps {
@@ -12,6 +15,8 @@ export interface CategoryViewProps {
   onFilterChange: (filter: EntityFilter) => void;
   onSearchChange: (search: string) => void;
   onBack: () => void;
+  hrefFor: (entity: EntityDiff) => string;
+  builds: { from: string; to: string };
 }
 
 const FILTER_LABELS: Record<EntityFilter, string> = {
@@ -21,7 +26,14 @@ const FILTER_LABELS: Record<EntityFilter, string> = {
   changed: "Changed",
 };
 
-function CategoryBody({ result, filter, search, onFilterChange, onSearchChange }: Omit<CategoryViewProps, "onBack">) {
+function CategoryBody({
+  result,
+  filter,
+  search,
+  onFilterChange,
+  onSearchChange,
+  hrefFor,
+}: Omit<CategoryViewProps, "onBack" | "builds">) {
   if (result.status === "loading") {
     return <LoadingState label={`Comparing ${result.definition.label.toLowerCase()}`} />;
   }
@@ -62,7 +74,7 @@ function CategoryBody({ result, filter, search, onFilterChange, onSearchChange }
       ) : (
         <ul className={styles.list} aria-label={diff.label}>
           {entities.map((entity) => (
-            <EntityRow key={entity.key} entity={entity} />
+            <EntityRow key={entity.key} entity={entity} href={hrefFor(entity)} />
           ))}
         </ul>
       )}
@@ -70,14 +82,21 @@ function CategoryBody({ result, filter, search, onFilterChange, onSearchChange }
   );
 }
 
-export function CategoryView({ onBack, ...props }: CategoryViewProps) {
+export function CategoryView({ onBack, builds, ...props }: CategoryViewProps) {
+  const { result } = props;
   return (
     <Panel
-      title={props.result.definition.label}
+      title={result.definition.label}
       actions={
-        <Button variant="ghost" size="sm" onPress={onBack}>
-          All categories
-        </Button>
+        <>
+          <CopyMarkdownButton
+            isDisabled={result.status !== "success"}
+            getText={() => (result.status === "success" ? toMarkdown([result.diff], builds) : "")}
+          />
+          <Button variant="ghost" size="sm" onPress={onBack}>
+            All categories
+          </Button>
+        </>
       }
     >
       <CategoryBody {...props} />
