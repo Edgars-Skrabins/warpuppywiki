@@ -10,7 +10,28 @@ export const FALLBACK_BUDGET = 10_000;
 
 export const SlotId = z.enum(["primary", "secondary", "sidearm", "specialist", "armor", "helmet", "vest", "backpack"]);
 
-export const WeaponSetup = z.object({ itemId: z.string() });
+export const MAX_MAGAZINES = 12;
+export const MAX_LOOSE_ROUNDS = 500;
+
+export const WeaponSetup = z.object({
+  itemId: z.string(),
+  attachments: z.record(z.string(), z.string()).default({}),
+  magazine: z
+    .object({
+      id: z.string(),
+      ammoType: z.string(),
+      count: z.number().int().min(0).max(MAX_MAGAZINES),
+    })
+    .nullable()
+    .default(null),
+  looseAmmo: z
+    .object({
+      itemId: z.string(),
+      rounds: z.number().int().min(0).max(MAX_LOOSE_ROUNDS),
+    })
+    .nullable()
+    .default(null),
+});
 
 export const GearEntry = z.object({
   itemId: z.string(),
@@ -92,4 +113,16 @@ export function setGearQuantity(loadout: Loadout, itemId: string, quantity: numb
     return loadout;
   }
   return { ...loadout, gear: [...loadout.gear, { itemId, quantity: clamped }] };
+}
+
+export function weaponSetupOf(loadout: Loadout, slot: SlotId): WeaponSetup | null {
+  const value = loadout.slots[slot];
+  return value === null || typeof value === "string" ? null : value;
+}
+
+export function setWeaponSetup(loadout: Loadout, slot: SlotId, setup: WeaponSetup | null): Loadout {
+  if (slotDefinition(slot).kind !== "weapon") {
+    return loadout;
+  }
+  return { ...loadout, slots: { ...loadout.slots, [slot]: setup } };
 }
