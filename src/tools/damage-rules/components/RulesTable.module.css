@@ -1,0 +1,151 @@
+.table {
+  --columns: 52px minmax(180px, 1.2fr) 168px minmax(240px, 1.6fr) minmax(140px, 1fr) 120px minmax(180px, 1.2fr) 104px
+    112px minmax(200px, 1.2fr);
+  --row-width: 1500px;
+
+  position: relative;
+  overflow: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+
+.table[data-marking] {
+  --columns: 52px 84px minmax(180px, 1.2fr) 168px minmax(240px, 1.6fr) minmax(140px, 1fr) 120px minmax(180px, 1.2fr)
+    104px 112px minmax(200px, 1.2fr);
+  --row-width: 1590px;
+}
+
+.head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  min-width: var(--row-width);
+  background: var(--color-surface-raised);
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: var(--columns);
+  align-items: center;
+  min-width: var(--row-width);
+  height: 36px;
+}
+
+.body {
+  position: relative;
+  min-width: var(--row-width);
+}
+
+.window {
+  position: absolute;
+  inset: 0 0 auto;
+}
+
+.body .row {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.body .row:hover {
+  background: var(--color-surface-hover);
+}
+
+.row[data-applies="true"] {
+  background: var(--color-success-subtle);
+}
+
+.row[data-applies="false"] {
+  color: var(--color-text-muted);
+}
+
+.header,
+.headerEnd {
+  overflow: hidden;
+  padding: 0 var(--space-2);
+  color: var(--color-text-muted);
+  font-family: var(--font-condensed);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-caps);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.headerEnd {
+  text-align: end;
+}
+
+.headerEnd .sortButton {
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.sortButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--easing);
+}
+
+.sortButton:hover,
+.sortButton[data-active] {
+  color: var(--color-text);
+}
+
+.sortMark {
+  min-width: 0.75em;
+  font-size: var(--text-xs);
+}
+
+.cell,
+.cellEnd,
+.cellMuted,
+.amount {
+  overflow: hidden;
+  padding: 0 var(--space-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cellEnd,
+.amount {
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+.cellEnd,
+.cellMuted {
+  color: var(--color-text-muted);
+}
+
+.amount {
+  font-weight: var(--font-weight-medium);
+}
+
+.amount[data-sign="0"] {
+  color: var(--color-text-muted);
+}
+
+.appliesYes {
+  color: var(--color-success);
+  font-weight: var(--font-weight-medium);
+}
+
+.appliesNo {
+  color: var(--color-text-muted);
+}
+
+.empty {
+  padding: var(--space-4);
+  color: var(--color-text-muted);
+}

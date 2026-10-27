@@ -1,0 +1,136 @@
+{
+  "rules": [
+    {
+      "entity": "Vehicle.Air.Rotary.Havoc",
+      "source": ["Bullet"],
+      "target": [],
+      "instigator": [],
+      "hitLocations": [],
+      "category": "Armor",
+      "operation": "Percentage_Ongoing",
+      "amount": -95
+    },
+    {
+      "entity": "Vehicle.Air.Rotary.Havoc",
+      "source": ["Cannon"],
+      "target": [],
+      "instigator": [],
+      "hitLocations": [],
+      "category": "Armor",
+      "operation": "Percentage_Ongoing",
+      "amount": -70
+    },
+    {
+      "entity": "Vehicle.Air.Rotary.Havoc",
+      "source": ["Explosive.Rocket", "Explosive.Radius.Inner"],
+      "target": [],
+      "instigator": [],
+      "hitLocations": [],
+      "category": "Calibre",
+      "operation": "Percentage_Ongoing",
+      "amount": 400
+    },
+    {
+      "entity": "Vehicle.Air.Rotary.Havoc",
+      "source": ["Explosive.Grenade", "Explosive.Radius.Inner"],
+      "target": [],
+      "instigator": [],
+      "hitLocations": [],
+      "category": "Calibre",
+      "operation": "Percentage_Ongoing",
+      "amount": -20
+    },
+    {
+      "entity": "Vehicle.Air.Rotary.Havoc",
+      "source": ["Explosive.Rocket.93mm"],
+      "target": [],
+      "instigator": [],
+      "hitLocations": ["Vehicle.MainRotor", "Vehicle.TailRotor", "Vehicle.Tail"],
+      "category": "Calibre",
+      "operation": "Percentage_Ongoing",
+      "amount": -45
+    },
+    {
+      "entity": "Buildable.FOB",
+      "source": ["DamageType.Melee"],
+      "target": [],
+      "instigator": [],
+      "hitLocations": [],
+      "category": "Melee",
+      "operation": "Percentage_Ongoing",
+      "amount": -80
+    },
+    {
+      "entity": "Buildable.FOB",
+      "source": ["Kinetic.Impact.Throwable"],
+      "target": [],
+      "instigator": [],
+      "hitLocations": [],
+      "category": "Melee",
+      "operation": "Percentage_Ongoing",
+      "amount": -100
+    },
+    {
+      "entity": "Buildable.FOB",
+      "source": ["Kinetic.Impact.ExplosiveBlunt"],
+      "target": [],
+      "instigator": [],
+      "hitLocations": [],
+      "category": "Melee",
+      "operation": "Percentage_Ongoing",
+      "amount": -50
+    },
+    {
+      "entity": "Buildable.Door",
+      "source": ["Vehicle.Land.Tracked"],
+      "target": [],
+      "instigator": [],
+      "hitLocations": [],
+      "category": "Bone",
+      "operation": "Add",
+      "amount": 1000
+    },
+    {
+      "entity": "Vehicle.SupplyCrate",
+      "source": ["Bullet"],
+      "target": [],
+      "instigator": [],
+      "hitLocations": [],
+      "category": "Armor",
+      "operation": "Percentage_Ongoing",
+      "amount": -60
+    }
+  ],
+  "vehicleSeats": [
+    {
+      "vehicle": "Vehicle.Variant.Air.Rotary.ROT_01.Default",
+      "rules": [
+        {
+          "damageSources": ["Small", "Medium"],
+          "reduction": -25
+        },
+        {
+          "damageSources": ["High"],
+          "reduction": -15
+        }
+      ]
+    },
+    {
+      "vehicle": "Vehicle.Variant.Air.Rotary.Havoc.Default",
+      "rules": [
+        {
+          "damageSources": ["Small", "Medium"],
+          "reduction": -90
+        },
+        {
+          "damageSources": ["High"],
+          "reduction": -50
+        },
+        {
+          "damageSources": ["Special"],
+          "reduction": -60
+        }
+      ]
+    }
+  ]
+}
