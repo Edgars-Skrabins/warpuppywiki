@@ -46,7 +46,7 @@ describe("map tool", () => {
     const user = userEvent.setup();
     const router = renderTool();
     expect(await screen.findByRole("tab", { name: "Bakurani", selected: true })).toBeInTheDocument();
-    const ozeti = await screen.findByRole("tab", { name: "Ozeti" }, { timeout: 3000 });
+    const ozeti = await screen.findByRole("tab", { name: "Ozeti" });
     expect(screen.getByRole("tab", { name: "Zestafona" })).toBeInTheDocument();
 
     await user.click(ozeti);

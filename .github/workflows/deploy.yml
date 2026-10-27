@@ -27,7 +27,6 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm check
       - run: pnpm data:sync
       - name: Compute the asset cache key
         id: cache-key

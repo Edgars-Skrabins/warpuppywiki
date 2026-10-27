@@ -24,10 +24,8 @@ function setup(search = "") {
   return router;
 }
 
-const LOAD_TIMEOUT = { timeout: 10000 };
-
 function searchField() {
-  return screen.findByLabelText("Search items", {}, LOAD_TIMEOUT);
+  return screen.findByLabelText("Search items");
 }
 
 async function cardNames() {
@@ -37,7 +35,7 @@ async function cardNames() {
     .map((card) => card.getAttribute("aria-label"));
 }
 
-describe("Item Browser", { timeout: 20000 }, () => {
+describe("Item Browser", () => {
   it("finds the Bandage by searching", async () => {
     const user = userEvent.setup();
     setup();
@@ -82,7 +80,7 @@ describe("Item Browser", { timeout: 20000 }, () => {
   it("opens the item named in the URL and links weapons to the Arsenal", async () => {
     const user = userEvent.setup();
     const router = setup("?i=id.item.m4");
-    const dialog = await screen.findByRole("dialog", { name: "M4" }, LOAD_TIMEOUT);
+    const dialog = await screen.findByRole("dialog", { name: "M4" });
     expect(within(dialog).getByText("Assault")).toBeInTheDocument();
     await user.click(within(dialog).getByRole("link", { name: "Open in Arsenal" }));
     await waitFor(() => expect(router.state.location.pathname).toBe("/arsenal"));

@@ -46,7 +46,7 @@ function urlState(router: ReturnType<typeof renderTool>) {
 }
 
 async function readyMap() {
-  await screen.findByRole("region", { name: "Plan" }, { timeout: 3000 });
+  await screen.findByRole("region", { name: "Plan" });
   await waitFor(() => expect(maps.length).toBeGreaterThan(0));
   return maps.at(-1)!;
 }
@@ -104,11 +104,11 @@ describe("map plan", () => {
     clickMap(leafletMap, -10000, -12000);
     await waitFor(() => expect(urlState(router).plans.kavkazi.rings).toHaveLength(1));
 
-    await user.click(await screen.findByRole("tab", { name: "Ozeti" }, { timeout: 3000 }));
+    await user.click(await screen.findByRole("tab", { name: "Ozeti" }));
     await waitFor(() => expect(urlState(router).world).toBe("europe"));
     expect(urlState(router).plans.europe.rings).toEqual([]);
     expect(urlState(router).plans.kavkazi.rings[0]!.distances).toEqual([100, 200, 300, 500]);
-    const plan = within(await screen.findByRole("region", { name: "Plan" }, { timeout: 3000 }));
+    const plan = within(await screen.findByRole("region", { name: "Plan" }));
     expect(plan.getAllByText("None yet.")).toHaveLength(2);
   });
 

@@ -25,7 +25,7 @@ function renderTool(path = "/patches", extra: Record<string, unknown> = {}) {
 }
 
 async function weaponsCard() {
-  return screen.findByRole("button", { name: /^Weapons Added/ }, { timeout: 5000 });
+  return screen.findByRole("button", { name: /^Weapons Added/ });
 }
 
 function count(card: HTMLElement, label: string): string | null {

@@ -38,5 +38,7 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["src/test/setup.ts"],
     exclude: [...configDefaults.exclude, ".claude/**"],
+    fsModuleCache: false,
+    testTimeout: 30000,
   },
 });

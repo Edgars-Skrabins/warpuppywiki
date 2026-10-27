@@ -62,7 +62,7 @@ describe("Patch Diff details", () => {
 
   it("lists a labelled change in the notable card and links to its detail", async () => {
     const router = renderTool();
-    const card = await screen.findByRole("list", { name: "Notable changes" }, { timeout: 5000 });
+    const card = await screen.findByRole("list", { name: "Notable changes" });
     const line = within(card).getByRole("link", { name: "M4: Unlock level 20 → 28 (Nerf)" });
     await userEvent.click(line);
     expect(await screen.findByRole("grid", { name: "Changes to M4" })).toBeInTheDocument();
