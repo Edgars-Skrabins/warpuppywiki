@@ -34,6 +34,11 @@ describe("TTK link contract", () => {
     expect(encodeState(ttkMatchupCodec, matchup)).toBe(CONTRACT_ENCODED);
   });
 
+  it("uses the m key and version 1", () => {
+    expect(ttkMatchupCodec.key).toBe("m");
+    expect(ttkMatchupCodec.version).toBe(1);
+  });
+
   it("builds a hash route into the TTK calculator", () => {
     const link = buildTtkLink({
       weaponId: "Id.Item.M4",
