@@ -1,0 +1,317 @@
+[
+  {
+    "id": "Id.Item.Bandage",
+    "kind": "item",
+    "asset": "Content/Items/Consumables/Bandage/ID_Bandage",
+    "name": "Bandage",
+    "subtitle": "Medical // Quick Slot",
+    "description": "- Used to heal Self/Teammates\n- Heals a Small Amount",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Vendor_Bandage.png",
+    "tags": [
+      "Item.Context.QuickSlot",
+      "Item.Context.Medical",
+      "Item.Context.Animation.Archetype.EquipRightHand",
+      "Item.Context.Animation.Type.Unarmed"
+    ],
+    "grid": [1, 1],
+    "maxStack": 5,
+    "weight": 0.08,
+    "unlock": null,
+    "vendor": [
+      {
+        "tag": "Id.Item.Bandage",
+        "price": 200,
+        "amount": 1,
+        "categories": ["Vendor.Category.Utility"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.M67Grenade",
+    "kind": "item",
+    "asset": "Content/Items/Throwable/Grenades/M67_Grenade/ID_M67Grenade",
+    "name": "M67 Frag Grenade",
+    "subtitle": "Lethal // Quick Slot",
+    "description": "- Detonates a short time after being thrown.",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Icon_Utility_Grenade_Textured_512x512.png",
+    "tags": [
+      "Item.Archetype.Grenade",
+      "Item.Context.UtilityItem",
+      "Item.Context.QuickSlot",
+      "Item.Context.Animation.Type.Unarmed",
+      "Item.Context.Animation.Archetype.EquipRightHand"
+    ],
+    "grid": [1, 1],
+    "maxStack": 2,
+    "weight": 0.4,
+    "unlock": null,
+    "vendor": [
+      {
+        "tag": "Id.Item.M67Grenade",
+        "price": 200,
+        "amount": 1,
+        "categories": ["Vendor.Category.Utility"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.BasicRedDot",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Weapons/Attachments/Sights/SGHT_013/Content/Data/ID_RedDot",
+    "name": "Compact T-2 Red Dot",
+    "subtitle": "Optic",
+    "description": "Specification:\n- 1.2x magnification\n- Close range combat\n- Fixed zeroing\n\nPros:\n- Minor ADS speed improvements",
+    "icon": "UI/Shared/Icons/Vendor/Optics/T_UI_Vendor_SGHT_013.png",
+    "tags": ["Item.Context.Equippable", "Item.Attachment.Sight.Short"],
+    "grid": [1, 1],
+    "maxStack": 1,
+    "weight": 0.13,
+    "unlock": {
+      "role": "Wardog",
+      "level": 17,
+      "cost": 5000
+    },
+    "vendor": []
+  },
+  {
+    "id": "Id.Item.RK6ForeGrip",
+    "kind": "item",
+    "asset": "Content/Items/Attachments/Foregrips/RK6/ID_RK6_Grip",
+    "name": "RK6 Tactical Foregrip",
+    "subtitle": "Foregrip",
+    "description": "Pros:\n- Moderate vertical recoil reduction\n- Moderate spread reduction\n- Moderate ADS stabilization handling\n- Moderate vertical sway reduction\n\nCons:\n- Moderate ADS speed penalty",
+    "icon": "UI/Shared/Icons/Vendor/Grips/T_UI_Vendor_FGRP_001.png",
+    "tags": [
+      "Item.Attachment.Underbarrel",
+      "Item.Context.Equippable",
+      "Item.Context.Animation.Archetype.Foregrip.BumpStop"
+    ],
+    "grid": [1, 1],
+    "maxStack": 1,
+    "weight": 1.05,
+    "unlock": {
+      "role": "Wardog",
+      "level": 15,
+      "cost": 7500
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.RK6ForeGrip",
+        "price": 380,
+        "amount": 1,
+        "categories": ["Vendor.Category.Attachment"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.SuperBandage",
+    "kind": "item",
+    "asset": "Content/Items/Consumables/Bandage/ID_SuperBandage",
+    "name": "Individual First Aid Kit",
+    "subtitle": "Medical // Quick Slot",
+    "description": "- Used to heal Self/Teammates\n- Heals Back to Full Health.",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Icon_Utility_SuperBandage_Textured_128x128.png",
+    "tags": [
+      "Item.Context.QuickSlot",
+      "Item.Context.Medical",
+      "Item.Context.Animation.Type.Unarmed",
+      "Item.Context.Animation.Archetype.EquipRightHand"
+    ],
+    "grid": [1, 1],
+    "maxStack": 2,
+    "weight": 0.16,
+    "unlock": {
+      "role": "Medic",
+      "level": 10,
+      "cost": 25000
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.SuperBandage",
+        "price": 800,
+        "amount": 1,
+        "categories": ["Vendor.Category.Utility"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.StimPen",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Items/StimPen/Content/Data/ID_StimPen",
+    "name": "Stim Pen",
+    "subtitle": "Medical // Quick Slot",
+    "description": "- Unlimited Tactical Sprint for Short Time\n- Reduces Equipment Weight Class\n- Single-Use item",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Item_Stim_BC.png",
+    "tags": [
+      "Item.Context.UtilityItem",
+      "Item.Context.QuickSlot",
+      "Item.Context.Animation.Type.Unarmed",
+      "Item.Context.Animation.Archetype.EquipRightHand",
+      "Item.Context.Medical"
+    ],
+    "grid": [1, 1],
+    "maxStack": 3,
+    "weight": 0.06,
+    "unlock": {
+      "role": "Medic",
+      "level": 16,
+      "cost": 25000
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.StimPen",
+        "price": 250,
+        "amount": 1,
+        "categories": ["Vendor.Category.Utility"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.SGHT_009",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Weapons/Attachments/Sights/SGHT_009/Content/Data/ID_SGHT_009",
+    "name": "Kobra Reflex",
+    "subtitle": "Optic",
+    "description": "Specification:\n- 1.2x magnification\n- Close range combat\n- Fixed zeroing\n\nPros:\n- Moderate ADS speed improvements",
+    "icon": "UI/Shared/Icons/Vendor/Optics/T_UI_Vendor_SGHT_009.png",
+    "tags": ["Item.Context.Equippable", "Item.Attachment.Sight.Short"],
+    "grid": [1, 1],
+    "maxStack": 1,
+    "weight": 0.41,
+    "unlock": {
+      "role": "Wardog",
+      "level": 4,
+      "cost": 7500
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.SGHT_009",
+        "price": 520,
+        "amount": 1,
+        "categories": ["Vendor.Category.Attachment"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.Resuscitator.Standard",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Items/Enox/Content/Data/ResuscitatorTest/ID_Resuscitator_Standard",
+    "name": "Field Resuscitator",
+    "subtitle": "Medical // Quick Slot",
+    "description": "- Field Revive Item\n- Revives Teammates Faster\n- Single-Use Item",
+    "icon": "UI/Shared/Icons/Utility/3D/t_ui_icon_enox_512x512.png",
+    "tags": [
+      "Item.Context.UtilityItem",
+      "Item.Context.QuickSlot",
+      "Item.Context.Animation.Type.Unarmed",
+      "Item.Context.Animation.Archetype.EquipRightHand",
+      "Item.Context.Medical"
+    ],
+    "grid": [1, 2],
+    "maxStack": 1,
+    "weight": 0.39,
+    "unlock": {
+      "role": "Medic",
+      "level": 2,
+      "cost": 10000
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.Resuscitator.Standard",
+        "price": 425,
+        "amount": 1,
+        "categories": ["Vendor.Category.Utility"]
+      }
+    ]
+  },
+  {
+    "id": "ID.Item.SmokeGrenade.White",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Items/SmokeGrenade/Content/Data/ColourVariants/ID_SmokeGrenade_White",
+    "name": "M18 Smoke Grenade: White",
+    "subtitle": "Tactical // Quick Slot",
+    "description": "- Emits a cloud of White Smoke",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Icon_Utility_Smoke_Textured_512x512_TEMP.png",
+    "tags": [
+      "Item.Context.UtilityItem",
+      "Item.Context.QuickSlot",
+      "Item.Context.Animation.Type.Unarmed",
+      "Item.Context.Animation.Archetype.EquipRightHand"
+    ],
+    "grid": [1, 1],
+    "maxStack": 2,
+    "weight": 0.54,
+    "unlock": {
+      "role": "Medic",
+      "level": 5,
+      "cost": 7500
+    },
+    "vendor": [
+      {
+        "tag": "ID.Item.SmokeGrenade.White",
+        "price": 100,
+        "amount": 1,
+        "categories": ["Vendor.Category.Utility"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.CombatBow",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Items/CombatBow/Content/Data/DataAssets/ID_CombatBow",
+    "name": "Compound Bow",
+    "subtitle": "Equipment",
+    "description": "- Pull & Release\n- Standard Arrows",
+    "icon": "UI/Shared/Icons/Weapons/3D/Session/T_UI_Weapon_Bow_BC.png",
+    "tags": [
+      "Item.Context.Equippable",
+      "Inventory.Slot.Primary",
+      "Item.Weapon",
+      "Item.Context.Animation.Archetype.Bow",
+      "Item.Archetype.Bow",
+      "Item.Context.Animation.Type.Bow"
+    ],
+    "grid": [6, 2],
+    "maxStack": 1,
+    "weight": 1.3,
+    "unlock": {
+      "role": "Recon",
+      "level": 16,
+      "cost": 150000
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.CombatBow",
+        "price": 1350,
+        "amount": 1,
+        "categories": ["Vendor.Category.Weapon.Primary"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.Arrow",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Items/CombatBow/Content/Data/DataAssets/Arrow/ID_Arrow_Combat",
+    "name": "Arrow",
+    "subtitle": "Ammunition",
+    "description": "- Metal broadhead arrow\n- Effective against unarmored targets",
+    "icon": "UI/Shared/Icons/Attachments/3D/T_UI_Magazine_Bow_BC.png",
+    "tags": ["Item.Ammo", "Item.Caliber.Arrow"],
+    "grid": [1, 3],
+    "maxStack": 10,
+    "weight": 0.01,
+    "unlock": {
+      "role": "Recon",
+      "level": 16,
+      "cost": 0
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.Arrow",
+        "price": 75,
+        "amount": 5,
+        "categories": ["Vendor.Category.Ammo", "Vendor.Category.AmmoLoose"]
+      }
+    ]
+  }
+]
