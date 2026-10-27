@@ -1,0 +1,64 @@
+[
+  {
+    "id": "Item.Caliber.84mm",
+    "asset": "Content/GameMechanics/Inventory/Equipment/Caliber/84mm/DA_84mm_ProjectileData",
+    "damage": 100,
+    "damageType": "Meta.Damage.Explosive.Rocket.84mm",
+    "damageContext": [],
+    "massKg": 2.3,
+    "diameterMm": 84,
+    "lengthMm": 254,
+    "drag": {
+      "model": "GC (Cylinder)"
+    },
+    "typicalSpeed": 224,
+    "penetration": {
+      "penetrates": false,
+      "penetratesThinSurfaces": true,
+      "ricochetMinAngle": 91
+    },
+    "explosive": {
+      "radius": 10,
+      "effectiveRadius": 4,
+      "falloff": 1,
+      "bluntDamage": 120
+    },
+    "suppression": 0.85,
+    "propulsion": {
+      "thrustSpeed": 220
+    },
+    "items": ["Id.Item.84mm"]
+  },
+  {
+    "id": "Item.Caliber.93mm",
+    "asset": "Content/GameMechanics/Inventory/Equipment/Caliber/93mm/DA_93mm_ProjectileData",
+    "damage": 110,
+    "damageType": "Meta.Damage.Explosive.Rocket.93mm",
+    "damageContext": [],
+    "massKg": 2,
+    "diameterMm": 93,
+    "lengthMm": 720,
+    "drag": {
+      "coefficient": 1.4,
+      "model": "GC (Cylinder)"
+    },
+    "typicalSpeed": 120,
+    "penetration": {
+      "penetrates": false,
+      "penetratesThinSurfaces": true,
+      "ricochetMinAngle": 91
+    },
+    "explosive": {
+      "radius": 12,
+      "effectiveRadius": 2.5,
+      "falloff": 0.9,
+      "bluntDamage": 120
+    },
+    "suppression": 0.9,
+    "propulsion": {
+      "thrustSpeed": 170,
+      "fuel": 100
+    },
+    "items": ["Id.Item.93mm"]
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "Id.Item.84mm",
+    "kind": "item",
+    "asset": "Content/Items/Resources/Ammo/84mm/ID_84mm",
+    "name": "84mm",
+    "subtitle": "Ammunition",
+    "description": "- Anti-tank Shell\n- 25M minimum arming distance",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Item_84MM_BC.png",
+    "tags": ["Item.Ammo", "Item.Caliber.84mm"],
+    "grid": [2, 1],
+    "maxStack": 1,
+    "weight": 3.5,
+    "unlock": null,
+    "vendor": [
+      {
+        "tag": "Id.Item.84mm",
+        "price": 200,
+        "amount": 1,
+        "categories": ["Vendor.Category.Ammo", "Vendor.Category.AmmoLoose"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.93mm",
+    "kind": "item",
+    "asset": "Content/Items/Resources/Ammo/93mm/ID_93mm",
+    "name": "93mm",
+    "subtitle": "Ammunition",
+    "description": "- Un-guided self-propelled rocket\n- 16M minimum arming distance",
+    "icon": "UI/Shared/Icons/Attachments/3D/T_UI_Icon_Attachment_93mm_Round_Textured_512x512.png",
+    "tags": ["Item.Ammo", "Item.Caliber.93mm"],
+    "grid": [3, 1],
+    "maxStack": 1,
+    "weight": 2.6,
+    "unlock": {
+      "role": "Support",
+      "level": 6,
+      "cost": 0
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.93mm",
+        "price": 200,
+        "amount": 1,
+        "categories": ["Vendor.Category.Ammo", "Vendor.Category.AmmoLoose"]
+      }
+    ]
+  }
+]

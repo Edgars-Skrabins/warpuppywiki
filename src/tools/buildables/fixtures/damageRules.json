@@ -1,0 +1,322 @@
+[
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["DamageType.Melee"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "None",
+    "operation": "Percentage_Ongoing",
+    "amount": -10
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["Kinetic.Impact.Throwable"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Melee",
+    "operation": "Percentage_Ongoing",
+    "amount": -100
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["Kinetic.Impact.ExplosiveBlunt"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Melee",
+    "operation": "Percentage_Ongoing",
+    "amount": -50
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["Bullet"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": -80
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["AmmoModifier.ArmorPiercing", "Bullet"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "AmmoModifier",
+    "operation": "Percentage_Ongoing",
+    "amount": 80
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["Bullet", "AmmoModifier.HollowPoint"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "AmmoModifier",
+    "operation": "Percentage_Ongoing",
+    "amount": -60
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["Explosive.Rocket"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": 45
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["Explosive.Grenade"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "CaliberEffectiveness",
+    "operation": "Percentage_Ongoing",
+    "amount": -50
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["Explosive.Utility"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "CaliberEffectiveness",
+    "operation": "Percentage_Ongoing",
+    "amount": -50
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["Explosive.Utility.C4"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "CaliberEffectiveness",
+    "operation": "Percentage_Ongoing",
+    "amount": 50
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["Explosive.Utility.IED"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "CaliberEffectiveness",
+    "operation": "Percentage_Ongoing",
+    "amount": 200
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["Explosive.Rocket.120mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "AmmoModifier",
+    "operation": "Percentage_Ongoing",
+    "amount": -30
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["Explosive.Rocket.155mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "AmmoModifier",
+    "operation": "Percentage_Ongoing",
+    "amount": -86
+  },
+  {
+    "entity": "Buildable.AirRaidShelter",
+    "source": ["Explosive.Rocket.125mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "AmmoModifier",
+    "operation": "Percentage_Ongoing",
+    "amount": -30
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["DamageType.Melee"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "None",
+    "operation": "Percentage_Ongoing",
+    "amount": -80
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Kinetic.Impact.Throwable"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Melee",
+    "operation": "Percentage_Ongoing",
+    "amount": -100
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Kinetic.Impact.ExplosiveBlunt"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Melee",
+    "operation": "Percentage_Ongoing",
+    "amount": -50
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Explosive.Rocket"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "CaliberEffectiveness",
+    "operation": "Percentage_Ongoing",
+    "amount": 650
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Cannon.30mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "CaliberEffectiveness",
+    "operation": "Percentage_Ongoing",
+    "amount": -50
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Explosive.Rocket.120mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "CaliberEffectiveness",
+    "operation": "Percentage_Ongoing",
+    "amount": -50
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Explosive.Rocket.155mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "AmmoModifier",
+    "operation": "Percentage_Ongoing",
+    "amount": -9
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Cannon.35x228mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": -80
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Cannon.20x102mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": -80
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Explosive.Utility"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "CaliberEffectiveness",
+    "operation": "Percentage_Ongoing",
+    "amount": 0
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Explosive.Utility.C4"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "CaliberEffectiveness",
+    "operation": "Percentage_Ongoing",
+    "amount": 200
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Explosive.Utility.IED"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "CaliberEffectiveness",
+    "operation": "Percentage_Ongoing",
+    "amount": 500
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Explosive.Grenade"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "CaliberEffectiveness",
+    "operation": "Percentage_Ongoing",
+    "amount": 0
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Bullet"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": -85
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["AmmoModifier.ArmorPiercing", "Bullet"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "AmmoModifier",
+    "operation": "Percentage_Ongoing",
+    "amount": 100
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Bullet", "AmmoModifier.HollowPoint"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "AmmoModifier",
+    "operation": "Percentage_Ongoing",
+    "amount": -50
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Vehicle.Land.Tracked"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Bone",
+    "operation": "Add",
+    "amount": 1000
+  },
+  {
+    "entity": "Buildable.SandbagWall",
+    "source": ["Explosive.Rocket.125mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "CaliberEffectiveness",
+    "operation": "Percentage_Ongoing",
+    "amount": -50
+  }
+]
