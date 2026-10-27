@@ -86,11 +86,11 @@ const cases: Array<{ name: string; from: string; alias: string; relative: string
 ];
 
 describe("import boundaries", () => {
-  describe.each(cases)("$name", ({ from, alias, relative, allowed }) => {
+  describe.each(cases)("$name", ({ name, from, alias, relative, allowed }) => {
     it.each([
-      ["alias", alias],
-      ["relative", relative],
-    ])(`is ${allowed ? "allowed" : "reported"} with a %s import`, async (_kind, source) => {
+      ["an alias", alias],
+      ["a relative", relative],
+    ])(`${name} is ${allowed ? "allowed" : "reported"} with %s import`, async (_kind, source) => {
       const errors = await boundaryErrors(from, source);
 
       expect(errors).toHaveLength(allowed ? 0 : 1);
