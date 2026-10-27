@@ -59,7 +59,7 @@ Download the game data for every published build into `public/data/` (about 8 MB
 pnpm data:sync
 ```
 
-Optionally, download the map tiles, map overviews, item icons and heightmaps of the latest build into `public/assets/` (about 375 MB). The app works without them and shows placeholders instead:
+Optionally, download the map tiles, map overviews, item icons and heightmaps of the latest build into `public/assets/` (about 345 MB). The app works without them and shows placeholders instead:
 
 ```bash
 pnpm assets:sync
