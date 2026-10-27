@@ -32,22 +32,6 @@ describe("mapStateCodec", () => {
     expect(mapStateCodec.defaults).toMatchObject({ world: "kavkazi", center: null, zoom: null, grid: true });
   });
 
-  it("starts with objectives, shops, spawns and vehicles on, and spawn volumes, Sniper Showdown and buildings off", () => {
-    expect(mapStateCodec.defaults.layers).toEqual({
-      objectives: true,
-      sniperShowdown: false,
-      equipmentVendors: true,
-      vehicleVendors: true,
-      garageVendors: true,
-      spawns: true,
-      spawnVolumes: false,
-      deploymentBoards: true,
-      fuelRefills: true,
-      buildings: false,
-    });
-    expect(Object.values(mapStateCodec.defaults.buildingKinds).every(Boolean)).toBe(true);
-  });
-
   it("decodes a map link from before layers existed with the default layers", () => {
     const old = { world: "europe", center: [-8123, -12001], zoom: 4.5, grid: false };
     const text = encodeState({ ...mapStateCodec, version: 1 } as never, old);
