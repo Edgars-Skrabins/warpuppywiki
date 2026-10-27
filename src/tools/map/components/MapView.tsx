@@ -15,17 +15,31 @@ import { mapCrs, MAX_ZOOM, PAN_MARGIN, worldBounds } from "../leaflet/crs";
 import { latLngToWorld, worldToLatLng } from "../leaflet/projection";
 import type { BuildingKind } from "../logic/buildingStyle";
 import { mapProblem, syncedNativeZoom } from "../logic/mapMeta";
+import { resultLabel } from "../los/losModel";
+import { losClick, losHint, type Los } from "../los/losState";
+import { useLos } from "../los/useLos";
 import { measurePath } from "../plan/measure";
-import { emptyPlan, removePin, removeRingSet, updatePin, type PinChanges, type Plan } from "../plan/plan";
+import {
+  emptyPlan,
+  removePin,
+  removeRingSet,
+  roundPosition,
+  updatePin,
+  type PinChanges,
+  type Plan,
+} from "../plan/plan";
+import { LosLayer, ViewshedObserver } from "../tools/LosLayer";
 import { MeasureLayer, PLAN_PANE } from "../tools/MeasureLayer";
 import { ModeBar } from "../tools/ModeBar";
 import { ModeEvents } from "../tools/ModeEvents";
 import { PinsLayer } from "../tools/PinsLayer";
 import { RangeRingsLayer } from "../tools/RangeRingsLayer";
+import { ViewshedLayer } from "../tools/ViewshedLayer";
 import { useMapMode } from "../tools/useMapMode";
 import { usePlanEditor } from "../tools/usePlanEditor";
 import type { MapState } from "../state";
 import { LayersPanel } from "./LayersPanel";
+import { LosPanel } from "./LosPanel";
 import { MapControls } from "./MapControls";
 import { MissingImagery } from "./MissingImagery";
 import { PlanPanel } from "./PlanPanel";
@@ -39,6 +53,7 @@ export interface MapViewProps {
   onLayerChange: (id: LayerId, on: boolean) => void;
   onBuildingKindChange: (kind: BuildingKind, on: boolean) => void;
   onPlanChange: (update: (plan: Plan) => Plan) => void;
+  onLosChange: (update: (los: Los) => Los) => void;
   shareUrl: string | null;
 }
 
@@ -148,6 +163,7 @@ function LoadedMap({
   onLayerChange,
   onBuildingKindChange,
   onPlanChange,
+  onLosChange,
   shareUrl,
 }: LoadedMapProps) {
   const heightmap = useHeightmap(state.world);
@@ -178,6 +194,26 @@ function LoadedMap({
     },
     [onPlanChange, setEditingPinId],
   );
+  const { los } = state;
+  const losData = useLos(state.world, los, heightmap, layerData.buildings);
+  const [hoverDistance, setHoverDistance] = useState<number | null>(null);
+  const moveObserver = useCallback(
+    (point: Vec2) => onLosChange((current) => ({ ...current, observer: roundPosition(point) })),
+    [onLosChange],
+  );
+  const moveTarget = useCallback(
+    (point: Vec2) => onLosChange((current) => ({ ...current, target: roundPosition(point) })),
+    [onLosChange],
+  );
+  const onMapClick = (point: Vec2) => {
+    if (mode === "los") {
+      onLosChange((current) => losClick(current, point));
+    } else {
+      editor.onMapClick(point);
+    }
+  };
+  const hint = mode === "los" ? losHint(los) : editor.hint;
+  const showLos = mode === "los" || los.observer !== null || los.viewshed.observer !== null;
   const [leafletMap, setLeafletMap] = useState<LeafletMap | null>(null);
   const [ready, setReady] = useState(false);
   const [zoom, setZoom] = useState<number | null>(null);
@@ -231,6 +267,9 @@ function LoadedMap({
                   ),
               )}
               <Pane name={PLAN_PANE} style={PLAN_PANE_STYLE}>
+                {los.tool === "viewshed" && losData.viewshed.result !== null && (
+                  <ViewshedLayer map={map} viewshed={losData.viewshed.result} />
+                )}
                 <RangeRingsLayer map={map} rings={plan.rings} />
                 <MeasureLayer map={map} points={plan.measure} measurement={measurement} />
                 <PinsLayer
@@ -241,8 +280,29 @@ function LoadedMap({
                   onChange={changePin}
                   onDelete={deletePin}
                 />
+                {los.tool === "line" && (
+                  <LosLayer
+                    map={map}
+                    observer={los.observer}
+                    target={los.target}
+                    result={losData.result}
+                    label={losData.result === null ? null : resultLabel(losData.result)}
+                    hoverDistance={hoverDistance}
+                    onObserverMove={moveObserver}
+                    onTargetMove={moveTarget}
+                  />
+                )}
+                {los.tool === "viewshed" && los.viewshed.observer !== null && (
+                  <ViewshedObserver
+                    map={map}
+                    position={los.viewshed.observer}
+                    label="Observer"
+                    glyph="circle"
+                    draggable={false}
+                  />
+                )}
               </Pane>
-              <ModeEvents map={map} mode={mode} onClick={editor.onMapClick} onDoubleClick={editor.onMapDoubleClick} />
+              <ModeEvents map={map} mode={mode} onClick={onMapClick} onDoubleClick={editor.onMapDoubleClick} />
               <CursorTracker map={map} onCursor={setCursor} />
             </>
           )}
@@ -263,7 +323,14 @@ function LoadedMap({
       </div>
       <Readout map={map} cursor={cursor} heightmap={heightmap} zoom={zoom} />
       <div className={styles.tools}>
-        <ModeBar mode={mode} onModeChange={setMode} editor={editor} />
+        <ModeBar
+          mode={mode}
+          onModeChange={setMode}
+          editor={editor}
+          hint={hint}
+          losAvailable={losData.available}
+          losMissing={losData.missing}
+        />
         <PlanPanel
           plan={plan}
           measurement={measurement}
@@ -284,6 +351,17 @@ function LoadedMap({
           shareUrl={shareUrl}
         />
       </div>
+      {showLos && (
+        <LosPanel
+          los={los}
+          onLosChange={onLosChange}
+          eyes={losData.eyes}
+          observerGround={losData.observerGround}
+          result={losData.result}
+          viewshed={losData.viewshed}
+          onHover={setHoverDistance}
+        />
+      )}
     </div>
   );
 }

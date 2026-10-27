@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25937608",
+  "units": "meters",
+  "stanceTransitions": [
+    {
+      "from": "Stand",
+      "to": "Crouch",
+      "seconds": 0.3
+    },
+    {
+      "from": "Crouch",
+      "to": "Prone",
+      "seconds": 0.4
+    },
+    {
+      "from": "Prone",
+      "to": "Crouch",
+      "seconds": 0.5
+    },
+    {
+      "from": "Crouch",
+      "to": "Stand",
+      "seconds": 0.3
+    }
+  ],
+  "ground": {
+    "minSpeed": 0.8,
+    "backMaxSpeedScale": 0.7,
+    "strafeMaxSpeedScale": 0.7,
+    "forwardStrafeScale": 0.6,
+    "forwardStrafeScaleSprinting": 0.3503,
+    "slowWalk": {
+      "Slow": 0.2,
+      "Moderate": 0.4,
+      "Fast": 0.6
+    },
+    "leanTime": 0.55,
+    "unleanTime": 0.35,
+    "blockSprintTime": 0.8,
+    "blockTacticalSprintTime": 0.6,
+    "minStartTacticalSprint": 0.2
+  },
+  "jump": {
+    "velocity": 3.2,
+    "maxStamina": 150,
+    "staminaCost": 50,
+    "staminaRegenPerSecond": 50,
+    "cooldown": 0.05
+  },
+  "falling": {
+    "maxSpeed": 3,
+    "airControl": 0.2,
+    "terminalSpeed": 53,
+    "landingDamage": [
+      {
+        "speed": 6.7,
+        "damage": 0
+      },
+      {
+        "speed": 8.75,
+        "damage": 100
+      },
+      {
+        "speed": 10.8,
+        "damage": 200
+      }
+    ]
+  },
+  "ladder": {
+    "climbUpMaxSpeed": 1.6,
+    "climbDownMaxSpeed": 1.6,
+    "slideDownSpeed": 3.2
+  },
+  "bodyDragging": {
+    "backMaxSpeedScale": 0.7,
+    "strafeMaxSpeedScale": 0.7,
+    "forwardStrafeScale": 0.6,
+    "backwardStrafeScale": 0.35
+  },
+  "stamina": {
+    "regenPerSecond": 20,
+    "regenDelay": 0,
+    "depletedRegenDelay": 2,
+    "stanceRegenPerSecond": 50,
+    "stanceRegenDelay": 0,
+    "stanceCooldown": 0.15
+  },
+  "slopes": {
+    "maxWalkableAngle": 55
+  },
+  "friction": 6,
+  "swimming": {
+    "waterAcceleration": 40,
+    "inputDeceleration": 5
+  },
+  "vaulting": {
+    "vaultDistance": 0.74,
+    "baseTraversalSpeed": 6
+  },
+  "mantling": {
+    "maxHeightAboveLedge": 0.55,
+    "forwardOnlyHeight": 1.275,
+    "maxTargetFloorHeight": 0.35,
+    "maxWallWidth": 0.3,
+    "maxWallAngle": 60,
+    "baseScaleOverSpeed": 2
+  },
+  "climbing": {
+    "maxLedgeLookAngle": 60,
+    "baseTraversalSpeed": 1.45,
+    "baseScaleOverSpeed": 1.45
+  },
+  "parachute": {
+    "minFallHeight": 1,
+    "gliderAcceleration": 12.5,
+    "pullUpDragAcceleration": 15,
+    "pullUpStaminaPerSecond": 50,
+    "pullUpStaminaRegenPerSecond": 30,
+    "minPitch": -10,
+    "maxPitch": 15,
+    "maxRoll": 20
+  },
+  "stances": [
+    {
+      "name": "Stand",
+      "capsuleHalfHeight": 0.96,
+      "capsuleRadius": 0.34,
+      "eyeHeight": 1.68,
+      "staminaCost": 20,
+      "maxSpeedMultiplier": 0.8
+    },
+    {
+      "name": "Crouch",
+      "capsuleHalfHeight": 0.68,
+      "capsuleRadius": 0.34,
+      "eyeHeight": 1.18,
+      "staminaCost": 30,
+      "maxSpeedMultiplier": 0.5
+    },
+    {
+      "name": "Prone",
+      "capsuleHalfHeight": 0.34,
+      "capsuleRadius": 0.34,
+      "eyeHeight": 0.36,
+      "staminaCost": 50,
+      "maxSpeedMultiplier": 0.15
+    }
+  ]
+}

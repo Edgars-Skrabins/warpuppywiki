@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const MAP_MODES = ["pan", "measure", "rings", "pin"] as const;
+export const MAP_MODES = ["pan", "measure", "rings", "pin", "los"] as const;
 
 export type MapMode = (typeof MAP_MODES)[number];
 
@@ -9,6 +9,7 @@ export const MODE_LABELS: Record<MapMode, string> = {
   measure: "Measure",
   rings: "Range rings",
   pin: "Pin",
+  los: "Line of sight",
 };
 
 export const MODE_HINTS: Record<MapMode, string | null> = {
@@ -16,6 +17,7 @@ export const MODE_HINTS: Record<MapMode, string | null> = {
   measure: "Click to add points. Double-click or Enter to finish.",
   rings: "Click to place a ring set.",
   pin: "Click to place a pin.",
+  los: null,
 };
 
 export function isTypingTarget(target: EventTarget | null): boolean {
