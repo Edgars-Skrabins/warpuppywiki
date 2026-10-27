@@ -1,0 +1,67 @@
+.standard {
+  --zone-color: var(--color-accent);
+}
+
+.sniperShowdown {
+  --zone-color: var(--color-text);
+}
+
+.zone {
+  stroke: var(--zone-color);
+  stroke-width: 2px;
+  fill: var(--zone-color);
+  fill-opacity: 0.08;
+}
+
+.hotZone {
+  stroke: var(--zone-color);
+  stroke-width: 1.5px;
+  stroke-dasharray: 2 5;
+  fill: none;
+}
+
+.never {
+  stroke-dasharray: 10 8;
+  fill-opacity: 0.02;
+}
+
+.highlight {
+  stroke-width: 3px;
+  fill-opacity: 0.16;
+}
+
+.label {
+  overflow: visible;
+}
+
+.labelText {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  padding: 0 var(--space-1);
+  font-family: var(--font-condensed);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-caps);
+  line-height: 1.4;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.standardLabel {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.sniperShowdownLabel {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.neverLabel {
+  border: 1px dashed var(--color-border-control);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+}

@@ -4,12 +4,19 @@ import { MapContainer, useMap, useMapEvents } from "react-leaflet";
 import { useAssetsManifest, useWorldData, type MapFile } from "@/core/data";
 import { useHeightmap, type Vec2 } from "@/core/maps";
 import { DataStateView, ErrorState, LoadingState } from "@/ui";
+import { BuildingsLayer } from "../layers/BuildingsLayer";
 import { GridLayer } from "../layers/GridLayer";
+import { LAYERS, type LayerId } from "../layers/layerDefinitions";
+import { ObjectivesLayer } from "../layers/ObjectivesLayer";
+import { ObjectsLayer } from "../layers/ObjectsLayer";
 import { TileLayer } from "../layers/TileLayer";
+import { useLayerData } from "../layers/useLayerData";
 import { mapCrs, MAX_ZOOM, PAN_MARGIN, worldBounds } from "../leaflet/crs";
 import { latLngToWorld, worldToLatLng } from "../leaflet/projection";
+import type { BuildingKind } from "../logic/buildingStyle";
 import { mapProblem, syncedNativeZoom } from "../logic/mapMeta";
 import type { MapState } from "../state";
+import { LayersPanel } from "./LayersPanel";
 import { MapControls } from "./MapControls";
 import { MissingImagery } from "./MissingImagery";
 import { Readout } from "./Readout";
@@ -19,7 +26,11 @@ export interface MapViewProps {
   state: MapState;
   onViewChange: (center: Vec2, zoom: number) => void;
   onGridChange: (grid: boolean) => void;
+  onLayerChange: (id: LayerId, on: boolean) => void;
+  onBuildingKindChange: (kind: BuildingKind, on: boolean) => void;
 }
+
+const OBJECT_LAYERS = LAYERS.filter((definition) => definition.objectKinds.length > 0);
 
 interface ViewSyncProps {
   map: MapFile;
@@ -114,8 +125,18 @@ interface LoadedMapProps extends MapViewProps {
   maxNativeZoom: number | null;
 }
 
-function LoadedMap({ map, maxNativeZoom, state, onViewChange, onGridChange }: LoadedMapProps) {
+function LoadedMap({
+  map,
+  maxNativeZoom,
+  state,
+  onViewChange,
+  onGridChange,
+  onLayerChange,
+  onBuildingKindChange,
+}: LoadedMapProps) {
   const heightmap = useHeightmap(state.world);
+  const layerData = useLayerData(state.world);
+  const { layers } = state;
   const [leafletMap, setLeafletMap] = useState<LeafletMap | null>(null);
   const [ready, setReady] = useState(false);
   const [zoom, setZoom] = useState<number | null>(null);
@@ -148,12 +169,41 @@ function LoadedMap({ map, maxNativeZoom, state, onViewChange, onGridChange }: Lo
             <>
               {maxNativeZoom !== null && <TileLayer map={map} world={state.world} maxNativeZoom={maxNativeZoom} />}
               {state.grid && <GridLayer map={map} />}
+              {layers.buildings && (
+                <BuildingsLayer map={map} buildings={layerData.buildings} kinds={state.buildingKinds} />
+              )}
+              {layers.objectives && layerData.standard !== null && (
+                <ObjectivesLayer map={map} config={layerData.standard} variant="standard" title="Control zone" />
+              )}
+              {layers.objectives && layers.sniperShowdown && layerData.sniperShowdown !== null && (
+                <ObjectivesLayer
+                  map={map}
+                  config={layerData.sniperShowdown}
+                  variant="sniperShowdown"
+                  title="Sniper Showdown zone"
+                />
+              )}
+              {OBJECT_LAYERS.map(
+                (definition) =>
+                  layers[definition.id] && (
+                    <ObjectsLayer key={definition.id} map={map} objects={layerData.objects[definition.id] ?? []} />
+                  ),
+              )}
               <CursorTracker map={map} onCursor={setCursor} />
             </>
           )}
         </MapContainer>
         {leafletMap && (
-          <MapControls map={map} leafletMap={leafletMap} zoom={zoom} grid={state.grid} onGridChange={onGridChange} />
+          <MapControls map={map} leafletMap={leafletMap} zoom={zoom} grid={state.grid} onGridChange={onGridChange}>
+            <LayersPanel
+              data={layerData}
+              layers={layers}
+              buildingKinds={state.buildingKinds}
+              zoom={zoom}
+              onLayerChange={onLayerChange}
+              onBuildingKindChange={onBuildingKindChange}
+            />
+          </MapControls>
         )}
         {maxNativeZoom === null && <MissingImagery />}
       </div>
