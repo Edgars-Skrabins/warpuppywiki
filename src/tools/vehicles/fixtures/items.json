@@ -1,0 +1,77 @@
+[
+  {
+    "id": "Vehicle.Variant.Air.Rotary.Havoc.Default",
+    "kind": "vehicle",
+    "asset": "Plugins/GameFeatures/Vehicles/ROT_02/Content/Variants/ID_ROT_02_Default",
+    "name": "Havoc",
+    "subtitle": "Combat Helicopter",
+    "description": "2 Seat. Attack Helicopter",
+    "icon": "UI/Shared/Icons/Vehicles/3D/T_UI_Vendor_Havoc.png",
+    "tags": [],
+    "grid": [5, 4],
+    "maxStack": 1,
+    "unlock": {
+      "role": "Pilot",
+      "level": 35,
+      "cost": 650000
+    },
+    "vendor": [
+      {
+        "tag": "Vehicle.Variant.Air.Rotary.Havoc.Default",
+        "price": 28000,
+        "amount": 1,
+        "categories": ["Vendor.Category.Vehicle.Air", "Vendor.Category.Vehicle.Blueprints"]
+      }
+    ]
+  },
+  {
+    "id": "Vehicle.Variant.Air.Rotary.Littlebird.MountedMachineGuns",
+    "kind": "vehicle",
+    "asset": "Plugins/GameFeatures/Vehicles/ROT_03_WeaponVariants/Content/Variants/ID_ROT_03_MountedMachineGuns",
+    "name": "AH-6M [Miniguns]",
+    "subtitle": "Combat Helicopter",
+    "description": "Small Attack Helicopter with 2 Miniguns",
+    "icon": "UI/Shared/Icons/Vehicles/3D/T_UI_Vehicle_LittleBird_GUNS_BC.png",
+    "tags": [],
+    "grid": [4, 4],
+    "maxStack": 1,
+    "unlock": {
+      "role": "Pilot",
+      "level": 8,
+      "cost": 125000
+    },
+    "vendor": [
+      {
+        "tag": "Vehicle.Variant.Air.Rotary.Littlebird.MountedMachineGuns",
+        "price": 12000,
+        "amount": 1,
+        "categories": ["Vendor.Category.Vehicle.Air", "Vendor.Category.Vehicle.Blueprints"]
+      }
+    ]
+  },
+  {
+    "id": "Vehicle.Variant.Land.Tracked.TNK_04.Default",
+    "kind": "vehicle",
+    "asset": "Plugins/GameFeatures/Vehicles/TNK_04/Content/Variants/ID_TNK_04",
+    "name": "T-72B3",
+    "subtitle": "Heavy Armored Vehicle",
+    "description": "3 Seat. Heavy Armored Vehicle",
+    "icon": "UI/Shared/Icons/Vehicles/3D/T_UI_Vendor_TNK_04.png",
+    "tags": [],
+    "grid": [6, 4],
+    "maxStack": 1,
+    "unlock": {
+      "role": "Driver",
+      "level": 20,
+      "cost": 250000
+    },
+    "vendor": [
+      {
+        "tag": "Vehicle.Variant.Land.Tracked.TNK_04.Default",
+        "price": 16000,
+        "amount": 1,
+        "categories": ["Vendor.Category.Vehicle.Land", "Vendor.Category.Vehicle.Blueprints"]
+      }
+    ]
+  }
+]

@@ -1,0 +1,322 @@
+[
+  {
+    "entity": "Vehicle",
+    "source": ["AmmoModifier.HollowPoint"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "AmmoModifier",
+    "operation": "Percentage_Ongoing",
+    "amount": -40
+  },
+  {
+    "entity": "Vehicle",
+    "source": ["AmmoModifier.HollowPoint"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "AmmoModifier",
+    "operation": "Percentage_Ongoing",
+    "amount": 40
+  },
+  {
+    "entity": "Vehicle",
+    "source": ["Kinetic.Impact.Ricochet"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Ricochet",
+    "operation": "Percentage_Ongoing",
+    "amount": 0
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Bullet"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Armor",
+    "operation": "Percentage_Ongoing",
+    "amount": -95
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Bullet", "AmmoModifier.ArmorPiercing"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Armor",
+    "operation": "Percentage_Ongoing",
+    "amount": 17.5
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Bullet", "AmmoModifier.HollowPoint"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Armor",
+    "operation": "Percentage_Ongoing",
+    "amount": -20
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Kinetic.Impact.Ricochet"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Ricochet",
+    "operation": "Percentage_Ongoing",
+    "amount": -85
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Bullet.308Win"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Armor",
+    "operation": "Percentage_Ongoing",
+    "amount": -50
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Rocket", "Explosive.Radius.Inner"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": 200
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Grenade", "Explosive.Radius.Inner"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": -35
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Utility.ATMine"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": 200
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Utility.C4"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Armor",
+    "operation": "Percentage_Ongoing",
+    "amount": -20
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Utility.IED"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Armor",
+    "operation": "Percentage_Ongoing",
+    "amount": 150
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Utility.Claymore"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Armor",
+    "operation": "Percentage_Ongoing",
+    "amount": -75
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Cannon.30mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": -70
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Cannon.35x228mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": -85
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Rocket.120mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": 250
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Rocket.155mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": 250
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Rocket"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": ["Vehicle.Wheel.Left.Front", "Vehicle.Wheel.Right.Front"],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": 27.5
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Rocket"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": ["Vehicle.Wheel.Left.Rear", "Vehicle.Wheel.Right.Rear"],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": 45
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Bullet"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": ["Vehicle.FuelTank"],
+    "category": "Bone",
+    "operation": "Percentage_Ongoing",
+    "amount": 400
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Bullet"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [
+      "Vehicle.Wheel.Left.Front",
+      "Vehicle.Wheel.Left.Rear",
+      "Vehicle.Wheel.Right.Front",
+      "Vehicle.Wheel.Right.Rear"
+    ],
+    "category": "Bone",
+    "operation": "Percentage_Ongoing",
+    "amount": 500
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Bullet"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": ["Vehicle.MainBody"],
+    "category": "Bone",
+    "operation": "Percentage_Ongoing",
+    "amount": -50
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Rocket.84mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": 30
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Rocket.93mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": -70
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Grenade.40mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [
+      "Vehicle.Wheel.Right.Front",
+      "Vehicle.Wheel.Right.Rear",
+      "Vehicle.Wheel.Left.Front",
+      "Vehicle.Wheel.Left.Rear"
+    ],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": 75
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Rocket.120x800mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": -35
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Cannon.20x102mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": -85
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Rocket.122mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": -55
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Drone"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": 350
+  },
+  {
+    "entity": "Vehicle.Land.Wheeled.Humvee.Default",
+    "source": ["Explosive.Rocket.125mm"],
+    "target": [],
+    "instigator": [],
+    "hitLocations": [],
+    "category": "Calibre",
+    "operation": "Percentage_Ongoing",
+    "amount": 250
+  }
+]
