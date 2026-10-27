@@ -24,7 +24,7 @@ const tools = [
 
 const featuredTools = [fakeTool({ id: "loadout", name: "Loadout builder", category: "combat" }), ...tools];
 
-function renderAppWithAssets(appTools: readonly ToolDefinition[]) {
+function renderAppWithAssets(appTools: readonly ToolDefinition[], assetsManifest: object = manifest) {
   stubDataFetch();
   const dataFetch = globalThis.fetch;
   vi.stubGlobal(
@@ -33,7 +33,10 @@ function renderAppWithAssets(appTools: readonly ToolDefinition[]) {
       const url = input instanceof Request ? input.url : input.toString();
       return url.endsWith("assets/manifest.json")
         ? Promise.resolve(
-            new Response(JSON.stringify(manifest), { status: 200, headers: { "Content-Type": "application/json" } }),
+            new Response(JSON.stringify(assetsManifest), {
+              status: 200,
+              headers: { "Content-Type": "application/json" },
+            }),
           )
         : dataFetch(input);
     }),
@@ -113,5 +116,27 @@ describe("HomePage", () => {
     const featured = screen.getByRole("region", { name: "Featured tools" });
     expect(featured.querySelectorAll("img")).toHaveLength(0);
     expect(featured.querySelectorAll("svg")).toHaveLength(3);
+  });
+
+  it("requests the featured renders as webp when the assets manifest says so", async () => {
+    renderAppWithAssets(featuredTools, { ...manifest, iconFormat: "webp" });
+
+    const featured = screen.getByRole("region", { name: "Featured tools" });
+    await waitFor(() => expect(featured.querySelectorAll("img")).toHaveLength(3));
+    expect(Array.from(featured.querySelectorAll("img"), (image) => image.getAttribute("src"))).toEqual([
+      `${import.meta.env.BASE_URL}assets/icons/UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_001v2.webp`,
+      `${import.meta.env.BASE_URL}assets/icons/UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_008.webp`,
+      `${import.meta.env.BASE_URL}assets/maps/kavkazi/tiles/2/1/2.webp`,
+    ]);
+  });
+
+  it("keeps the stored png paths when the assets manifest has no icon format", async () => {
+    renderAppWithAssets(featuredTools);
+
+    const featured = screen.getByRole("region", { name: "Featured tools" });
+    await waitFor(() => expect(featured.querySelectorAll("img")).toHaveLength(3));
+    const sources = Array.from(featured.querySelectorAll("img"), (image) => image.getAttribute("src"));
+    expect(sources[0]).toMatch(/T_UI_Vendor_WEPN_001v2\.png$/);
+    expect(sources[1]).toMatch(/T_UI_Vendor_WEPN_008\.png$/);
   });
 });

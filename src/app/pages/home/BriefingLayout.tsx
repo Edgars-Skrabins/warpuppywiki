@@ -8,14 +8,25 @@ import { ToolStatusBadge } from "../../ToolStatusBadge";
 import styles from "./BriefingLayout.module.css";
 import { ART, FEATURED } from "./featuredArt";
 
-function FeatureCard({ tool, hasAssets, priority }: { tool: ToolDefinition; hasAssets: boolean; priority: boolean }) {
+function FeatureCard({
+  tool,
+  hasAssets,
+  webp,
+  priority,
+}: {
+  tool: ToolDefinition;
+  hasAssets: boolean;
+  webp: boolean;
+  priority: boolean;
+}) {
   const art = ART[tool.id];
+  const artPath = art && webp ? art.path.replace(/\.png$/i, ".webp") : art?.path;
   return (
     <Link to={`/${tool.id}`} className={styles.feature}>
       <span className={art?.kind === "map" ? styles.artMap : styles.art}>
         {hasAssets && art ? (
           <img
-            src={`${import.meta.env.BASE_URL}assets/${art.path}`}
+            src={`${import.meta.env.BASE_URL}assets/${artPath}`}
             alt=""
             fetchPriority={priority ? "high" : undefined}
           />
@@ -38,6 +49,7 @@ function FeatureCard({ tool, hasAssets, priority }: { tool: ToolDefinition; hasA
 export function BriefingLayout({ tools }: { tools: readonly ToolDefinition[] }) {
   const assets = useAssetsManifest();
   const hasAssets = assets.status === "success" && assets.data !== null;
+  const webp = assets.status === "success" && assets.data?.iconFormat === "webp";
   const featured = FEATURED.map((id) => tools.find((tool) => tool.id === id)).filter(
     (tool): tool is ToolDefinition => tool !== undefined,
   );
@@ -48,7 +60,7 @@ export function BriefingLayout({ tools }: { tools: readonly ToolDefinition[] }) 
       {featured.length > 0 && (
         <section aria-label="Featured tools" className={styles.features}>
           {featured.map((tool, index) => (
-            <FeatureCard key={tool.id} tool={tool} hasAssets={hasAssets} priority={index === 0} />
+            <FeatureCard key={tool.id} tool={tool} hasAssets={hasAssets} webp={webp} priority={index === 0} />
           ))}
         </section>
       )}
