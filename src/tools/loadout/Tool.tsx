@@ -1,13 +1,24 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useCatalog, type Catalog } from "@/core/catalog";
 import { useGameDataMany, type DataState, type EquipmentFile, type MetaFile } from "@/core/data";
 import { useUrlState } from "@/core/state";
+import { useWeaponIndex, type WeaponIndex } from "@/core/weapons";
 import { Button, DataStateView, Dialog, LoadingState, Panel } from "@/ui";
 import { GearList } from "./components/GearList";
 import { SlotGrid } from "./components/SlotGrid";
 import { SummaryPanel } from "./components/SummaryPanel";
-import { emptyLoadout, setGearQuantity, setSlotItem, startingBudget, type Loadout } from "./model/loadout";
-import { SLOT_DEFINITIONS } from "./model/slots";
+import {
+  emptyLoadout,
+  setGearQuantity,
+  setSlotItem,
+  setWeaponSetup,
+  startingBudget,
+  type Loadout,
+  type SlotId,
+} from "./model/loadout";
+import { SLOT_DEFINITIONS, slotDefinition } from "./model/slots";
+import { kitStatSources } from "./model/totals";
+import { defaultSetup, validateLoadout } from "./model/weaponSetup";
 import { loadoutCodec } from "./state";
 import styles from "./Tool.module.css";
 
@@ -17,18 +28,23 @@ interface LoadoutData {
   catalog: Catalog;
   equipment: EquipmentFile;
   meta: MetaFile;
+  index: WeaponIndex;
 }
 
 function useLoadoutData(): DataState<LoadoutData> {
   const catalog = useCatalog();
   const files = useGameDataMany(LOADOUT_FILES);
+  const index = useWeaponIndex();
   if (catalog.status !== "success") {
     return catalog;
   }
   if (files.status !== "success") {
     return files;
   }
-  return { status: "success", data: { catalog: catalog.data, ...files.data } };
+  if (index.status !== "success") {
+    return index;
+  }
+  return { status: "success", data: { catalog: catalog.data, ...files.data, index: index.data } };
 }
 
 function isEmpty(loadout: Loadout): boolean {
@@ -50,10 +66,24 @@ function LoadoutSkeleton() {
   );
 }
 
-function LoadoutBuilder({ catalog, equipment, meta }: LoadoutData) {
+function LoadoutBuilder({ catalog, equipment, meta, index }: LoadoutData) {
   const codec = useMemo(() => loadoutCodec(startingBudget(meta)), [meta]);
-  const [loadout, setLoadout] = useUrlState(codec);
+  const [decoded, setDecoded] = useUrlState(codec);
+  const validation = useMemo(() => validateLoadout(decoded, index), [decoded, index]);
+  const loadout = validation.loadout;
+  const setLoadout = useCallback(
+    (update: (prev: Loadout) => Loadout) => setDecoded((prev) => update(validateLoadout(prev, index).loadout)),
+    [setDecoded, index],
+  );
+  const kitSources = useMemo(() => kitStatSources(loadout, catalog, equipment), [loadout, catalog, equipment]);
   const [confirmingClear, setConfirmingClear] = useState(false);
+
+  const changeSlot = (slot: SlotId, itemId: string | null) =>
+    setLoadout((prev) =>
+      itemId !== null && slotDefinition(slot).kind === "weapon"
+        ? setWeaponSetup(prev, slot, defaultSetup(itemId, index, catalog))
+        : setSlotItem(prev, slot, itemId),
+    );
 
   return (
     <div className={styles.layout}>
@@ -69,7 +99,11 @@ function LoadoutBuilder({ catalog, equipment, meta }: LoadoutData) {
           <SlotGrid
             loadout={loadout}
             catalog={catalog}
-            onSlotChange={(slot, itemId) => setLoadout((prev) => setSlotItem(prev, slot, itemId))}
+            index={index}
+            kitSources={kitSources}
+            notices={validation.droppedSlots}
+            onSlotChange={changeSlot}
+            onSetupChange={(slot, setup) => setLoadout((prev) => setWeaponSetup(prev, slot, setup))}
           />
         </Panel>
         <GearList

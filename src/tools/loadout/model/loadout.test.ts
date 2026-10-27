@@ -9,7 +9,7 @@ describe("loadout model", () => {
 
   it("stores weapon slots as setups and equipment slots as ids", () => {
     const loadout = setSlotItem(setSlotItem(emptyLoadout(0), "primary", "Id.Item.M4"), "helmet", "Id.Item.LightHelmet");
-    expect(loadout.slots.primary).toEqual({ itemId: "Id.Item.M4" });
+    expect(loadout.slots.primary).toEqual({ itemId: "Id.Item.M4", attachments: {}, magazine: null, looseAmmo: null });
     expect(loadout.slots.helmet).toBe("Id.Item.LightHelmet");
     expect(slotItemId(loadout, "primary")).toBe("Id.Item.M4");
     expect(slotItemId(setSlotItem(loadout, "primary", null), "primary")).toBeNull();

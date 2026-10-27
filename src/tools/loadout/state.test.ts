@@ -15,6 +15,17 @@ describe("loadout URL codec", () => {
     expect(decodeState(codec, encoded)).toEqual({ state: loadout, error: false });
   });
 
+  it("decodes a spec 14 link whose weapon setups have only an item id", () => {
+    const legacy = {
+      ...emptyLoadout(10_000),
+      slots: { ...emptyLoadout(10_000).slots, primary: { itemId: "Id.Item.M4" } },
+    };
+    expect(decodeState(codec, encodeState(codec, legacy as Loadout))).toEqual({
+      state: setSlotItem(emptyLoadout(10_000), "primary", "Id.Item.M4"),
+      error: false,
+    });
+  });
+
   it("defaults to an empty loadout with the starting budget", () => {
     expect(decodeState(codec, null).state).toEqual(emptyLoadout(10_000));
   });

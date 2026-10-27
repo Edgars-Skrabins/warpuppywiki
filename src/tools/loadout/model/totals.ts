@@ -7,14 +7,18 @@ import {
   type AttributeInfo,
   type CombineResult,
   type Modifier,
+  type ModifierSource,
 } from "@/core/modifiers";
-import { slotItemId, type Loadout } from "./loadout";
+import { slotItemId, weaponSetupOf, type Loadout } from "./loadout";
 import { SLOT_DEFINITIONS, type SlotDefinition } from "./slots";
+import { setupEntries, type SetupEntryKind } from "./weaponSetup";
 
-export type CostSection = "weapons" | "armor" | "gear";
+export type CostSection = "weapons" | "attachments" | "ammo" | "armor" | "gear";
 
 export const COST_SECTIONS: readonly { id: CostSection; label: string }[] = [
   { id: "weapons", label: "Weapons" },
+  { id: "attachments", label: "Attachments" },
+  { id: "ammo", label: "Ammunition and magazines" },
   { id: "armor", label: "Armor" },
   { id: "gear", label: "Gear" },
 ];
@@ -25,6 +29,7 @@ export interface LoadoutEntry {
   section: CostSection;
   slot: SlotDefinition | null;
   item: Item;
+  priceTag: string;
   quantity: number;
 }
 
@@ -93,6 +98,12 @@ export interface UnlockSummary {
 
 const ARMOR_SLOTS = new Set(["armor", "helmet"]);
 
+const SETUP_SECTIONS: Record<SetupEntryKind, CostSection> = {
+  attachment: "attachments",
+  magazine: "ammo",
+  ammo: "ammo",
+};
+
 function roundKg(kg: number): number {
   return Math.round(kg * 1000) / 1000;
 }
@@ -109,8 +120,21 @@ export function loadoutEntries(loadout: Loadout, catalog: Catalog): LoadoutEntry
         section: slot.kind === "weapon" ? "weapons" : "armor",
         slot,
         item,
+        priceTag: item.id,
         quantity: 1,
       });
+      const setup = weaponSetupOf(loadout, slot.id);
+      for (const entry of setup === null ? [] : setupEntries(setup, catalog, `${slot.id}:`)) {
+        entries.push({
+          key: entry.key,
+          label: entry.item.name,
+          section: SETUP_SECTIONS[entry.kind],
+          slot: null,
+          item: entry.item,
+          priceTag: entry.priceTag,
+          quantity: entry.quantity,
+        });
+      }
     }
   }
   for (const gear of loadout.gear) {
@@ -122,6 +146,7 @@ export function loadoutEntries(loadout: Loadout, catalog: Catalog): LoadoutEntry
         section: "gear",
         slot: null,
         item,
+        priceTag: item.id,
         quantity: gear.quantity,
       });
     }
@@ -131,7 +156,7 @@ export function loadoutEntries(loadout: Loadout, catalog: Catalog): LoadoutEntry
 
 export function costSummary(loadout: Loadout, catalog: Catalog): CostSummary {
   const lines = loadoutEntries(loadout, catalog).map((entry): CostLine => {
-    const price = catalog.price(entry.item.id);
+    const price = catalog.price(entry.priceTag);
     const unitPrice = price?.price ?? 0;
     return { ...entry, unitPrice, total: unitPrice * entry.quantity, notSold: price === null };
   });
@@ -204,7 +229,13 @@ export function weightSummary(loadout: Loadout, catalog: Catalog, equipment: Equ
   };
 }
 
-export function armorEffects(loadout: Loadout, catalog: Catalog, equipment: EquipmentFile): ArmorEffects[] {
+interface ArmorSource {
+  source: string;
+  item: Item;
+  modifiers: readonly Modifier[];
+}
+
+function armorSources(loadout: Loadout, catalog: Catalog, equipment: EquipmentFile): ArmorSource[] {
   return loadoutEntries(loadout, catalog).flatMap((entry) => {
     if (entry.slot === null || !ARMOR_SLOTS.has(entry.slot.id)) {
       return [];
@@ -213,9 +244,28 @@ export function armorEffects(loadout: Loadout, catalog: Catalog, equipment: Equi
     if (armor === undefined || armor.modifiers.length === 0) {
       return [];
     }
-    const source = armor.name ?? entry.item.name;
-    return [{ source, item: entry.item, effects: effectRows(source, armor.modifiers) }];
+    return [{ source: armor.name ?? entry.item.name, item: entry.item, modifiers: armor.modifiers }];
   });
+}
+
+export function armorEffects(loadout: Loadout, catalog: Catalog, equipment: EquipmentFile): ArmorEffects[] {
+  return armorSources(loadout, catalog, equipment).map(({ source, item, modifiers }) => ({
+    source,
+    item,
+    effects: effectRows(source, modifiers),
+  }));
+}
+
+export function kitStatSources(loadout: Loadout, catalog: Catalog, equipment: EquipmentFile): ModifierSource[] {
+  const sources: ModifierSource[] = armorSources(loadout, catalog, equipment).map(({ source, modifiers }) => ({
+    label: source,
+    modifiers,
+  }));
+  const { weightClass } = weightSummary(loadout, catalog, equipment);
+  if (weightClass !== null && weightClass.modifiers.length > 0) {
+    sources.push({ label: `Weight class: ${weightClass.name}`, modifiers: weightClass.modifiers });
+  }
+  return sources;
 }
 
 export function unlockSummary(loadout: Loadout, catalog: Catalog): UnlockSummary {
