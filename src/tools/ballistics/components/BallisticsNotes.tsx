@@ -1,8 +1,6 @@
 import { Panel } from "@/ui";
 import type { DragModel } from "../logic/dragTables";
 import { AIR_DENSITY, GRAVITY, SPEED_OF_SOUND } from "../logic/trajectory";
-import { LEAD_TARGET_SPEED } from "../logic/rangeCard";
-import { SIGHT_HEIGHT } from "../logic/zero";
 import styles from "./BallisticsNotes.module.css";
 
 export interface DragModelNote {
@@ -31,20 +29,22 @@ export function BallisticsNotes({ dragModels }: { dragModels: readonly DragModel
         </li>
         <li>
           Drag deceleration is ρ v² Cd A / 2m with air density {AIR_DENSITY} kg/m³ and A = π d² / 4. The
-          projectile&apos;s drag coefficient is read as a form factor on a standard drag function, with Mach from{" "}
-          {SPEED_OF_SOUND} m/s.
+          projectile&apos;s drag coefficient is read as a form factor on the standard G7 drag function (G1 where the
+          game data names G1), with Mach from {SPEED_OF_SOUND} m/s. That reading is an interpretation: the game data
+          does not say how the coefficient is used.
         </li>
         {dragModels.map((note) => (
           <li key={note.label}>{dragModelText(note)}</li>
         ))}
         <li>
-          Gravity {GRAVITY} m/s². The sight sits {SIGHT_HEIGHT * 100} cm above the bore, and the bore is angled so the
-          bullet crosses the line of sight at the zero distance.
+          Gravity {GRAVITY} m/s². The bullet is fired along the bore, and drop is measured below the bore line, a
+          straight line along the barrel.
         </li>
         <li>No wind, no change in air density with altitude, no spin drift.</li>
         <li>
-          Holdover is drop ÷ distance in thousandths (mil). Lead is for a target crossing at {LEAD_TARGET_SPEED} m/s.
-          Damage per hit is the projectile&apos;s damage times the weapon&apos;s falloff at that distance.
+          Hold is how far to aim above the bore line, drop ÷ distance in thousandths (mil). Lead uses the target speed
+          you type in and is shown only when you enter one. Damage per hit is the projectile&apos;s damage times the
+          weapon&apos;s falloff at that distance.
         </li>
       </ul>
     </Panel>

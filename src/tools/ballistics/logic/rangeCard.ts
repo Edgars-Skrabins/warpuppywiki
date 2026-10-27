@@ -1,7 +1,5 @@
 import type { TrajectorySample } from "./trajectory";
-import { SIGHT_HEIGHT } from "./zero";
 
-export const LEAD_TARGET_SPEED = 5;
 const FINE_STEP = 25;
 const FINE_LIMIT = 300;
 const COARSE_STEP = 50;
@@ -15,7 +13,7 @@ export interface RangeCardRow {
   energy: number;
   falloff: number;
   damage: number;
-  lead: number;
+  lead: number | null;
 }
 
 export interface RangeCardInput {
@@ -23,7 +21,7 @@ export interface RangeCardInput {
   massKg: number;
   baseDamage: number;
   falloff: (distance: number) => number;
-  sightHeight?: number;
+  targetSpeed: number | null;
 }
 
 export function cardDistances(maxDistance: number): number[] {
@@ -33,38 +31,32 @@ export function cardDistances(maxDistance: number): number[] {
   return distances;
 }
 
-export function heightAboveSight(sample: TrajectorySample, sightHeight: number = SIGHT_HEIGHT): number {
-  return sample.height - sightHeight;
+export function heightAboveBore(sample: TrajectorySample): number {
+  return sample.height;
 }
 
 export function holdoverMils(dropMetres: number, distance: number): number {
   return Math.round((dropMetres / distance) * 1000 * 10) / 10;
 }
 
-export function rangeCard({
-  samples,
-  massKg,
-  baseDamage,
-  falloff,
-  sightHeight = SIGHT_HEIGHT,
-}: RangeCardInput): RangeCardRow[] {
+export function rangeCard({ samples, massKg, baseDamage, falloff, targetSpeed }: RangeCardInput): RangeCardRow[] {
   const maxDistance = samples.length - 1;
   return cardDistances(maxDistance).flatMap((distance) => {
     const sample = samples[distance];
     if (!sample) return [];
-    const drop = heightAboveSight(sample, sightHeight);
+    const drop = heightAboveBore(sample);
     const multiplier = falloff(distance);
     return [
       {
         distance,
         dropCm: drop * 100,
-        mils: holdoverMils(drop, distance),
+        mils: holdoverMils(-drop, distance),
         time: sample.time,
         velocity: sample.velocity,
         energy: 0.5 * massKg * sample.velocity ** 2,
         falloff: multiplier,
         damage: baseDamage * multiplier,
-        lead: sample.time * LEAD_TARGET_SPEED,
+        lead: targetSpeed === null ? null : sample.time * targetSpeed,
       },
     ];
   });
