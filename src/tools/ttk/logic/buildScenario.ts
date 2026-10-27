@@ -1,8 +1,8 @@
 import { sameId, type Catalog } from "@/core/catalog";
 import { HIT_LOCATIONS, hitPattern, type HitLocation, type Scenario, type WornPiece } from "@/core/damage";
 import type { Armor, DamageFile, EquipmentFile } from "@/core/data";
-import type { AmmoOption, MagazineOption, PlayerWeapon, WeaponIndex } from "@/core/weapons";
-import type { MatchupState } from "../state";
+import type { AmmoOption, AmmoTypeKey, MagazineOption, PlayerWeapon, WeaponIndex } from "@/core/weapons";
+import type { Setup, SharedTargetState } from "../state";
 
 export interface MatchupSources {
   index: WeaponIndex;
@@ -83,7 +83,7 @@ export function armorOptions(equipment: EquipmentFile, catalog: Catalog): ArmorO
   };
 }
 
-function findArmor(options: readonly Armor[], id: string | null): Armor | null {
+export function findArmor(options: readonly Armor[], id: string | null): Armor | null {
   return id === null ? null : (options.find((armor) => sameId(armor.id, id)) ?? null);
 }
 
@@ -91,7 +91,7 @@ function isHitLocation(zone: string): zone is HitLocation {
   return HIT_LOCATIONS.some((info) => info.location === zone);
 }
 
-function patternOf(state: MatchupState): readonly HitLocation[] {
+function patternOf(state: SharedTargetState): readonly HitLocation[] {
   return state.placement === "custom" ? state.custom.filter(isHitLocation) : hitPattern(state.placement).locations;
 }
 
@@ -103,9 +103,17 @@ function wornPiece(armor: Armor | null, condition: number): WornPiece | null {
   return covers(armor) ? { armor, durability: (armor.durability ?? 0) * condition } : null;
 }
 
-export function resolveMatchup(state: MatchupState, sources: MatchupSources): ResolvedMatchup | null {
+export function ammoTypesOf(options: readonly AmmoOption[]): AmmoTypeKey[] {
+  return [...new Set(options.map((option) => option.ammoType))];
+}
+
+export function resolveMatchup(
+  shared: SharedTargetState,
+  setup: Setup,
+  sources: MatchupSources,
+): ResolvedMatchup | null {
   const { index } = sources;
-  const weapon = state.weaponId === "" ? defaultWeapon(index) : index.weapon(state.weaponId);
+  const weapon = setup.weaponId === "" ? defaultWeapon(index) : index.weapon(setup.weaponId);
   if (weapon === undefined) {
     return null;
   }
@@ -115,22 +123,22 @@ export function resolveMatchup(state: MatchupState, sources: MatchupSources): Re
   return {
     weapon,
     ammoOptions,
-    ammo: ammoOptions.find((option) => sameId(option.ammoType, state.ammoType)) ?? ammoOptions[0] ?? null,
+    ammo: ammoOptions.find((option) => sameId(option.ammoType, setup.ammoType)) ?? ammoOptions[0] ?? null,
     magazines,
     magazine:
-      (state.magazineId === null
+      (setup.magazineId === null
         ? undefined
-        : magazines.find((option) => sameId(option.attachment.id, state.magazineId ?? ""))) ??
+        : magazines.find((option) => sameId(option.attachment.id, setup.magazineId ?? ""))) ??
       defaultMagazine(weapon, magazines),
     isShotgun: sameId(weapon.damageClass, SHOTGUN_CLASS),
-    pattern: patternOf(state),
-    bodyArmor: findArmor(armor.body, state.bodyArmorId),
-    helmet: findArmor(armor.helmets, state.helmetId),
+    pattern: patternOf(shared),
+    bodyArmor: findArmor(armor.body, shared.bodyArmorId),
+    helmet: findArmor(armor.helmets, shared.helmetId),
   };
 }
 
-export function buildScenario(state: MatchupState, sources: MatchupSources): ScenarioResult {
-  const matchup = resolveMatchup(state, sources);
+export function buildScenario(shared: SharedTargetState, setup: Setup, sources: MatchupSources): ScenarioResult {
+  const matchup = resolveMatchup(shared, setup, sources);
   if (matchup === null) {
     return { ok: false, error: "unknown-weapon", matchup: null };
   }
@@ -144,15 +152,15 @@ export function buildScenario(state: MatchupState, sources: MatchupSources): Sce
     damage: sources.damage,
     weapon: matchup.weapon,
     ammo: matchup.ammo,
-    distance: state.distance,
+    distance: shared.distance,
     pattern: matchup.pattern,
     target: {
-      health: state.health,
-      body: wornPiece(matchup.bodyArmor, state.condition),
-      helmet: wornPiece(matchup.helmet, state.condition),
+      health: shared.health,
+      body: wornPiece(matchup.bodyArmor, shared.condition),
+      helmet: wornPiece(matchup.helmet, shared.condition),
       extras: [matchup.bodyArmor, matchup.helmet].filter((armor): armor is Armor => armor !== null && !covers(armor)),
     },
-    ...(matchup.isShotgun ? { pelletsPerShot: state.pellets } : {}),
+    ...(matchup.isShotgun ? { pelletsPerShot: shared.pellets } : {}),
     magazineCapacity: matchup.magazine?.capacity ?? null,
   };
   return { ok: true, scenario, matchup };

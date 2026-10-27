@@ -17,6 +17,7 @@ import { MAX_LOOSE_ROUNDS, setWeaponSetup, weaponSetupOf, WeaponSetup, type Load
 import { SLOT_DEFINITIONS } from "./slots";
 
 export const MAGAZINE_SLOT = "Magazine";
+export const CHAMBER_SLOT = "Chamber";
 export const DEFAULT_MAGAZINE_COUNT = 4;
 
 const AMMO_TYPE_ORDER = Object.keys(AMMO_TYPE_LABELS) as AmmoTypeKey[];
@@ -29,7 +30,7 @@ export interface SetupEntry {
   key: string;
   kind: SetupEntryKind;
   item: Item;
-  priceTag: string;
+  priceTag: string | null;
   quantity: number;
 }
 
@@ -98,7 +99,7 @@ function findSlot(weapon: PlayerWeapon, slot: string) {
 }
 
 export function attachmentSlots(weapon: PlayerWeapon) {
-  return weapon.visibleSlots.filter((slot) => !sameId(slot.slot, MAGAZINE_SLOT));
+  return weapon.visibleSlots.filter((slot) => !sameId(slot.slot, MAGAZINE_SLOT) && !sameId(slot.slot, CHAMBER_SLOT));
 }
 
 export function hasMagazines(weapon: PlayerWeapon, index: WeaponIndex): boolean {
@@ -206,7 +207,7 @@ export function setupEntries(setup: WeaponSetup, catalog: Catalog, keyPrefix = "
       key: `${keyPrefix}magazine`,
       kind: "magazine",
       item: magazineItem,
-      priceTag: loadedVariation(catalog, magazineItem, magazine.ammoType)?.tag ?? magazineItem.id,
+      priceTag: loadedVariation(catalog, magazineItem, magazine.ammoType)?.tag ?? null,
       quantity: magazine.count,
     });
   }
@@ -224,7 +225,7 @@ export function setupEntries(setup: WeaponSetup, catalog: Catalog, keyPrefix = "
 }
 
 export function entryTotal(entry: Pick<SetupEntry, "priceTag" | "quantity">, catalog: Catalog): number {
-  return (catalog.price(entry.priceTag)?.price ?? 0) * entry.quantity;
+  return ((entry.priceTag === null ? null : catalog.price(entry.priceTag))?.price ?? 0) * entry.quantity;
 }
 
 export function setupCost(setup: WeaponSetup, catalog: Catalog): number {

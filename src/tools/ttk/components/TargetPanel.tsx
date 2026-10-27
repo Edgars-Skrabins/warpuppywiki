@@ -1,7 +1,7 @@
 import type { Armor } from "@/core/data";
 import { NumberField, Select, Slider, formatPercent } from "@/ui";
 import type { ArmorOptions } from "../logic/buildScenario";
-import type { MatchupState } from "../state";
+import type { SharedTargetState } from "../state";
 import styles from "./MatchupPanel.module.css";
 
 const NONE = { id: "none", name: "None" };
@@ -13,9 +13,9 @@ function choices(options: readonly Armor[]): ArmorChoice[] {
 }
 
 export interface TargetPanelProps {
-  state: MatchupState;
+  state: SharedTargetState;
   armor: ArmorOptions;
-  onChange: (patch: Partial<MatchupState>) => void;
+  onChange: (patch: Partial<SharedTargetState>) => void;
 }
 
 export function TargetPanel({ state, armor, onChange }: TargetPanelProps) {

@@ -18,29 +18,8 @@
   min-width: 0;
 }
 
-.toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  min-height: var(--control-height-sm);
-}
-
-.notices {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  min-width: 0;
-}
-
-.notice {
-  color: var(--color-warning);
-  font-size: var(--text-sm);
-}
-
-.copied {
-  color: var(--color-success);
-  font-size: var(--text-sm);
+.tabs {
+  margin-bottom: var(--space-6);
 }
 
 @media (max-width: 900px) {

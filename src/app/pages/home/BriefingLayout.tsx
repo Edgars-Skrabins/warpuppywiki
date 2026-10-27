@@ -5,7 +5,6 @@ import { Icon } from "@/ui";
 import { categoryLabel } from "../../categories";
 import { toolIcon } from "../../toolIcon";
 import { ToolStatusBadge } from "../../ToolStatusBadge";
-import type { HomeLayoutProps } from "./types";
 import styles from "./BriefingLayout.module.css";
 
 const FEATURED = ["loadout", "ttk", "map"] as const;
@@ -13,7 +12,7 @@ const FEATURED = ["loadout", "ttk", "map"] as const;
 const ART: Record<string, { path: string; kind: "render" | "map" }> = {
   loadout: { path: "icons/UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_001v2.png", kind: "render" },
   ttk: { path: "icons/UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_008.png", kind: "render" },
-  map: { path: "maps/kavkazi/overview.webp", kind: "map" },
+  map: { path: "maps/kavkazi/tiles/2/1/2.webp", kind: "map" },
 };
 
 function FeatureCard({ tool, hasAssets }: { tool: ToolDefinition; hasAssets: boolean }) {
@@ -39,7 +38,7 @@ function FeatureCard({ tool, hasAssets }: { tool: ToolDefinition; hasAssets: boo
   );
 }
 
-export function BriefingLayout({ tools }: HomeLayoutProps) {
+export function BriefingLayout({ tools }: { tools: readonly ToolDefinition[] }) {
   const assets = useAssetsManifest();
   const hasAssets = assets.status === "success" && assets.data !== null;
   const featured = FEATURED.map((id) => tools.find((tool) => tool.id === id)).filter(

@@ -25,7 +25,7 @@ export function MagazinePicker({ options, value, catalog, onChange }: MagazinePi
   const unitPrice =
     selected === undefined || value === null
       ? null
-      : (loadedVariation(catalog, selected.item, value.ammoType)?.price.price ?? selected.empty?.price ?? null);
+      : (loadedVariation(catalog, selected.item, value.ammoType)?.price.price ?? null);
   const count = value?.count ?? 0;
 
   return (

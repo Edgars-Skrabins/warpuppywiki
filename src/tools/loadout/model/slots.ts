@@ -11,7 +11,6 @@ export interface SlotDefinition {
 
 export const SLOT_DEFINITIONS: readonly SlotDefinition[] = [
   { id: "primary", label: "Primary", inventorySlot: "Primary", kind: "weapon" },
-  { id: "secondary", label: "Secondary", inventorySlot: "Secondary", kind: "weapon" },
   { id: "sidearm", label: "Sidearm", inventorySlot: "Sidearm", kind: "weapon" },
   { id: "specialist", label: "Specialist", inventorySlot: "Specialist", kind: "weapon" },
   { id: "armor", label: "Body armor", inventorySlot: "Armor", kind: "equipment" },

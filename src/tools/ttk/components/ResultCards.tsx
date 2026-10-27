@@ -1,6 +1,7 @@
-import type { KillResult, ShotResult, WornPiece } from "@/core/damage";
+import type { KillResult, WornPiece } from "@/core/damage";
 import { Badge, formatNumber, formatPercent, formatSeconds } from "@/ui";
 import type { ResolvedMatchup } from "../logic/buildScenario";
+import { shotHealthDamage } from "../logic/shotDamage";
 import styles from "./ResultCards.module.css";
 
 type SupportedKill = Extract<KillResult, { supported: true }>;
@@ -10,10 +11,6 @@ export interface ResultCardsProps {
   matchup: ResolvedMatchup;
   body: WornPiece | null;
   helmet: WornPiece | null;
-}
-
-function shotHealthDamage(shot: ShotResult | undefined): number | null {
-  return shot === undefined ? null : shot.hits.reduce((sum, hit) => sum + hit.healthDamage, 0);
 }
 
 function ttkReason(kill: SupportedKill, matchup: ResolvedMatchup): string | null {

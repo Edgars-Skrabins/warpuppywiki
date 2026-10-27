@@ -3,10 +3,9 @@ import { catalog } from "../fixtures/testData";
 import { itemsForSlot, slotDefinition, SLOT_DEFINITIONS } from "./slots";
 
 describe("slots", () => {
-  it("lists the eight slots in order", () => {
+  it("lists the seven slots in order", () => {
     expect(SLOT_DEFINITIONS.map((slot) => slot.label)).toEqual([
       "Primary",
-      "Secondary",
       "Sidearm",
       "Specialist",
       "Body armor",
@@ -21,7 +20,10 @@ describe("slots", () => {
     expect(primaries).toContain("Id.Item.M4");
     expect(primaries).not.toContain("Id.Item.ArtilleryBarrelTest");
     expect(primaries).not.toContain("ID.Item.BuildTool.Hammer.Large");
-    expect(itemsForSlot(slotDefinition("specialist"), catalog).map((item) => item.name)).toEqual(["Large Hammer"]);
+    expect(itemsForSlot(slotDefinition("specialist"), catalog).map((item) => item.name)).toEqual([
+      "Large Hammer",
+      "RPG-7",
+    ]);
     expect(itemsForSlot(slotDefinition("armor"), catalog).map((item) => item.name)).toEqual([
       "Level 3 Armor",
       "Level 1 Armor",

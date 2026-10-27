@@ -44,6 +44,7 @@ specs/              specs (see below)
 - Import boundaries, enforced by ESLint: `src/tools/X` may import from `src/core` and `src/ui` only; `src/core` may not import from `src/ui`, `src/app` or `src/tools`; `src/ui` may not import from `src/app` or `src/tools`.
 - Game ids and tags are compared case-insensitively through the helpers in `src/core/catalog`, never with `===` on raw strings.
 - The game data is extracted from game files and can be incomplete or contradictory. Code reading it is defensive: optional fields may be absent or `null`, lookups that can miss return `null` or an empty list instead of throwing, contradictory rules fall back to the most permissive reasonable reading, and the UI shows "—" or a short note instead of breaking. Real-data tests report anomalies rather than assume perfect data.
+- Never fill gaps in the game data with guessed or invented values. If the data has no number for something, show "—" or "Not in game data" instead of a made-up default. Values a user types in themselves are allowed, but they must be clearly labelled as the user's input.
 
 ## Conventions
 

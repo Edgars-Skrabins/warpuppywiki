@@ -1,9 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { ItemsFile } from "@/core/data/schemas/items";
 import { RolesFile } from "@/core/data/schemas/roles";
 import { TagsFile } from "@/core/data/schemas/tags";
 import { WeaponsFile } from "@/core/data/schemas/weapons";
-import { buildCatalog } from "./catalog";
+import { buildCatalog, type Catalog } from "./catalog";
 import { hasTag } from "./tags";
 
 const files: Record<string, unknown> = import.meta.glob(
@@ -24,10 +24,14 @@ function dataFile(file: string): unknown {
 }
 
 describe.skipIf(!builds)("catalog against real data", () => {
-  const catalog = buildCatalog({
-    items: ItemsFile.parse(dataFile("items.json")),
-    tags: TagsFile.parse(dataFile("tags.json")),
-    roles: RolesFile.parse(dataFile("roles.json")),
+  let catalog: Catalog;
+
+  beforeAll(() => {
+    catalog = buildCatalog({
+      items: ItemsFile.parse(dataFile("items.json")),
+      tags: TagsFile.parse(dataFile("tags.json")),
+      roles: RolesFile.parse(dataFile("roles.json")),
+    });
   });
 
   it("loads every item", () => {

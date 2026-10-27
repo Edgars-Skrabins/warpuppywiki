@@ -12,6 +12,13 @@
   min-width: 0;
 }
 
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3) var(--space-4);
+}
+
 .aside {
   min-width: 0;
 }
