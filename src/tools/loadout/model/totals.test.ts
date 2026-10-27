@@ -35,6 +35,16 @@ describe("costSummary", () => {
     });
   });
 
+  it("flags a magazine whose loaded ammo type is not sold instead of using the empty price", () => {
+    const setup = WeaponSetup.parse({
+      itemId: "Id.Item.AK74M",
+      magazine: { id: "Id.Item.AK74MMagazine", ammoType: "Slug", count: 2 },
+    });
+    const summary = costSummary(setWeaponSetup(emptyLoadout(10_000), "primary", setup), catalog);
+    expect(summary.sections.find((section) => section.id === "ammo")?.total).toBe(0);
+    expect(summary.notSold.map((line) => line.key)).toContain("primary:magazine");
+  });
+
   it("counts an item that is not sold as $0 and flags it", () => {
     const summary = costSummary(build(1000, { primary: "Id.Item.AK74M" }), catalog);
     expect(summary.total).toBe(0);
