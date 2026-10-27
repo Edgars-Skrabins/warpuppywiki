@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { fieldLabel, summarizeChange, summarizeChanges } from "./summarize";
+import { fieldLabel, formatFieldValue, summarizeChange, summarizeChanges } from "./summarize";
 
 describe("summarizeChange", () => {
   it("shows a number change with its percent", () => {
@@ -74,5 +74,20 @@ describe("summarizeChanges", () => {
     expect(summarizeChanges([{ path: "slots[Sight].blockedItems[]", kind: "added", after: "X" }])).toEqual([
       "+1 blocked item (Sight)",
     ]);
+  });
+});
+
+describe("fieldLabel with positions", () => {
+  it("numbers positional array entries from one", () => {
+    expect(fieldLabel("stages[#1].damageReduction")).toBe("Damage reduction (#2)");
+  });
+});
+
+describe("formatFieldValue", () => {
+  it("formats lists, records, prices and recoil patterns", () => {
+    expect(formatFieldValue("fireModes", ["Automatic", "SemiAutomatic"])).toBe("Automatic, SemiAutomatic");
+    expect(formatFieldValue("damageFalloff[500]", { distance: 500, multiplier: 0 })).toBe("distance 500, multiplier 0");
+    expect(formatFieldValue("vendor[Shop].price", 1500)).toBe("$1,500");
+    expect(formatFieldValue("recoil.pattern", [{ x: 0, y: 1 }])).toBe("1 shot");
   });
 });

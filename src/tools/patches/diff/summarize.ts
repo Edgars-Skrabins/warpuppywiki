@@ -1,5 +1,5 @@
 import { EMPTY_VALUE, formatCash, formatNumber, formatPercent } from "@/ui";
-import { normalizePath, valuesEqual } from "./deepDiff";
+import { isRecord, normalizePath, valuesEqual } from "./deepDiff";
 import type { FieldChange } from "./types";
 
 export const FIELD_LABELS: Readonly<Record<string, string>> = {
@@ -35,6 +35,18 @@ export const FIELD_LABELS: Readonly<Record<string, string>> = {
   "recoil.pattern": "Recoil pattern",
   "recoil.patternResetTime": "Recoil reset time",
   "recoil.viewKickMultiplier": "View kick",
+  "recoil.afterPatternPitch[]": "Pitch after pattern",
+  windupTime: "Windup time",
+  roundsPerBurst: "Rounds per burst",
+  "penetration.effectivenessMultiplier": "Penetration effectiveness",
+  "explosive.radius": "Explosion radius",
+  "explosive.effectiveRadius": "Explosion effective radius",
+  "explosive.minimumDamage": "Explosion minimum damage",
+  "magazine.capacity": "Magazine capacity",
+  "stages[].damageReduction": "Damage reduction",
+  fuelEconomy: "Fuel economy",
+  seats: "Seats",
+  minWeightKg: "Minimum weight",
   "slots[]": "Slot",
   "slots[].items": "Items",
   "slots[].contexts": "Contexts",
@@ -70,16 +82,25 @@ export const FIELD_LABELS: Readonly<Record<string, string>> = {
 
 const CASH_PATHS = new Set(["vendor[].price", "unlock.cost"]);
 
+export const FIELD_UNITS: Readonly<Record<string, string>> = {
+  muzzleVelocity: "m/s",
+  effectiveRange: "m",
+  "explosive.radius": "m",
+  "explosive.effectiveRadius": "m",
+  massKg: "kg",
+  minWeightKg: "kg",
+};
+
 const HIDDEN_KEY_ARRAYS = new Set(["vendor"]);
 
-const SUMMARIZED_PATTERN = "recoil.pattern";
+export const SUMMARIZED_PATTERN = "recoil.pattern";
 
 const MINUS = "−";
 
 function keysIn(path: string): string[] {
-  return [...path.matchAll(/(\w+)\[([^\]#][^\]]*)\]/g)]
+  return [...path.matchAll(/(\w+)\[([^\]]+)\]/g)]
     .filter((match) => !HIDDEN_KEY_ARRAYS.has(match[1]!))
-    .map((match) => match[2]!);
+    .map((match) => (match[2]!.startsWith("#") ? `#${Number(match[2]!.slice(1)) + 1}` : match[2]!));
 }
 
 function withKeys(label: string, path: string): string {
@@ -92,7 +113,7 @@ export function fieldLabel(path: string): string {
   return label === undefined ? path : withKeys(label, path);
 }
 
-function isScalar(value: unknown): boolean {
+export function isScalar(value: unknown): boolean {
   return value === null || value === undefined || typeof value !== "object";
 }
 
@@ -107,6 +128,35 @@ function formatValue(value: unknown, cash: boolean): string {
     return value ? "yes" : "no";
   }
   return typeof value === "string" ? value : JSON.stringify(value);
+}
+
+export function isRecoilPatternChange(change: FieldChange): boolean {
+  return normalizePath(change.path) === SUMMARIZED_PATTERN && change.kind === "changed";
+}
+
+export function isCashPath(path: string): boolean {
+  return CASH_PATHS.has(normalizePath(path));
+}
+
+export function formatFieldValue(path: string, value: unknown): string {
+  if (normalizePath(path) === SUMMARIZED_PATTERN && Array.isArray(value)) {
+    return `${formatNumber(value.length)} ${value.length === 1 ? "shot" : "shots"}`;
+  }
+  if (Array.isArray(value) && value.every(isScalar)) {
+    return value.length === 0 ? EMPTY_VALUE : value.map((entry) => formatValue(entry, isCashPath(path))).join(", ");
+  }
+  if (isRecord(value)) {
+    return Object.entries(value)
+      .map(([field, entry]) => `${field} ${formatValue(entry, false)}`)
+      .join(", ");
+  }
+  return formatValue(value, isCashPath(path));
+}
+
+export function valueChange(path: string, before: unknown, after: unknown): string {
+  const unit = FIELD_UNITS[normalizePath(path)];
+  const text = `${formatFieldValue(path, before)} → ${formatFieldValue(path, after)}`;
+  return unit === undefined ? text : `${text} ${unit}`;
 }
 
 function differingShots(before: unknown, after: unknown): number {
@@ -176,13 +226,24 @@ function summarizeSet(path: string, changes: readonly FieldChange[]): string {
   return keys.length > 0 ? `${parts.join(", ")} (${keys.join(", ")})` : parts.join(", ");
 }
 
-export function summarizeChanges(changes: readonly FieldChange[]): string[] {
+export interface ChangeGroup {
+  setPath: string | null;
+  changes: FieldChange[];
+}
+
+export function groupChanges(changes: readonly FieldChange[]): ChangeGroup[] {
   const groups = new Map<string, FieldChange[]>();
   changes.forEach((change, index) => {
     const id = change.path.endsWith("[]") ? change.path : `#${index}`;
     groups.set(id, [...(groups.get(id) ?? []), change]);
   });
-  return [...groups.entries()].map(([id, group]) =>
-    id.startsWith("#") ? summarizeChange(group[0]!) : summarizeSet(id, group),
-  );
+  return [...groups.entries()].map(([id, group]) => ({ setPath: id.startsWith("#") ? null : id, changes: group }));
+}
+
+export function summarizeGroup(group: ChangeGroup): string {
+  return group.setPath === null ? summarizeChange(group.changes[0]!) : summarizeSet(group.setPath, group.changes);
+}
+
+export function summarizeChanges(changes: readonly FieldChange[]): string[] {
+  return groupChanges(changes).map(summarizeGroup);
 }

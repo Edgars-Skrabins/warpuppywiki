@@ -16,6 +16,7 @@ export interface PatchState {
   from: string;
   to: string;
   category: string | null;
+  entity: string | null;
   filter: EntityFilter;
   search: string;
   showAssets: boolean;
@@ -51,10 +52,12 @@ export function readPatchState(params: URLSearchParams, builds: readonly BuildIn
   const to = params.get("to");
   const category = params.get("c");
   const filter = params.get("f");
+  const knownCategory = category !== null && categoryById(category) ? category : null;
   return {
     from: from !== null && known.has(from) ? from : defaults.from,
     to: to !== null && known.has(to) ? to : defaults.to,
-    category: category !== null && categoryById(category) ? category : null,
+    category: knownCategory,
+    entity: knownCategory === null ? null : params.get("e") || null,
     filter: isFilter(filter) ? filter : "all",
     search: params.get("q") ?? "",
     showAssets: params.get("assets") === "1",
@@ -64,10 +67,15 @@ export function readPatchState(params: URLSearchParams, builds: readonly BuildIn
 export function writePatchState(state: PatchState): URLSearchParams {
   const params = new URLSearchParams({ from: state.from, to: state.to });
   if (state.category !== null) params.set("c", state.category);
+  if (state.category !== null && state.entity !== null) params.set("e", state.entity);
   if (state.filter !== "all") params.set("f", state.filter);
   if (state.search !== "") params.set("q", state.search);
   if (state.showAssets) params.set("assets", "1");
   return params;
+}
+
+export function patchSearch(state: PatchState, patch: Partial<PatchState>): string {
+  return `?${writePatchState({ ...state, ...patch }).toString()}`;
 }
 
 export function usePatchState(builds: readonly BuildInfo[]): [PatchState | null, (patch: Partial<PatchState>) => void] {

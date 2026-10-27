@@ -37,6 +37,12 @@ describe("diffCategory", () => {
     );
   });
 
+  it("keeps the fields of an added entity", () => {
+    const bizon = diff.entities.find((entity) => entity.name === "PP-19 Bizon");
+    expect(bizon?.fields).toContainEqual({ path: "rpm", value: addedWeapon.rpm });
+    expect(bizon?.fields?.some((field) => field.path === "asset")).toBe(false);
+  });
+
   it("hides asset path changes unless asked", () => {
     const moved = { weapons: from.weapons.weapons.map((weapon) => ({ ...weapon, asset: `${weapon.asset}/moved` })) };
     const same = { weapons: { ...oldWeapons, weapons: from.weapons.weapons } };

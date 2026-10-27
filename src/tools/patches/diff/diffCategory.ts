@@ -6,7 +6,8 @@ import {
   type DiffContext,
 } from "./categories";
 import { deepDiff } from "./deepDiff";
-import type { CategoryDiff, DiffOptions, DiffRecord, EntityDiff, FieldChange } from "./types";
+import { flattenRecord } from "./flatten";
+import type { CategoryDiff, DiffOptions, DiffRecord, EntityDiff, EntityStatus, FieldChange, FieldValue } from "./types";
 
 export interface DiffCategoryOptions {
   showAssets: boolean;
@@ -19,6 +20,7 @@ interface EntityEntry {
   inTo: boolean;
   changes: FieldChange[];
   seen: Set<string>;
+  fields: FieldValue[];
 }
 
 export function diffOptionsFor(collection: CollectionDefinition, showAssets: boolean): DiffOptions {
@@ -64,12 +66,16 @@ function addCollection(
         inTo: false,
         changes: [],
         seen: new Set(),
+        fields: [],
       };
       entries.set(entityKey, entry);
     }
     entry.inFrom ||= from !== undefined;
     entry.inTo ||= to !== undefined;
-    if (from && to) {
+    if (!from || !to) {
+      const known = new Set(entry.fields.map((field) => field.path));
+      entry.fields.push(...flattenRecord((to ?? from)!, diffOptions).filter((field) => !known.has(field.path)));
+    } else {
       for (const change of deepDiff(from, to, diffOptions)) {
         const id = changeId(change);
         if (!entry.seen.has(id)) {
@@ -82,8 +88,11 @@ function addCollection(
 }
 
 function toEntity(entry: EntityEntry): EntityDiff {
-  const status = !entry.inFrom ? "added" : !entry.inTo ? "removed" : "changed";
-  return { key: entry.key, name: entry.name || entry.key, status, changes: status === "changed" ? entry.changes : [] };
+  const status: EntityStatus = !entry.inFrom ? "added" : !entry.inTo ? "removed" : "changed";
+  const entity = { key: entry.key, name: entry.name || entry.key, status };
+  return status === "changed"
+    ? { ...entity, changes: entry.changes }
+    : { ...entity, changes: [], fields: entry.fields };
 }
 
 export function diffCategory(
