@@ -2,7 +2,15 @@ import { sameId } from "@/core/catalog";
 import type { Armor, DamageFile, EquipmentFile } from "@/core/data";
 import { DEFAULT_HEALTH, hitPattern, stkByDistance, type DistancePoint, type Target } from "@/core/damage";
 import { effectiveStats, type AmmoOption, type PlayerWeapon, type WeaponIndex } from "@/core/weapons";
-import { slotItemId, weaponSetupOf, type LethalityView, type Loadout, type SlotId, type WeaponSetup } from "./loadout";
+import {
+  ARMOR_LEVELS,
+  slotItemId,
+  weaponSetupOf,
+  type LethalityView,
+  type Loadout,
+  type SlotId,
+  type WeaponSetup,
+} from "./loadout";
 import { slotDefinition } from "./slots";
 import { bareAttachments, fittedAttachments } from "./weaponSetup";
 
@@ -56,6 +64,22 @@ export function armorForLevel(equipment: EquipmentFile, slot: ArmorSlotName, lev
     return null;
   }
   return equipment.armor.find((armor) => sameId(armor.slot, slot) && armorLevel(armor) === level) ?? null;
+}
+
+export interface ArmorLevelChoice {
+  key: string;
+  level: number;
+  label: string;
+}
+
+export function armorLevelChoices(equipment: EquipmentFile, slot: ArmorSlotName): ArmorLevelChoice[] {
+  return ARMOR_LEVELS.flatMap((level): ArmorLevelChoice[] => {
+    if (level === 0) {
+      return [{ key: "0", level, label: "None" }];
+    }
+    const armor = armorForLevel(equipment, slot, level);
+    return armor === null ? [] : [{ key: String(level), level, label: armor.name ?? `Level ${level}` }];
+  });
 }
 
 export function targetWith(bodyArmor: Armor | null, helmet: Armor | null): Target {

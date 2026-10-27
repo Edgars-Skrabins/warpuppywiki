@@ -1,11 +1,17 @@
 import "leaflet/dist/leaflet.css";
-import { useUrlState } from "@/core/state";
+import { useCallback } from "react";
 import { MapView } from "./components/MapView";
 import { WorldTabs } from "./components/WorldTabs";
-import { mapStateCodec, withBuildingKind, withLayer, withView, withWorld } from "./state";
+import type { Plan } from "./plan/plan";
+import { withBuildingKind, withLayer, withPlan, withView, withWorld } from "./state";
+import { useMapState } from "./useMapState";
 
 export default function Tool() {
-  const [state, setState] = useUrlState(mapStateCodec);
+  const [state, setState, { shareUrl }] = useMapState();
+  const onPlanChange = useCallback(
+    (update: (plan: Plan) => Plan) => setState((prev) => withPlan(prev, prev.world, update)),
+    [setState],
+  );
   return (
     <WorldTabs world={state.world} onWorldChange={(world) => setState((prev) => withWorld(prev, world))}>
       <MapView
@@ -15,6 +21,8 @@ export default function Tool() {
         onGridChange={(grid) => setState((prev) => ({ ...prev, grid }))}
         onLayerChange={(id, on) => setState((prev) => withLayer(prev, id, on))}
         onBuildingKindChange={(kind, on) => setState((prev) => withBuildingKind(prev, kind, on))}
+        onPlanChange={onPlanChange}
+        shareUrl={shareUrl}
       />
     </WorldTabs>
   );
