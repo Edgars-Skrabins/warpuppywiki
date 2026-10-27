@@ -1,11 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { fixtureSources } from "../fixtures/sources";
-import { DEFAULT_MATCHUP } from "../state";
+import { DEFAULT_MATCHUP, type MatchupState } from "../state";
 import { armorOptions, buildScenario, defaultMagazine } from "./buildScenario";
+
+function build(matchup: MatchupState) {
+  return buildScenario(matchup, matchup, fixtureSources);
+}
 
 describe("buildScenario", () => {
   it("builds an AK-family scenario from the default state", () => {
-    const result = buildScenario(DEFAULT_MATCHUP, fixtureSources);
+    const result = build(DEFAULT_MATCHUP);
     if (!result.ok) throw new Error(result.error);
     expect(result.scenario.weapon.id).toBe("Id.Item.AK74M");
     expect(result.scenario.ammo.ammoType).toBe("FMJ");
@@ -28,7 +32,7 @@ describe("buildScenario", () => {
   });
 
   it("reports an unknown weapon id", () => {
-    expect(buildScenario({ ...DEFAULT_MATCHUP, weaponId: "Id.Item.Nope" }, fixtureSources)).toEqual({
+    expect(build({ ...DEFAULT_MATCHUP, weaponId: "Id.Item.Nope" })).toEqual({
       ok: false,
       error: "unknown-weapon",
       matchup: null,
@@ -36,38 +40,37 @@ describe("buildScenario", () => {
   });
 
   it("falls back to the first available ammo when the stored type is not offered", () => {
-    const result = buildScenario({ ...DEFAULT_MATCHUP, ammoType: "Buckshot" }, fixtureSources);
+    const result = build({ ...DEFAULT_MATCHUP, ammoType: "Buckshot" });
     if (!result.ok) throw new Error(result.error);
     expect(result.scenario.ammo).toBe(result.matchup.ammoOptions[0]);
   });
 
   it("reports a custom placement without zones", () => {
-    const result = buildScenario({ ...DEFAULT_MATCHUP, placement: "custom", custom: [] }, fixtureSources);
+    const result = build({ ...DEFAULT_MATCHUP, placement: "custom", custom: [] });
     expect(result.ok).toBe(false);
     expect(result.ok ? null : result.error).toBe("no-zones");
   });
 
   it("uses the custom zones in order", () => {
-    const result = buildScenario(
-      { ...DEFAULT_MATCHUP, placement: "custom", custom: ["Head", "Leg.Calf", "Head"] },
-      fixtureSources,
-    );
+    const result = build({ ...DEFAULT_MATCHUP, placement: "custom", custom: ["Head", "Leg.Calf", "Head"] });
     if (!result.ok) throw new Error(result.error);
     expect(result.scenario.pattern).toEqual(["Head", "Leg.Calf", "Head"]);
   });
 
   it("sets armor durability from the condition", () => {
-    const result = buildScenario(
-      { ...DEFAULT_MATCHUP, bodyArmorId: "Id.Item.HeavyArmor", helmetId: "Id.Item.LightHelmet", condition: 0.5 },
-      fixtureSources,
-    );
+    const result = build({
+      ...DEFAULT_MATCHUP,
+      bodyArmorId: "Id.Item.HeavyArmor",
+      helmetId: "Id.Item.LightHelmet",
+      condition: 0.5,
+    });
     if (!result.ok) throw new Error(result.error);
     expect(result.scenario.target.body?.durability).toBe(125);
     expect(result.scenario.target.helmet?.durability).toBe(40);
   });
 
   it("passes the pellet count only for shotguns", () => {
-    const result = buildScenario({ ...DEFAULT_MATCHUP, weaponId: "Id.Item.M500", pellets: 9 }, fixtureSources);
+    const result = build({ ...DEFAULT_MATCHUP, weaponId: "Id.Item.M500", pellets: 9 });
     if (!result.ok) throw new Error(result.error);
     expect(result.matchup.isShotgun).toBe(true);
     expect(result.scenario.pelletsPerShot).toBe(9);

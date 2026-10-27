@@ -1,12 +1,16 @@
 import { describe, expect, it } from "vitest";
 import { simulateKill } from "@/core/damage";
 import { fixtureSources } from "../fixtures/sources";
-import { DEFAULT_MATCHUP } from "../state";
+import { DEFAULT_MATCHUP, type MatchupState } from "../state";
 import { buildScenario } from "./buildScenario";
 import { distanceSeries } from "./distanceSeries";
 
+function build(matchup: MatchupState) {
+  return buildScenario(matchup, matchup, fixtureSources);
+}
+
 describe("distanceSeries", () => {
-  const result = buildScenario({ ...DEFAULT_MATCHUP, bodyArmorId: "Id.Item.HeavyArmor" }, fixtureSources);
+  const result = build({ ...DEFAULT_MATCHUP, bodyArmorId: "Id.Item.HeavyArmor" });
   if (!result.ok) throw new Error(result.error);
   const { scenario } = result;
   const series = distanceSeries(scenario);
