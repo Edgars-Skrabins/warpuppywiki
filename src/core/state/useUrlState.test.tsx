@@ -17,6 +17,7 @@ const probe: { setState: (next: { weapon: string } | ((prev: { weapon: string })
   setState: () => undefined,
 };
 const decodeErrors: boolean[] = [];
+const rendered: string[] = [];
 
 function Probe() {
   const [state, set, { decodeError }] = useUrlState(codec);
@@ -24,6 +25,7 @@ function Probe() {
     probe.setState = set;
     decodeErrors.push(decodeError);
   });
+  rendered.push(state.weapon);
   return <p>weapon:{state.weapon}</p>;
 }
 
@@ -39,6 +41,33 @@ describe("useUrlState", () => {
   beforeEach(() => {
     vi.useFakeTimers();
     decodeErrors.length = 0;
+    rendered.length = 0;
+  });
+
+  it("never renders the previous state while the URL write is applied", async () => {
+    const router = setup();
+    act(() => probe.setState({ weapon: "WP_M4" }));
+    await act(async () => {
+      vi.advanceTimersByTime(URL_STATE_DEBOUNCE_MS);
+      await Promise.resolve();
+    });
+    expect(router.state.location.search).toBe(`?l=${encodeState(codec, { weapon: "WP_M4" })}`);
+    const firstNew = rendered.indexOf("WP_M4");
+    expect(rendered.slice(firstNew)).not.toContain("");
+    expect(screen.getByText("weapon:WP_M4")).toBeInTheDocument();
+  });
+
+  it("follows a URL change made outside the hook after a write", async () => {
+    const router = setup();
+    act(() => probe.setState({ weapon: "WP_M4" }));
+    await act(async () => {
+      vi.advanceTimersByTime(URL_STATE_DEBOUNCE_MS);
+      await Promise.resolve();
+    });
+    await act(async () => {
+      await router.navigate(`/loadout?l=${encodeState(codec, { weapon: "WP_AK74" })}`);
+    });
+    expect(screen.getByText("weapon:WP_AK74")).toBeInTheDocument();
   });
 
   afterEach(() => {
