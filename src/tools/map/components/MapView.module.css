@@ -1,4 +1,5 @@
 .view {
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -88,7 +89,39 @@
   border-right-color: var(--color-border-strong);
 }
 
-.map :global(.leaflet-pane > canvas) {
+.map :global(.leaflet-pane > canvas),
+.map :global(.leaflet-pane > svg) {
   max-width: none;
   max-height: none;
+}
+
+.map:global(.leaflet-container)[data-mode] {
+  cursor: crosshair;
+}
+
+.map:global(.leaflet-container)[data-mode] :global(.leaflet-overlay-pane),
+.map:global(.leaflet-container)[data-mode] :global(.leaflet-overlay-pane *),
+.map:global(.leaflet-container)[data-mode] :global(.leaflet-marker-pane *) {
+  pointer-events: none !important;
+}
+
+.tools {
+  position: absolute;
+  top: calc(var(--space-3) + 20px);
+  left: calc(var(--space-3) + 28px);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 17rem;
+  max-height: calc(70vh - 2 * var(--space-3) - 20px);
+}
+
+@media (max-width: 640px) {
+  .tools {
+    position: static;
+    width: auto;
+    max-height: none;
+    margin-top: var(--space-2);
+  }
 }
