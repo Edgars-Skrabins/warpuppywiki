@@ -1,14 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { fixtureProjectile } from "../fixtures/projectiles";
-import { cardDistances, holdoverMils, rangeCard } from "./rangeCard";
+import { cardDistances, heightAboveBore, holdoverMils, rangeCard } from "./rangeCard";
 import { ballisticProjectileOf, simulate } from "./trajectory";
-import { solveLaunchAngle } from "./zero";
 
 const caliber545 = ballisticProjectileOf(fixtureProjectile("Item.Caliber.545mm"))!;
 
-function card(zero: number, maxDistance: number, falloff: (distance: number) => number = () => 1) {
-  const samples = simulate(caliber545, 880, solveLaunchAngle(caliber545, 880, zero), maxDistance);
-  return rangeCard({ samples, massKg: caliber545.massKg, baseDamage: 40, falloff });
+function card(maxDistance: number, targetSpeed: number | null = null, falloff: (distance: number) => number = () => 1) {
+  const samples = simulate(caliber545, 880, 0, maxDistance);
+  return rangeCard({ samples, massKg: caliber545.massKg, baseDamage: 40, falloff, targetSpeed });
 }
 
 describe("cardDistances", () => {
@@ -25,24 +24,39 @@ describe("holdoverMils", () => {
   });
 });
 
+describe("heightAboveBore", () => {
+  it("is the sample's height", () => {
+    const sample = simulate(caliber545, 880, 0, 100)[100]!;
+    expect(heightAboveBore(sample)).toBe(sample.height);
+  });
+});
+
 describe("rangeCard", () => {
-  it("has no drop at the zero distance", () => {
-    const row = card(300, 600).find((r) => r.distance === 300)!;
-    expect(Math.abs(row.dropCm)).toBeLessThan(0.1);
-    expect(row.mils).toBe(0);
+  it("shows the bullet falling further below the bore with distance", () => {
+    const rows = card(600);
+    expect(rows.every((row) => row.dropCm < 0)).toBe(true);
+    for (let i = 1; i < rows.length; i++) expect(rows[i]!.dropCm).toBeLessThan(rows[i - 1]!.dropCm);
   });
 
-  it("shows the bullet below the sight line beyond the zero", () => {
-    const row = card(100, 600).find((r) => r.distance === 600)!;
-    expect(row.dropCm).toBeLessThan(0);
-    expect(row.mils).toBe(holdoverMils(row.dropCm / 100, 600));
+  it("gives the hold above the bore as a positive number of mils", () => {
+    const row = card(600).find((r) => r.distance === 600)!;
+    expect(row.mils).toBeGreaterThan(0);
+    expect(row.mils).toBe(holdoverMils(-row.dropCm / 100, 600));
   });
 
-  it("scales damage per hit by the falloff and derives energy and lead", () => {
-    const row = card(100, 600, (d) => (d >= 500 ? 0.5 : 1)).find((r) => r.distance === 500)!;
+  it("has no lead without a target speed", () => {
+    expect(card(600).every((row) => row.lead === null)).toBe(true);
+  });
+
+  it("leads by flight time times the target speed", () => {
+    const row = card(600, 7).find((r) => r.distance === 500)!;
+    expect(row.lead).toBeCloseTo(row.time * 7, 9);
+  });
+
+  it("scales damage per hit by the falloff and derives energy", () => {
+    const row = card(600, null, (d) => (d >= 500 ? 0.5 : 1)).find((r) => r.distance === 500)!;
     expect(row.falloff).toBe(0.5);
     expect(row.damage).toBe(20);
     expect(row.energy).toBeCloseTo(0.5 * 0.0034 * row.velocity ** 2, 9);
-    expect(row.lead).toBeCloseTo(row.time * 5, 9);
   });
 });

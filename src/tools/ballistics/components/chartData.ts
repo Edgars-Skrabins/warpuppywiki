@@ -6,7 +6,6 @@ export interface ChartSetup {
   key: string;
   label: string;
   samples: readonly TrajectorySample[];
-  zero: number;
 }
 
 export function everyStep(samples: readonly TrajectorySample[]): TrajectorySample[] {
