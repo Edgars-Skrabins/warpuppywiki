@@ -21,3 +21,13 @@
   font-size: var(--text-xs);
   line-height: var(--line-height-normal);
 }
+
+.modes {
+  flex-wrap: wrap;
+}
+
+.missing {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}

@@ -59,7 +59,7 @@ Download the game data for every published build into `public/data/` (about 8 MB
 pnpm data:sync
 ```
 
-Optionally, download the map tiles, map overviews, item icons and heightmaps of the latest build into `public/assets/` (about 375 MB). The app works without them and shows placeholders instead:
+Optionally, download the map tiles, map overviews, item icons and heightmaps of the latest build into `public/assets/` (about 345 MB). The app works without them and shows placeholders instead:
 
 ```bash
 pnpm assets:sync
@@ -106,7 +106,7 @@ Tests run on trimmed fixtures in `src/test/fixtures/`, so they don't need synced
 
 The workflow `.github/workflows/deploy.yml` publishes the app to GitHub Pages at `https://<owner>.github.io/warpuppywiki/`. It runs on every push to the `deployment` branch and by hand ("Run workflow" in the Actions tab). Work is merged into `main`; a release is made by merging `main` into `deployment` and pushing it.
 
-Each run installs the dependencies, runs `pnpm check`, syncs the game data and all map tile levels, builds the app and writes `dist/deploy.json` with the commit, the synced builds and a fingerprint of both. The full-zip download is cached between runs per game build. A failed check or sync stops the run before anything is deployed, so the live site stays as it was.
+Each run installs the dependencies, runs `pnpm check`, syncs the game data and all map tile levels, builds the app and writes `dist/deploy.json` with the commit, the synced builds and a fingerprint of both. The extracted `public/assets/` folder is cached between runs per game build and version of the asset scripts, so a run with a cache hit skips the full-zip download and extraction; a new build or a change to the asset scripts downloads and extracts the zip once. A failed check or sync stops the run before anything is deployed, so the live site stays as it was.
 
 To turn on deployment:
 

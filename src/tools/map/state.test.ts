@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { decodeState, encodeState } from "@/core/state";
 import { defaultLayers } from "./layers/layerDefinitions";
+import { defaultLos } from "./los/losState";
 import { emptyPlans } from "./plan/plan";
 import {
   defaultBuildingKinds,
@@ -23,6 +24,7 @@ const view: MapState = {
   layers,
   buildingKinds,
   plans: emptyPlans(),
+  los: defaultLos(),
 };
 
 describe("mapStateCodec", () => {
@@ -58,6 +60,20 @@ describe("mapStateCodec", () => {
     expect(decodeState(mapStateCodec, text)).toEqual({ state: view, error: false });
   });
 
+  it("decodes a map link from before line of sight existed with the default options", () => {
+    const old = {
+      world: view.world,
+      center: view.center,
+      zoom: view.zoom,
+      grid: view.grid,
+      layers,
+      buildingKinds,
+      plans: view.plans,
+    };
+    const text = encodeState({ ...mapStateCodec, version: 3 }, old);
+    expect(decodeState(mapStateCodec, text)).toEqual({ state: view, error: false });
+  });
+
   it("round-trips layer toggles through the URL", () => {
     const toggled = withBuildingKind(withLayer(view, "buildings", true), "garage", false);
     expect(decodeState(mapStateCodec, encodeState(mapStateCodec, toggled)).state).toEqual(toggled);
@@ -78,6 +94,19 @@ describe("mapStateCodec", () => {
 describe("withWorld", () => {
   it("resets the view when the world changes and keeps the grid and layer settings", () => {
     expect(withWorld(view, "kavkazi")).toEqual({ ...view, world: "kavkazi", center: null, zoom: null });
+  });
+
+  it("clears line-of-sight points when the world changes and keeps the options", () => {
+    const placed = {
+      ...view,
+      los: {
+        ...view.los,
+        stance: "prone" as const,
+        observer: [1, 2] as [number, number],
+        target: [3, 4] as [number, number],
+      },
+    };
+    expect(withWorld(placed, "kavkazi").los).toEqual({ ...placed.los, observer: null, target: null });
   });
 
   it("keeps the state when the world is the same", () => {

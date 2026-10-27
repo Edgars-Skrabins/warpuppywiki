@@ -1,7 +1,8 @@
 import { existsSync } from "node:fs";
 import { mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { parseArgs } from "node:util";
+import { type AssetRequest, assetsUpToDate } from "./lib/assetsState";
 import { cacheDir } from "./lib/cache";
 import { downloadVerified } from "./lib/download";
 import {
@@ -13,6 +14,7 @@ import {
   type Terrain,
   writeU16LE,
 } from "./lib/heightmap";
+import { convertIcon } from "./lib/icons";
 import { listReleases, selectBuilds } from "./lib/releases";
 import { assetEntryTarget, extractEntry, forEachEntry, readEntry, safeJoin, stripTopFolder } from "./lib/zip";
 
@@ -71,7 +73,7 @@ async function presentMaxZoom(world: string): Promise<number | null> {
   return levels.length > 0 ? Math.max(...levels) : null;
 }
 
-async function writeManifest(build: string): Promise<void> {
+async function writeManifest(request: AssetRequest): Promise<void> {
   const mapsDir = join(assetsRoot, "maps");
   const worlds: Record<string, { maxZoom: number }> = {};
   if (existsSync(mapsDir)) {
@@ -80,15 +82,42 @@ async function writeManifest(build: string): Promise<void> {
       if (maxZoom !== null) worlds[world] = { maxZoom };
     }
   }
-  const manifest = { schemaVersion: 1, build, worlds, icons: existsSync(join(assetsRoot, "icons")) };
+  const manifest = {
+    schemaVersion: 1,
+    build: request.build,
+    worlds,
+    icons: existsSync(join(assetsRoot, "icons")),
+    iconFormat: "webp",
+    sync: { maxZoom: request.maxZoom, worlds: request.worlds },
+  };
   await writeFile(join(assetsRoot, "manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
 }
 
-async function previousBuild(): Promise<string | null> {
+async function readManifest(): Promise<unknown> {
   const path = join(assetsRoot, "manifest.json");
   if (!existsSync(path)) return null;
-  const manifest = JSON.parse(await readFile(path, "utf8")) as { build?: unknown };
-  return typeof manifest.build === "string" ? manifest.build : null;
+  try {
+    return JSON.parse(await readFile(path, "utf8")) as unknown;
+  } catch {
+    return null;
+  }
+}
+
+function hasHeightmap(world: string): boolean {
+  const worldDir = join(assetsRoot, "maps", world);
+  return existsSync(join(worldDir, "heightmap.u16")) && existsSync(join(worldDir, "heightmap.json"));
+}
+
+interface PreviousManifest {
+  build: string | null;
+  iconFormat: unknown;
+}
+
+async function previousManifest(): Promise<PreviousManifest | null> {
+  const path = join(assetsRoot, "manifest.json");
+  if (!existsSync(path)) return null;
+  const manifest = JSON.parse(await readFile(path, "utf8")) as { build?: unknown; iconFormat?: unknown };
+  return { build: typeof manifest.build === "string" ? manifest.build : null, iconFormat: manifest.iconFormat };
 }
 
 async function main(): Promise<void> {
@@ -97,6 +126,16 @@ async function main(): Promise<void> {
   const release = args.build === null ? builds[0] : builds.find((candidate) => candidate.build === args.build);
   if (!release) {
     throw new Error(args.build === null ? "No release has a full zip." : `Build ${args.build} has no full zip.`);
+  }
+
+  const request: AssetRequest = {
+    build: release.build,
+    maxZoom: args.maxZoom,
+    worlds: args.worlds === null ? null : [...args.worlds].sort(),
+  };
+  if (assetsUpToDate(await readManifest(), request, hasHeightmap)) {
+    console.log(`${release.build} assets up to date`);
+    return;
   }
 
   const zipPath = join(cacheDir(), release.assets.zip.name);
@@ -108,13 +147,18 @@ async function main(): Promise<void> {
   );
   if (downloaded) process.stdout.write("\n");
 
-  const previous = await previousBuild();
-  if (previous !== null && previous !== release.build) await rm(assetsRoot, { recursive: true, force: true });
+  const previous = await previousManifest();
+  if (previous !== null && previous.build !== null && previous.build !== release.build) {
+    await rm(assetsRoot, { recursive: true, force: true });
+  } else if (previous?.build === release.build && previous.iconFormat !== "webp") {
+    await rm(join(assetsRoot, "icons"), { recursive: true, force: true });
+  }
   await mkdir(assetsRoot, { recursive: true });
 
   const terrains = new Map<string, Terrain>();
   const heightmaps = new Map<string, Heightmap>();
   let copied = 0;
+  let converted = 0;
   await forEachEntry(zipPath, async (entry, zip) => {
     const terrainMatch = /^data\/maps\/([^/]+)\/terrain\.json$/.exec(stripTopFolder(entry.fileName));
     if (terrainMatch?.[1]) {
@@ -123,6 +167,23 @@ async function main(): Promise<void> {
     }
     const target = assetEntryTarget(entry.fileName, { maxZoom: args.maxZoom, worlds: args.worlds });
     if (target === null) return;
+    if (target.kind === "icon") {
+      const path = safeJoin(assetsRoot, target.path);
+      if (existsSync(path)) return;
+      let webp: Buffer;
+      try {
+        webp = await convertIcon(await readEntry(zip, entry));
+      } catch (error) {
+        throw new Error(
+          `Could not convert icon ${entry.fileName}: ${error instanceof Error ? error.message : String(error)}`,
+          { cause: error },
+        );
+      }
+      await mkdir(dirname(path), { recursive: true });
+      await writeFile(path, webp);
+      converted++;
+      return;
+    }
     if (target.kind === "copy") {
       const path = safeJoin(assetsRoot, target.path);
       if (await sameSize(path, entry.uncompressedSize)) return;
@@ -147,8 +208,10 @@ async function main(): Promise<void> {
     await writeFile(join(assetsRoot, "maps", world, "heightmap.json"), `${JSON.stringify(meta, null, 2)}\n`);
   }
 
-  await writeManifest(release.build);
-  console.log(`${release.build} assets synced: ${copied} files extracted, ${heightmaps.size} heightmaps converted`);
+  await writeManifest(request);
+  console.log(
+    `${release.build} assets synced: ${copied} files extracted, ${converted} icons converted, ${heightmaps.size} heightmaps converted`,
+  );
 }
 
 main().catch((error: unknown) => {

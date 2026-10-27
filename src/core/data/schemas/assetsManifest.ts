@@ -5,4 +5,5 @@ export const AssetsManifest = z.looseObject({
   build: z.string(),
   worlds: z.record(z.string(), z.looseObject({ maxZoom: z.number() })),
   icons: z.boolean(),
+  iconFormat: z.enum(["png", "webp"]).optional(),
 });
