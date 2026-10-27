@@ -7,8 +7,6 @@ import ammoJson from "@/test/fixtures/data/25937608/ammo.json";
 import Tool from "./Tool";
 
 const AMMO_FIXTURE_PATH = "25937608/ammo.json";
-const LOAD_TIMEOUT = { timeout: 10000 };
-
 afterEach(() => {
   vi.unstubAllGlobals();
 });
@@ -21,7 +19,7 @@ function setup(fixtures: Record<string, unknown> = {}) {
 }
 
 function rangeCard() {
-  return screen.findByRole("grid", { name: "Range card" }, LOAD_TIMEOUT);
+  return screen.findByRole("grid", { name: "Range card" });
 }
 
 async function dropAt(distance: string) {
@@ -31,7 +29,7 @@ async function dropAt(distance: string) {
   return within(row).getAllByRole("gridcell")[0]?.textContent;
 }
 
-describe("Ballistics", { timeout: 20000 }, () => {
+describe("Ballistics", () => {
   it("shows a range card for the default weapon", async () => {
     setup();
     const table = await rangeCard();
@@ -56,7 +54,7 @@ describe("Ballistics", { timeout: 20000 }, () => {
         projectiles: ammoJson.projectiles.map((projectile) => ({ ...projectile, drag: null })),
       },
     });
-    expect(await screen.findByText("Not enough ballistic data for this projectile", {}, LOAD_TIMEOUT)).toBeTruthy();
+    expect(await screen.findByText("Not enough ballistic data for this projectile")).toBeTruthy();
     expect(screen.queryByRole("grid", { name: "Range card" })).toBeNull();
   });
 

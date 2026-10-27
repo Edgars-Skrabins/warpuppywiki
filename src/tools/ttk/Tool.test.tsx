@@ -21,7 +21,7 @@ async function choose(user: ReturnType<typeof userEvent.setup>, field: string, o
   await user.click(within(await screen.findByRole("listbox")).getByRole("option", { name: option }));
 }
 
-describe("TTK calculator", { timeout: 30000 }, () => {
+describe("TTK calculator", () => {
   it("shows 5 shots to kill for the AK74 with FMJ at the upper chest against no armor", async () => {
     setup();
     expect(await headline("Shots to kill")).toBe("5");
@@ -32,9 +32,7 @@ describe("TTK calculator", { timeout: 30000 }, () => {
     const user = setup();
     const unarmored = Number(await headline("Shots to kill"));
     await choose(user, "Body armor", "Level 3 Armor");
-    await waitFor(async () => expect(Number(await headline("Shots to kill"))).toBeGreaterThan(unarmored), {
-      timeout: 5000,
-    });
+    await waitFor(async () => expect(Number(await headline("Shots to kill"))).toBeGreaterThan(unarmored));
   });
 
   it("asks for the pellet count when a shotgun is chosen", async () => {

@@ -24,7 +24,7 @@ async function checkHeadshot({ user, router }: ReturnType<typeof setup>) {
   await waitFor(() => expect(screen.getByLabelText("Cash amount")).toHaveTextContent("$350"));
 }
 
-describe("Reward calculator", { timeout: 15_000 }, () => {
+describe("Reward calculator", () => {
   it("shows the default PlayerKill cash of 300", async () => {
     setup();
     expect(await screen.findByLabelText("Cash amount")).toHaveTextContent("$300");

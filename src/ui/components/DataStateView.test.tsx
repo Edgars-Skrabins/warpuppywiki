@@ -66,7 +66,7 @@ describe("DataStateView", () => {
       }),
     );
 
-    expect(await screen.findByText("Could not load game data", {}, { timeout: 5000 })).toBeInTheDocument();
+    expect(await screen.findByText("Could not load game data")).toBeInTheDocument();
     failing = false;
     await userEvent.click(screen.getByRole("button", { name: "Try again" }));
 

@@ -22,10 +22,8 @@ function setup(search = "") {
   return router;
 }
 
-const LOAD_TIMEOUT = { timeout: 10000 };
-
 async function weaponTable() {
-  return screen.findByRole("grid", { name: "Weapons" }, LOAD_TIMEOUT);
+  return screen.findByRole("grid", { name: "Weapons" });
 }
 
 async function weaponNames() {
@@ -39,7 +37,7 @@ function chip(name: string) {
   return screen.getByRole("button", { name });
 }
 
-describe("Arsenal", { timeout: 20000 }, () => {
+describe("Arsenal", () => {
   it("lists the fixture weapons by class, then name", async () => {
     setup();
     expect(await weaponNames()).toEqual(["AK74", "M4", "MP5", "Mosin Nagant", "SV98", "M500"]);

@@ -20,13 +20,11 @@ function compareEntry(...setups: Setup[]): string {
 }
 
 async function setups(count: number) {
-  await waitFor(() => expect(screen.getAllByRole("group", { name: /^Setup \d$/ })).toHaveLength(count), {
-    timeout: 5000,
-  });
+  await waitFor(() => expect(screen.getAllByRole("group", { name: /^Setup \d$/ })).toHaveLength(count));
   return screen.getAllByRole("group", { name: /^Setup \d$/ });
 }
 
-describe("TTK compare", { timeout: 30000 }, () => {
+describe("TTK compare", () => {
   it("seeds the comparison from the single matchup", async () => {
     const user = setup();
     await screen.findByText("Shots to kill", { selector: "dt" });

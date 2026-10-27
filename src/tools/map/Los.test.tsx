@@ -72,7 +72,7 @@ function renderWithTerrain() {
 }
 
 async function readyMap() {
-  await screen.findByRole("region", { name: "Plan" }, { timeout: 3000 });
+  await screen.findByRole("region", { name: "Plan" });
   await waitFor(() => expect(maps.length).toBeGreaterThan(0));
   return maps.at(-1)!;
 }
@@ -96,7 +96,7 @@ describe("line of sight", () => {
     renderWithTerrain();
     const leafletMap = await readyMap();
     const losMode = screen.getByRole("radio", { name: "Line of sight" });
-    await waitFor(() => expect(losMode).toBeEnabled(), { timeout: 3000 });
+    await waitFor(() => expect(losMode).toBeEnabled());
 
     await user.click(losMode);
     expect(screen.getByText("Click to set the observer.")).toBeInTheDocument();
@@ -113,7 +113,7 @@ describe("line of sight", () => {
     renderWithTerrain();
     const leafletMap = await readyMap();
     const losMode = screen.getByRole("radio", { name: "Line of sight" });
-    await waitFor(() => expect(losMode).toBeEnabled(), { timeout: 3000 });
+    await waitFor(() => expect(losMode).toBeEnabled());
     await user.click(losMode);
     clickMap(leafletMap, -10000, -12000);
 

@@ -29,7 +29,7 @@ function urlState(router: ReturnType<typeof renderTool>) {
 }
 
 async function layersPanel() {
-  return within(await screen.findByRole("region", { name: "Layers" }, { timeout: 3000 }));
+  return within(await screen.findByRole("region", { name: "Layers" }));
 }
 
 function toggle(panel: Awaited<ReturnType<typeof layersPanel>>, label: string) {
@@ -53,7 +53,7 @@ describe("map layers", () => {
 
   it("labels each control zone placement with its chance", async () => {
     renderTool();
-    expect(await screen.findByText("50%", {}, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByText("50%")).toBeInTheDocument();
     expect(screen.getAllByText("25%")).toHaveLength(2);
   });
 
