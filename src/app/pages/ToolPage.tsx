@@ -1,7 +1,8 @@
 import { Suspense, useEffect } from "react";
 import type { ToolDefinition } from "@/core/tool";
-import { Badge, ErrorState, LoadingState } from "@/ui";
+import { ErrorState, LoadingState } from "@/ui";
 import { categoryLabel } from "../categories";
+import { ToolStatusBadge } from "../ToolStatusBadge";
 import { ToolErrorBoundary } from "../ToolErrorBoundary";
 import styles from "./ToolPage.module.css";
 
@@ -30,9 +31,15 @@ export function ToolPage({ tool }: { tool: ToolDefinition }) {
         <p className={styles.category}>{categoryLabel(tool.category)}</p>
         <div className={styles.titleRow}>
           <h1 className={styles.title}>{tool.name}</h1>
-          {tool.status === "beta" && <Badge tone="tag">Beta</Badge>}
+          <ToolStatusBadge status={tool.status} />
         </div>
         <p className={styles.summary}>{tool.summary}</p>
+        {tool.status === "unreleased" && (
+          <p className={styles.notice}>
+            This feature isn't released in Wardogs yet. It's built from data already in the game files, which may change
+            before release.
+          </p>
+        )}
       </header>
       <ToolErrorBoundary key={tool.id} fallback={(error, reset) => <ToolError error={error} reset={reset} />}>
         <Suspense fallback={<LoadingState label={`Loading ${tool.name}…`} />}>

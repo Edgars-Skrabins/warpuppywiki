@@ -1,4 +1,5 @@
 import type { Map as LeafletMap } from "leaflet";
+import type { ReactNode } from "react";
 import type { MapFile } from "@/core/data";
 import { Button, IconButton, Switch } from "@/ui";
 import { MAX_ZOOM, worldBounds } from "../leaflet/crs";
@@ -10,9 +11,10 @@ export interface MapControlsProps {
   zoom: number | null;
   grid: boolean;
   onGridChange: (grid: boolean) => void;
+  children?: ReactNode;
 }
 
-export function MapControls({ map, leafletMap, zoom, grid, onGridChange }: MapControlsProps) {
+export function MapControls({ map, leafletMap, zoom, grid, onGridChange, children }: MapControlsProps) {
   return (
     <div className={styles.controls}>
       <div className={styles.panel}>
@@ -46,6 +48,7 @@ export function MapControls({ map, leafletMap, zoom, grid, onGridChange }: MapCo
         </Switch>
         <p className={styles.note}>Grid by warpuppywiki; the in-game grid may differ.</p>
       </div>
+      {children}
     </div>
   );
 }

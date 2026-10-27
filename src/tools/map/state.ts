@@ -2,6 +2,8 @@ import { z } from "zod";
 import { WORLDS, type World } from "@/core/data";
 import type { Vec2 } from "@/core/maps";
 import { defineUrlState } from "@/core/state";
+import { defaultLayers, LAYER_IDS, type LayerId } from "./layers/layerDefinitions";
+import { BUILDING_KINDS, type BuildingKind } from "./logic/buildingStyle";
 
 export const DEFAULT_WORLD: World = "kavkazi";
 
@@ -10,15 +12,31 @@ export const MapState = z.object({
   center: z.tuple([z.number(), z.number()]).nullable(),
   zoom: z.number().nullable(),
   grid: z.boolean(),
+  layers: z.record(z.enum(LAYER_IDS), z.boolean()),
+  buildingKinds: z.record(z.enum(BUILDING_KINDS), z.boolean()),
 });
 
 export type MapState = z.infer<typeof MapState>;
 
+export function defaultBuildingKinds(): Record<BuildingKind, boolean> {
+  return Object.fromEntries(BUILDING_KINDS.map((kind) => [kind, true])) as Record<BuildingKind, boolean>;
+}
+
 export const mapStateCodec = defineUrlState<MapState>({
   key: "m",
-  version: 1,
+  version: 2,
   schema: MapState,
-  defaults: { world: DEFAULT_WORLD, center: null, zoom: null, grid: true },
+  defaults: {
+    world: DEFAULT_WORLD,
+    center: null,
+    zoom: null,
+    grid: true,
+    layers: defaultLayers(),
+    buildingKinds: defaultBuildingKinds(),
+  },
+  migrate: {
+    1: (old) => ({ ...(old as object), layers: defaultLayers(), buildingKinds: defaultBuildingKinds() }),
+  },
 });
 
 export function withWorld(state: MapState, world: World): MapState {
@@ -31,4 +49,12 @@ export function withView(state: MapState, center: Vec2, zoom: number): MapState 
     center: [Math.round(center[0]), Math.round(center[1])],
     zoom: Math.round(zoom * 100) / 100,
   };
+}
+
+export function withLayer(state: MapState, id: LayerId, on: boolean): MapState {
+  return { ...state, layers: { ...state.layers, [id]: on } };
+}
+
+export function withBuildingKind(state: MapState, kind: BuildingKind, on: boolean): MapState {
+  return { ...state, buildingKinds: { ...state.buildingKinds, [kind]: on } };
 }

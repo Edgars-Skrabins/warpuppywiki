@@ -1,0 +1,70 @@
+[
+  {
+    "id": "Id.Item.GhillieArmor",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Items/Armor/Content/Data/ID_GhillieArmor",
+    "name": "Ghillie Suit",
+    "subtitle": "Armor",
+    "description": "- Must be used with the Ghillie Headwear\n- Removes death cam after killing an enemy\n- Hides the Player from Infrared Range Finders",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Icon_Ghillie_Body_BC.png",
+    "tags": ["Inventory.Slot.Armor", "Item.Context.Equippable"],
+    "grid": [5, 4],
+    "maxStack": 1,
+    "weight": 1.5,
+    "unlock": {
+      "role": "Recon",
+      "level": 26,
+      "cost": 80000
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.GhillieArmor",
+        "price": 3000,
+        "amount": 1,
+        "categories": ["Vendor.Category.Gear.Armor"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.PilotHelmet",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Items/Armor/Content/Data/ID_PilotHelmet",
+    "name": "Pilot Helmet",
+    "subtitle": "Armor",
+    "description": "- Low Damage Reduction\n- Protects the Head\n- Muffles Vehicle Audio\n- Highlights Target Vehicles",
+    "icon": "UI/Shared/Icons/Vendor/Gear/T_UI_Gear_PilotHelmet.png",
+    "tags": ["Inventory.Slot.Helmet", "Item.Context.Equippable"],
+    "grid": [2, 2],
+    "maxStack": 1,
+    "unlock": null,
+    "vendor": [
+      {
+        "tag": "Id.Item.PilotHelmet",
+        "price": 6400,
+        "amount": 1,
+        "categories": ["Vendor.Category.Gear.Helmet"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.TankHelmet",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Items/Armor/Content/Data/ID_TankHelmet",
+    "name": "Tank Helmet",
+    "subtitle": "Armor",
+    "description": "- High Damage Reduction\n- Protects the Head and Neck\n- Muffles Vehicle and Infantry Audio\n- Remove Suppression and Tinnitus",
+    "icon": "UI/Shared/Icons/Vendor/Gear/T_UI_Gear_TankHelmet.png",
+    "tags": ["Inventory.Slot.Helmet", "Item.Context.Equippable"],
+    "grid": [2, 2],
+    "maxStack": 1,
+    "unlock": null,
+    "vendor": [
+      {
+        "tag": "Id.Item.TankHelmet",
+        "price": 5000,
+        "amount": 1,
+        "categories": ["Vendor.Category.Gear.Helmet"]
+      }
+    ]
+  }
+]

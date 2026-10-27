@@ -37,6 +37,11 @@
   --chart-grid: #262b2f;
   --chart-axis: #9b9c97;
 
+  --faction-alpha: #4f9fd6;
+  --faction-bravo: #e0703a;
+  --faction-charlie: #b98ad0;
+  --faction-neutral: #c9c4b8;
+
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -124,6 +129,11 @@
   --chart-grid: #e3e0d8;
   --chart-axis: #5d5f5b;
 
+  --faction-alpha: #2f7fb5;
+  --faction-bravo: #c25a22;
+  --faction-charlie: #9461ab;
+  --faction-neutral: #6f6c64;
+
   --shadow-2: 0 12px 32px rgb(22 25 27 / 18%), 0 2px 6px rgb(22 25 27 / 10%);
 
   --focus-ring-color: #8a6800;
@@ -168,6 +178,11 @@
     --chart-6: #109484;
     --chart-grid: #e3e0d8;
     --chart-axis: #5d5f5b;
+
+    --faction-alpha: #2f7fb5;
+    --faction-bravo: #c25a22;
+    --faction-charlie: #9461ab;
+    --faction-neutral: #6f6c64;
 
     --shadow-2: 0 12px 32px rgb(22 25 27 / 18%), 0 2px 6px rgb(22 25 27 / 10%);
 

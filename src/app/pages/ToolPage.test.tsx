@@ -19,6 +19,17 @@ describe("ToolPage", () => {
     expect(document.title).toBe("Map · warpuppywiki");
   });
 
+  it("marks an unreleased tool and explains it", async () => {
+    renderApp(
+      [fakeTool({ id: "skills", name: "Skill Trees", category: "progression", status: "unreleased" })],
+      "/skills",
+    );
+
+    expect(screen.getByText("Not in game yet")).toBeInTheDocument();
+    expect(screen.getByText(/isn't released in Wardogs yet/)).toBeInTheDocument();
+    expect(await screen.findByText("Skill Trees content")).toBeInTheDocument();
+  });
+
   it("contains a crashing tool and reloads it on request", async () => {
     vi.spyOn(console, "error").mockImplementation(() => undefined);
     let shouldThrow = true;

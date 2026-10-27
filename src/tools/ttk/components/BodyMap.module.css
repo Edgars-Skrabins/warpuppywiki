@@ -1,0 +1,106 @@
+.bodyMap {
+  display: grid;
+  grid-template-columns: minmax(96px, 132px) 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.figure {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.zone {
+  fill: transparent;
+  stroke: var(--color-text-muted);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  cursor: pointer;
+  outline: none;
+  transition:
+    fill var(--duration-fast) var(--easing),
+    stroke var(--duration-fast) var(--easing);
+}
+
+.zone[data-covered="true"] {
+  fill: var(--color-info-subtle);
+  stroke: var(--color-info);
+}
+
+.zone:hover {
+  fill: var(--color-surface-hover);
+  stroke: var(--color-text);
+}
+
+.zone:focus-visible {
+  stroke: var(--focus-ring-color);
+  stroke-width: 3;
+}
+
+.zone[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.sequence {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.hint {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: var(--control-height-sm);
+  padding-inline: var(--space-2) var(--space-1);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+  font-size: var(--text-sm);
+}
+
+.chipIndex {
+  color: var(--color-text-muted);
+  font-family: var(--font-condensed);
+  font-variant-numeric: tabular-nums;
+}
+
+.chipRemove {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.chipRemove:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.chipRemove:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
