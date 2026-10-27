@@ -78,10 +78,21 @@ describe("assetEntryTarget", () => {
     });
   });
 
-  it("keeps icons with their path", () => {
+  it("routes PNG icons to conversion with their path as .webp", () => {
     expect(assetEntryTarget(`${top}assets/icons/UI/Shared/Icons/Utility/3D/T_UI_Ammo_120mm.png`, all)).toEqual({
+      kind: "icon",
+      path: "icons/UI/Shared/Icons/Utility/3D/T_UI_Ammo_120mm.webp",
+    });
+    expect(assetEntryTarget(`${top}assets/icons/UI/T_UI_Flag.PNG`, all)).toEqual({
+      kind: "icon",
+      path: "icons/UI/T_UI_Flag.webp",
+    });
+  });
+
+  it("copies icons that are not PNG unchanged", () => {
+    expect(assetEntryTarget(`${top}assets/icons/UI/T_UI_Logo.webp`, all)).toEqual({
       kind: "copy",
-      path: "icons/UI/Shared/Icons/Utility/3D/T_UI_Ammo_120mm.png",
+      path: "icons/UI/T_UI_Logo.webp",
     });
   });
 
