@@ -1,0 +1,14 @@
+.budget {
+  max-width: 220px;
+}
+
+.over {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-danger-subtle);
+  border-left: 2px solid var(--color-danger);
+  color: var(--color-danger-text);
+  font-family: var(--font-condensed);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-caps);
+  text-transform: uppercase;
+}
