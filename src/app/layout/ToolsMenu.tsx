@@ -49,7 +49,7 @@ function ToolsPopover({ tools }: ToolsMenuProps) {
           renderEmptyState={() => <p className={styles.empty}>No tools yet</p>}
         >
           {groups.map((group) => (
-            <MenuSection key={group.id} id={group.id} className={styles.section}>
+            <MenuSection key={group.id} id={`section-${group.id}`} className={styles.section}>
               <Header className={styles.sectionHeader}>{group.label}</Header>
               {group.tools.map((tool) => (
                 <MenuItem
