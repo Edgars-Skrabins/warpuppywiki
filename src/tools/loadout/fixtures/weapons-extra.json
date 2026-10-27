@@ -1,0 +1,44 @@
+[
+  {
+    "id": "Id.Item.RPG7",
+    "name": "RPG-7",
+    "asset": "Plugins/GameFeatures/Weapons/Launchers/RPG7/Content/Data/DA_RPG7_Stats",
+    "fireModes": ["SemiAutomatic"],
+    "rpm": 100,
+    "calibers": ["93mm"],
+    "muzzleVelocity": 100,
+    "effectiveRange": 300,
+    "accuracy": 3,
+    "adsTime": 50000,
+    "zeroing": {
+      "max": 500
+    },
+    "meleeDamage": 40,
+    "slots": [
+      {
+        "slot": "Chamber",
+        "items": ["Id.Item.93mm"],
+        "contexts": [],
+        "filter": "AllowList",
+        "blockedItems": [],
+        "blockedContexts": [],
+        "default": "Id.Item.93mm",
+        "hidden": false
+      },
+      {
+        "slot": "Sight",
+        "items": ["Id.Item.SGHT_034"],
+        "contexts": [],
+        "filter": "BlockPriority",
+        "blockedItems": [
+          "Id.Item.SniperScope10x",
+          "Id.Item.HybridScope4x",
+          "Id.Item.10xScopeMoa",
+          "Id.Item.4xElcanSpectr"
+        ],
+        "blockedContexts": [],
+        "hidden": false
+      }
+    ]
+  }
+]

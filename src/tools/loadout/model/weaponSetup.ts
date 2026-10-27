@@ -17,6 +17,7 @@ import { MAX_LOOSE_ROUNDS, setWeaponSetup, weaponSetupOf, WeaponSetup, type Load
 import { SLOT_DEFINITIONS } from "./slots";
 
 export const MAGAZINE_SLOT = "Magazine";
+export const CHAMBER_SLOT = "Chamber";
 export const DEFAULT_MAGAZINE_COUNT = 4;
 
 const AMMO_TYPE_ORDER = Object.keys(AMMO_TYPE_LABELS) as AmmoTypeKey[];
@@ -98,7 +99,7 @@ function findSlot(weapon: PlayerWeapon, slot: string) {
 }
 
 export function attachmentSlots(weapon: PlayerWeapon) {
-  return weapon.visibleSlots.filter((slot) => !sameId(slot.slot, MAGAZINE_SLOT));
+  return weapon.visibleSlots.filter((slot) => !sameId(slot.slot, MAGAZINE_SLOT) && !sameId(slot.slot, CHAMBER_SLOT));
 }
 
 export function hasMagazines(weapon: PlayerWeapon, index: WeaponIndex): boolean {

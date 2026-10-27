@@ -58,11 +58,11 @@ describe("costSummary", () => {
     expect(summary.lines.find((line) => line.key === "primary:attachment:Sight")?.section).toBe("attachments");
   });
 
-  it("counts the same weapon twice in primary and secondary", () => {
-    const summary = costSummary(build(1000, { primary: "Id.Item.M4", secondary: "Id.Item.M4" }), catalog);
-    expect(summary.total).toBe(5600);
-    expect(summary.overBudgetBy).toBe(4600);
-    expect(summary.remaining).toBe(-4600);
+  it("reports how far the total is over budget", () => {
+    const summary = costSummary(build(1000, { primary: "Id.Item.M4" }), catalog);
+    expect(summary.total).toBe(2800);
+    expect(summary.overBudgetBy).toBe(1800);
+    expect(summary.remaining).toBe(-1800);
   });
 });
 
@@ -90,8 +90,7 @@ describe("weightSummary", () => {
 
   it("has no next class at the heaviest class", () => {
     const loadout = build(0, {
-      primary: "Id.Item.SV98",
-      secondary: "Id.Item.SV98",
+      primary: "Id.Item.AK74M",
       armor: "Id.Item.SuperHeavyArmor",
       helmet: "Id.Item.SuperHeavyHelmet",
       specialist: "ID.Item.BuildTool.Hammer.Large",
@@ -99,7 +98,14 @@ describe("weightSummary", () => {
     const summary = weightSummary(loadout, catalog, equipmentFile);
     expect(summary.weightClass?.name).toBe("Heavy");
     const heavier = weightSummary(
-      setGearQuantity(setSlotItem(loadout, "vest", "Id.Item.MediumTacVest"), "Id.Item.Bandage", 20),
+      setWeaponSetup(
+        loadout,
+        "primary",
+        WeaponSetup.parse({
+          itemId: "Id.Item.AK74M",
+          magazine: { id: "Id.Item.AK74MMagazine75rnd", ammoType: "FMJ", count: 12 },
+        }),
+      ),
       catalog,
       equipmentFile,
     );
@@ -154,7 +160,6 @@ describe("unlockSummary", () => {
       0,
       {
         primary: "Id.Item.M4",
-        secondary: "Id.Item.M4",
         armor: "Id.Item.HeavyArmor",
         helmet: "Id.Item.LightHelmet",
         backpack: "Id.Item.SmallBackpack",
