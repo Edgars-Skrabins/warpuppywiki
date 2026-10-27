@@ -29,7 +29,7 @@ export interface LoadoutEntry {
   section: CostSection;
   slot: SlotDefinition | null;
   item: Item;
-  priceTag: string;
+  priceTag: string | null;
   quantity: number;
 }
 
@@ -156,7 +156,7 @@ export function loadoutEntries(loadout: Loadout, catalog: Catalog): LoadoutEntry
 
 export function costSummary(loadout: Loadout, catalog: Catalog): CostSummary {
   const lines = loadoutEntries(loadout, catalog).map((entry): CostLine => {
-    const price = catalog.price(entry.priceTag);
+    const price = entry.priceTag === null ? null : catalog.price(entry.priceTag);
     const unitPrice = price?.price ?? 0;
     return { ...entry, unitPrice, total: unitPrice * entry.quantity, notSold: price === null };
   });
