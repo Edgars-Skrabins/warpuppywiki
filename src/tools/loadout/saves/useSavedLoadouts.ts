@@ -14,9 +14,11 @@ import {
   type SavedEntry,
   type SavedLoadout,
   type SaveResult,
+  type StoredEntries,
 } from "./savedLoadouts";
 
 export interface SavedLoadouts {
+  stored: StoredEntries;
   entries: SavedEntry[];
   find: (id: string | null) => SavedLoadout | null;
   save: (id: string | null, loadout: Loadout) => SaveResult;
@@ -42,6 +44,7 @@ export function useSavedLoadouts(): SavedLoadouts {
   const entries = useMemo(() => readEntries(stored), [stored]);
   const find = useCallback((id: string | null) => (id === null ? null : findSaved(stored, id)), [stored]);
   return {
+    stored,
     entries,
     find,
     save: (id, loadout) => commit(saveLoadout(savedLoadoutsStore.read(), id, loadout, saveContext())),

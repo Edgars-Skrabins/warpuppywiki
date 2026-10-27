@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import type { Target } from "@/core/damage";
 import { DataTable, SegmentedControl, Select, type Column } from "@/ui";
-import { ARMOR_LEVELS, weaponSetupOf, type LethalityView, type Loadout, type SlotId } from "../model/loadout";
+import { weaponSetupOf, type LethalityView, type Loadout, type SlotId } from "../model/loadout";
 import {
   armorForLevel,
+  armorLevelChoices,
   LETHALITY_DISTANCES,
   lethalityTarget,
   weaponRow,
-  type ArmorSlotName,
   type LethalityModel,
   type WeaponRow,
 } from "../model/lethality";
@@ -22,22 +22,6 @@ const PLACEMENTS: { id: LethalityView["placement"]; label: string }[] = [
   { id: "head", label: "Head" },
   { id: "mixed", label: "Mixed" },
 ];
-
-interface LevelChoice {
-  key: string;
-  level: number;
-  label: string;
-}
-
-function levelChoices(model: LethalityModel, slot: ArmorSlotName): LevelChoice[] {
-  return ARMOR_LEVELS.flatMap((level): LevelChoice[] => {
-    if (level === 0) {
-      return [{ key: "0", level, label: "None" }];
-    }
-    const armor = armorForLevel(model.equipment, slot, level);
-    return armor === null ? [] : [{ key: String(level), level, label: armor.name ?? `Level ${level}` }];
-  });
-}
 
 function useWeaponRow(
   loadout: Loadout,
@@ -88,8 +72,8 @@ export function YourWeaponsTable({ loadout, model, onViewChange }: YourWeaponsTa
   const sidearm = useWeaponRow(loadout, "sidearm", model, target, view.placement);
   const specialist = useWeaponRow(loadout, "specialist", model, target, view.placement);
   const rows = [primary, sidearm, specialist].filter((row): row is WeaponRow => row !== null);
-  const bodyChoices = levelChoices(model, "Armor");
-  const helmetChoices = levelChoices(model, "Helmet");
+  const bodyChoices = armorLevelChoices(model.equipment, "Armor");
+  const helmetChoices = armorLevelChoices(model.equipment, "Helmet");
 
   const columns: Column<WeaponRow>[] = [
     {
