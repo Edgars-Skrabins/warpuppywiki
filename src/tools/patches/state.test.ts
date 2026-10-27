@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { EntityDiff } from "./diff/types";
-import { defaultBuilds, filterEntities, readPatchState, writePatchState } from "./state";
+import { defaultBuilds, filterEntities, patchSearch, readPatchState, writePatchState } from "./state";
 
 const builds = [
   { build: "25677108", publishedAt: "2026-10-10T14:09:49Z" },
@@ -25,6 +25,7 @@ describe("readPatchState", () => {
       from: "25677108",
       to: "25937608",
       category: null,
+      entity: null,
       filter: "all",
       search: "",
       showAssets: false,
@@ -36,13 +37,20 @@ describe("readPatchState", () => {
       from: "25500000",
       to: "25677108",
       category: "weapons",
+      entity: "weapon:id.item.ak74m",
       filter: "changed" as const,
       search: "ak",
       showAssets: true,
     };
     const params = writePatchState(state);
-    expect(params.toString()).toBe("from=25500000&to=25677108&c=weapons&f=changed&q=ak&assets=1");
+    expect(params.toString()).toBe(
+      "from=25500000&to=25677108&c=weapons&e=weapon%3Aid.item.ak74m&f=changed&q=ak&assets=1",
+    );
     expect(readPatchState(params, builds)).toEqual(state);
+  });
+
+  it("ignores an entity without a category", () => {
+    expect(readPatchState(new URLSearchParams("e=weapon%3Aak"), builds)?.entity).toBeNull();
   });
 });
 
@@ -61,5 +69,14 @@ describe("filterEntities", () => {
     expect(filterEntities(entities, "all", "bizon").map((entity) => entity.name)).toEqual(["PP-19 Bizon"]);
     expect(filterEntities(entities, "all", "WEPN_031").map((entity) => entity.name)).toEqual(["PP-19 Bizon"]);
     expect(filterEntities(entities, "changed", "bizon")).toEqual([]);
+  });
+});
+
+describe("patchSearch", () => {
+  it("builds a link to an entity's detail view", () => {
+    const state = readPatchState(new URLSearchParams("q=old"), builds)!;
+    expect(patchSearch(state, { category: "weapons", entity: "weapon:m4", search: "" })).toBe(
+      "?from=25677108&to=25937608&c=weapons&e=weapon%3Am4",
+    );
   });
 });
