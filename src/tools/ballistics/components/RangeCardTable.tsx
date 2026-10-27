@@ -4,6 +4,7 @@ import type { RangeCardRow } from "../logic/rangeCard";
 export interface RangeCardTableProps {
   rows: readonly RangeCardRow[];
   comparison?: readonly RangeCardRow[];
+  targetSpeed: number | null;
 }
 
 interface PairedRow {
@@ -57,10 +58,10 @@ const second = (row: PairedRow) => row.comparison;
 
 const SINGLE_COLUMNS: readonly Column<PairedRow>[] = [
   DISTANCE,
-  dropColumn("drop", "Drop", primary),
+  dropColumn("drop", "Drop below bore", primary),
   {
     key: "mils",
-    header: "Holdover (mil)",
+    header: "Hold above bore (mil)",
     value: (row) => row.primary.mils,
     render: (row) => formatMils(row.primary.mils),
     align: "end",
@@ -94,14 +95,17 @@ const SINGLE_COLUMNS: readonly Column<PairedRow>[] = [
     render: (row) => formatNumber(row.primary.damage, { maxFractionDigits: 1 }),
     align: "end",
   },
-  {
+];
+
+function leadColumn(targetSpeed: number): Column<PairedRow> {
+  return {
     key: "lead",
-    header: "Lead at 5 m/s",
+    header: `Lead at ${formatNumber(targetSpeed, { maxFractionDigits: 1 })} m/s`,
     value: (row) => row.primary.lead,
     render: (row) => formatDistance(row.primary.lead),
     align: "end",
-  },
-];
+  };
+}
 
 const PAIRED_COLUMNS: readonly Column<PairedRow>[] = [
   DISTANCE,
@@ -111,7 +115,7 @@ const PAIRED_COLUMNS: readonly Column<PairedRow>[] = [
   timeColumn("timeComparison", "Flight time B", second),
 ];
 
-export function RangeCardTable({ rows, comparison }: RangeCardTableProps) {
+export function RangeCardTable({ rows, comparison, targetSpeed }: RangeCardTableProps) {
   const paired: PairedRow[] = rows.map((row) => ({
     distance: row.distance,
     primary: row,
@@ -120,7 +124,13 @@ export function RangeCardTable({ rows, comparison }: RangeCardTableProps) {
   return (
     <DataTable
       aria-label="Range card"
-      columns={comparison ? PAIRED_COLUMNS : SINGLE_COLUMNS}
+      columns={
+        comparison
+          ? PAIRED_COLUMNS
+          : targetSpeed === null
+            ? SINGLE_COLUMNS
+            : [...SINGLE_COLUMNS, leadColumn(targetSpeed)]
+      }
       rows={paired}
       getRowKey={(row) => String(row.distance)}
       emptyText="The bullet does not reach the first range card distance."
