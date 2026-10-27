@@ -42,7 +42,8 @@ describe("treeLayout", () => {
   it("keeps the stored proportions of the canvas", () => {
     const [a, b] = treeLayout(roleSkills("Driver")).nodes;
     const source = roleSkills("Driver").filter((skill) => skill.layout);
-    expect(a && b).toBeTruthy();
+    expect(a, "first node").toBeDefined();
+    expect(b, "second node").toBeDefined();
     const ratio = (b!.x - a!.x) / (b!.y - a!.y);
     const [sa, sb] = [source.find((s) => s.id === a!.skill.id)!, source.find((s) => s.id === b!.skill.id)!];
     expect(ratio).toBeCloseTo((sb.layout!.x - sa.layout!.x) / (sb.layout!.y - sa.layout!.y));

@@ -79,7 +79,6 @@ describe("Damage rules tool", () => {
     const sniper = within(heatmap)
       .getAllByRole("row")
       .find((row) => within(row).queryByRole("rowheader")?.textContent === "Weapon.Sniper");
-    expect(sniper).toBeDefined();
     expect(within(sniper!).getByTitle("Weapon.Sniper, Head: ×4.2667")).toHaveTextContent("4.2667");
     expect(within(heatmap).getAllByRole("row")[1]).toHaveTextContent("Universal");
   });
