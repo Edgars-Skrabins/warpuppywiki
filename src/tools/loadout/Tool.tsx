@@ -28,7 +28,10 @@ import { kitStatSources } from "./model/totals";
 import { defaultSetup, validateLoadout } from "./model/weaponSetup";
 import { sameContent, type SavedLoadout } from "./saves/savedLoadouts";
 import { useSavedLoadouts } from "./saves/useSavedLoadouts";
-import { loadoutCodec, shareLink, useLoadoutLink } from "./state";
+import { decodeState } from "@/core/state";
+import { CompareView } from "./components/CompareView";
+import type { SideSource } from "./compare/sideSource";
+import { loadoutCodec, shareLink, useLoadoutParams, type LoadoutLink } from "./state";
 import styles from "./Tool.module.css";
 
 const LIMIT_MESSAGE = "You have 100 saved loadouts. Delete some to save more.";
@@ -90,12 +93,14 @@ function LoadoutBuilder({ catalog, equipment, meta, damage, index }: LoadoutData
     [setDecoded, index],
   );
   const kitSources = useMemo(() => kitStatSources(loadout, catalog, equipment), [loadout, catalog, equipment]);
-  const lethalityModel = useMemo(() => ({ index, damage, equipment }), [index, damage, equipment]);
+  const compareModel = useMemo(() => ({ catalog, index, damage, equipment }), [catalog, index, damage, equipment]);
   const [confirmingClear, setConfirmingClear] = useState(false);
-  const [confirmingNew, setConfirmingNew] = useState(false);
+  const [pendingDiscard, setPendingDiscard] = useState<(() => void) | null>(null);
   const [libraryOpen, setLibraryOpen] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
-  const [link, setLink] = useLoadoutLink();
+  const params = useLoadoutParams();
+  const { link, compare } = params;
+  const setLink = (next: LoadoutLink) => params.update({ link: next });
   const saves = useSavedLoadouts();
   const location = useLocation();
   const savedCopy = saves.find(link.savedId);
@@ -123,14 +128,14 @@ function LoadoutBuilder({ catalog, equipment, meta, damage, index }: LoadoutData
 
   const openSaved = (saved: SavedLoadout) => {
     setLoadout(() => saved.loadout);
-    setLink({ savedId: saved.id, shared: false });
+    params.update({ link: { savedId: saved.id, shared: false }, compare: null });
     setStatus(null);
     setLibraryOpen(false);
   };
 
   const startNew = () => {
     setLoadout((prev) => ({ ...emptyLoadout(defaultBudget), view: prev.view }));
-    setLink({ savedId: null, shared: false });
+    params.update({ link: { savedId: null, shared: false }, compare: null });
     setStatus(null);
   };
 
@@ -153,6 +158,82 @@ function LoadoutBuilder({ catalog, equipment, meta, damage, index }: LoadoutData
         : setSlotItem(prev, slot, itemId),
     );
 
+  const discardDialog = (
+    <Dialog
+      title="Discard unsaved changes?"
+      role="alertdialog"
+      size="sm"
+      isOpen={pendingDiscard !== null}
+      onOpenChange={(open) => {
+        if (!open) setPendingDiscard(null);
+      }}
+      actions={(close) => (
+        <>
+          <Button variant="ghost" onPress={close}>
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onPress={() => {
+              pendingDiscard?.();
+              close();
+            }}
+          >
+            Discard
+          </Button>
+        </>
+      )}
+    >
+      <p>This replaces the loadout you are editing. Changes that are not saved are lost.</p>
+    </Dialog>
+  );
+
+  const editSide = (source: SideSource) => {
+    if (source.kind === "current") {
+      params.update({ compare: null });
+      return;
+    }
+    const apply = () => {
+      if (source.kind === "empty") {
+        startNew();
+      } else if (source.kind === "saved") {
+        const saved = saves.find(source.id);
+        if (saved !== null) openSaved(saved);
+      } else {
+        const decoded = decodeState(codec, source.encoded);
+        if (!decoded.error) {
+          setLoadout(() => decoded.state);
+          params.update({ link: { savedId: null, shared: true }, compare: null });
+        }
+      }
+    };
+    if (dirty) {
+      setPendingDiscard(() => apply);
+    } else {
+      apply();
+    }
+  };
+
+  if (compare !== null) {
+    return (
+      <>
+        <CompareView
+          link={compare}
+          current={loadout}
+          stored={saves.stored}
+          entries={saves.entries}
+          model={compareModel}
+          codec={codec}
+          defaultBudget={defaultBudget}
+          onLinkChange={(next) => params.update({ compare: next })}
+          onEdit={editSide}
+          onClose={() => params.update({ compare: null })}
+        />
+        {discardDialog}
+      </>
+    );
+  }
+
   return (
     <div className={styles.layout}>
       <div className={styles.main}>
@@ -166,7 +247,8 @@ function LoadoutBuilder({ catalog, equipment, meta, damage, index }: LoadoutData
             onSaveAsNew={saveAsNew}
             onOpenLibrary={() => setLibraryOpen(true)}
             onShare={share}
-            onNew={() => (dirty ? setConfirmingNew(true) : startNew())}
+            onNew={() => (dirty ? setPendingDiscard(() => startNew) : startNew())}
+            onCompare={() => params.update({ compare: { a: { kind: "current" }, b: { kind: "empty" } } })}
           />
         </div>
         {link.shared && <SharedBanner onSave={save} />}
@@ -190,7 +272,7 @@ function LoadoutBuilder({ catalog, equipment, meta, damage, index }: LoadoutData
         </Panel>
         <LethalityPanel
           loadout={loadout}
-          model={lethalityModel}
+          model={compareModel}
           onViewChange={(changes) => setLoadout((prev) => setLethalityView(prev, changes))}
         />
         <GearList
@@ -232,31 +314,7 @@ function LoadoutBuilder({ catalog, equipment, meta, damage, index }: LoadoutData
       >
         <p>This removes every item from the slots and the gear list. The budget stays.</p>
       </Dialog>
-      <Dialog
-        title="Discard unsaved changes?"
-        role="alertdialog"
-        size="sm"
-        isOpen={confirmingNew}
-        onOpenChange={setConfirmingNew}
-        actions={(close) => (
-          <>
-            <Button variant="ghost" onPress={close}>
-              Cancel
-            </Button>
-            <Button
-              variant="danger"
-              onPress={() => {
-                startNew();
-                close();
-              }}
-            >
-              Discard
-            </Button>
-          </>
-        )}
-      >
-        <p>This starts an empty loadout. Changes that are not saved are lost.</p>
-      </Dialog>
+      {discardDialog}
       <MyLoadoutsDialog
         entries={saves.entries}
         catalog={catalog}

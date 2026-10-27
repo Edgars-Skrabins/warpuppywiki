@@ -10,6 +10,7 @@ export interface LoadoutToolbarProps {
   onOpenLibrary: () => void;
   onShare: () => void;
   onNew: () => void;
+  onCompare: () => void;
 }
 
 export function LoadoutToolbar({
@@ -21,6 +22,7 @@ export function LoadoutToolbar({
   onOpenLibrary,
   onShare,
   onNew,
+  onCompare,
 }: LoadoutToolbarProps) {
   const upToDate = saved && !dirty;
   return (
@@ -33,6 +35,7 @@ export function LoadoutToolbar({
         <Button onPress={onSaveAsNew}>Save as new</Button>
         <Button onPress={onOpenLibrary}>My loadouts</Button>
         <Button onPress={onShare}>Share</Button>
+        <Button onPress={onCompare}>Compare</Button>
         <Button variant="ghost" onPress={onNew}>
           New
         </Button>

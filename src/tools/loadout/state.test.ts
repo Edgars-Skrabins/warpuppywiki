@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { decodeState, encodeState } from "@/core/state";
 import { emptyLoadout, setGearQuantity, setSlotItem, type Loadout } from "./model/loadout";
-import { loadoutCodec, readLoadoutLink, shareLink, withLoadoutLink } from "./state";
+import { loadoutCodec, readCompareLink, readLoadoutLink, shareLink, withCompareLink, withLoadoutLink } from "./state";
 
 describe("loadout URL codec", () => {
   const codec = loadoutCodec(10_000);
@@ -103,5 +103,21 @@ describe("loadout link params", () => {
       ok: false,
       reason: "too-large",
     });
+  });
+});
+
+describe("compare view params", () => {
+  it("opens with the current loadout against an empty one and keeps other params", () => {
+    expect(readCompareLink(new URLSearchParams("l=1.abc"))).toBeNull();
+    expect(readCompareLink(new URLSearchParams("view=compare"))).toEqual({
+      a: { kind: "current" },
+      b: { kind: "empty" },
+    });
+    const params = withCompareLink(new URLSearchParams("l=1.abc&id=x"), {
+      a: { kind: "saved", id: "save-1" },
+      b: { kind: "current" },
+    });
+    expect(params.toString()).toBe("l=1.abc&id=x&view=compare&a=saved%3Asave-1&b=current");
+    expect(withCompareLink(params, null).toString()).toBe("l=1.abc&id=x");
   });
 });
