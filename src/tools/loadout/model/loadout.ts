@@ -8,7 +8,7 @@ export const MAX_GEAR_ROWS = 30;
 export const MAX_BUDGET = 10_000_000;
 export const FALLBACK_BUDGET = 10_000;
 
-export const SlotId = z.enum(["primary", "secondary", "sidearm", "specialist", "armor", "helmet", "vest", "backpack"]);
+export const SlotId = z.enum(["primary", "sidearm", "specialist", "armor", "helmet", "vest", "backpack"]);
 
 export const MAX_MAGAZINES = 12;
 export const MAX_LOOSE_ROUNDS = 500;
@@ -44,7 +44,6 @@ export const Loadout = z.object({
   budget: z.number().min(0).max(MAX_BUDGET),
   slots: z.object({
     primary: WeaponSetup.nullable(),
-    secondary: WeaponSetup.nullable(),
     sidearm: WeaponSetup.nullable(),
     specialist: WeaponSetup.nullable(),
     armor: z.string().nullable(),
@@ -67,7 +66,6 @@ export function emptyLoadout(budget: number): Loadout {
     budget,
     slots: {
       primary: null,
-      secondary: null,
       sidearm: null,
       specialist: null,
       armor: null,

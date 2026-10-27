@@ -26,6 +26,17 @@ describe("loadout URL codec", () => {
     });
   });
 
+  it("ignores the secondary slot of an old link", () => {
+    const old = {
+      ...emptyLoadout(10_000),
+      slots: { ...emptyLoadout(10_000).slots, secondary: { itemId: "Id.Item.M4" } },
+    };
+    expect(decodeState(codec, encodeState(codec, old as Loadout))).toEqual({
+      state: emptyLoadout(10_000),
+      error: false,
+    });
+  });
+
   it("defaults to an empty loadout with the starting budget", () => {
     expect(decodeState(codec, null).state).toEqual(emptyLoadout(10_000));
   });

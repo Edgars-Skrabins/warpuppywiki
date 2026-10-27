@@ -123,10 +123,10 @@ describe("validateSetup", () => {
 describe("validateLoadout", () => {
   it("cleans every weapon slot and names the slots that lost parts", () => {
     const stale = ak74({ attachments: { Underbarrel: "Id.Item.3xScope" } });
-    const loadout = setWeaponSetup(setWeaponSetup(emptyLoadout(0), "primary", scopedAk), "secondary", stale);
+    const loadout = setWeaponSetup(setWeaponSetup(emptyLoadout(0), "primary", scopedAk), "sidearm", stale);
     expect(validateLoadout(loadout, weaponIndex)).toEqual({
-      loadout: setWeaponSetup(loadout, "secondary", ak74()),
-      droppedSlots: ["secondary"],
+      loadout: setWeaponSetup(loadout, "sidearm", ak74()),
+      droppedSlots: ["sidearm"],
     });
   });
 

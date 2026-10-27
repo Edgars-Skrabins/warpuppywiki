@@ -3,10 +3,9 @@ import { catalog } from "../fixtures/testData";
 import { itemsForSlot, slotDefinition, SLOT_DEFINITIONS } from "./slots";
 
 describe("slots", () => {
-  it("lists the eight slots in order", () => {
+  it("lists the seven slots in order", () => {
     expect(SLOT_DEFINITIONS.map((slot) => slot.label)).toEqual([
       "Primary",
-      "Secondary",
       "Sidearm",
       "Specialist",
       "Body armor",
