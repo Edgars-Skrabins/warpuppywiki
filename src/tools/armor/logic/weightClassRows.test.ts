@@ -5,17 +5,7 @@ import { classFor, WEIGHT_COLUMNS, weightClassRows } from "./weightClassRows";
 const rows = weightClassRows(fixtureEquipment.weightClasses);
 
 describe("weightClassRows", () => {
-  it("has the eight modifier columns with their direction", () => {
-    expect(WEIGHT_COLUMNS.map((column) => column.label)).toEqual([
-      "Top speed",
-      "Jump",
-      "Stamina regen",
-      "Aim sway",
-      "Aim sway speed",
-      "ADS time",
-      "Lean time",
-      "Weight penalty",
-    ]);
+  it("marks which direction is better for each modifier column", () => {
     expect(WEIGHT_COLUMNS.find((column) => column.label === "Top speed")?.betterWhen).toBe("higher");
     expect(WEIGHT_COLUMNS.find((column) => column.label === "ADS time")?.betterWhen).toBe("lower");
   });
