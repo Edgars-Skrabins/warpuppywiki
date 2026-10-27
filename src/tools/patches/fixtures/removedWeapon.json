@@ -1,0 +1,67 @@
+{
+  "id": "Id.Item.Judge",
+  "name": "Judge",
+  "asset": "Content/Weapons/Pistol/Judge/Data/DA_Judge_Stats",
+  "fireModes": ["SemiAutomatic"],
+  "rpm": 200,
+  "calibers": ["45Colt"],
+  "muzzleVelocity": 335,
+  "effectiveRange": 50,
+  "accuracy": 3.49,
+  "randomDeviation": 10,
+  "zeroing": {
+    "min": 25,
+    "max": 25,
+    "step": 25
+  },
+  "meleeDamage": 20,
+  "recoil": {
+    "pattern": [
+      {
+        "x": 0.09,
+        "y": 2.247748
+      }
+    ],
+    "afterPatternPitch": [0.5, 1],
+    "afterPatternYaw": [-0.5, 0.5]
+  },
+  "slots": [
+    {
+      "slot": "Chamber",
+      "items": [],
+      "contexts": ["Item.Caliber.45Colt"],
+      "filter": "AllowList",
+      "blockedItems": [],
+      "blockedContexts": [],
+      "hidden": true
+    },
+    {
+      "slot": "Magazine",
+      "items": ["Id.Item.JudgeMagazine"],
+      "contexts": ["Item.Attachment.Magazine.Pistol"],
+      "filter": "AllowList",
+      "blockedItems": [],
+      "blockedContexts": [],
+      "default": "Id.Item.JudgeMagazine",
+      "hidden": true
+    },
+    {
+      "slot": "Grip",
+      "items": ["Id.Item.JudgePistolgrip"],
+      "contexts": [],
+      "filter": "AllowList",
+      "blockedItems": [],
+      "blockedContexts": [],
+      "hidden": true
+    },
+    {
+      "slot": "Barrel",
+      "items": ["Id.Item.JudgeBarrel"],
+      "contexts": [],
+      "filter": "AllowList",
+      "blockedItems": [],
+      "blockedContexts": [],
+      "hidden": true
+    }
+  ]
+}

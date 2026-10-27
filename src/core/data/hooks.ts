@@ -3,7 +3,7 @@ import type { z } from "zod";
 import { assetsManifestUrl, buildsUrl, BuildsFile } from "./builds";
 import { DataMissingError, type DataError } from "./fetchJson";
 import type { BuildFileKey, DataOf, World, WorldFileKey } from "./files";
-import { loadDataFile, loadRaw, loadValidated, loadWorldFile } from "./loadDataFile";
+import { loadDataFile, loadRaw, loadRawWorld, loadValidated, loadWorldFile } from "./loadDataFile";
 import { queryKeys } from "./queryKeys";
 import { AssetsManifest } from "./schemas/assetsManifest";
 
@@ -89,6 +89,28 @@ export function useRawGameData(key: BuildFileKey, opts: { build: string }): Data
     queryFn: () => loadRaw(key, opts.build),
   });
   return toState(query);
+}
+
+export function useRawGameDataMany(keys: readonly BuildFileKey[], opts: { build: string }): DataState<unknown>[] {
+  const queries = useQueries({
+    queries: keys.map((key) => ({
+      queryKey: queryKeys.raw(opts.build, key),
+      queryFn: () => loadRaw(key, opts.build),
+    })),
+  });
+  return queries.map(toState);
+}
+
+export type WorldFileRef = { world: World; key: WorldFileKey };
+
+export function useRawWorldDataMany(files: readonly WorldFileRef[], opts: { build: string }): DataState<unknown>[] {
+  const queries = useQueries({
+    queries: files.map(({ world, key }) => ({
+      queryKey: queryKeys.rawWorld(opts.build, world, key),
+      queryFn: () => loadRawWorld(world, key, opts.build),
+    })),
+  });
+  return queries.map(toState);
 }
 
 async function loadAssetsManifest(): Promise<z.infer<typeof AssetsManifest> | null> {

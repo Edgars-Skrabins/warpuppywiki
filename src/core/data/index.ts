@@ -19,8 +19,11 @@ export {
   useGameDataMany,
   useLatestBuild,
   useRawGameData,
+  useRawGameDataMany,
+  useRawWorldDataMany,
   useWorldData,
   type DataState,
+  type WorldFileRef,
 } from "./hooks";
 export { queryKeys } from "./queryKeys";
 export type * from "./types";

@@ -1,0 +1,15 @@
+.pickers {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+.picker {
+  flex: 1 1 220px;
+  max-width: 320px;
+}
+
+.swap {
+  flex-shrink: 0;
+}

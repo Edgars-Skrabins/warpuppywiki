@@ -39,3 +39,7 @@ export function loadWorldFile<K extends WorldFileKey>(world: World, key: K, buil
 export function loadRaw(key: BuildFileKey, build: string): Promise<unknown> {
   return fetchJson(buildFileUrl(build, buildFilePath(key)));
 }
+
+export function loadRawWorld(world: World, key: WorldFileKey, build: string): Promise<unknown> {
+  return fetchJson(buildFileUrl(build, worldFilePath(world, key)));
+}
