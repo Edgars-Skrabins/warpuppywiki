@@ -8,13 +8,17 @@ import { ToolStatusBadge } from "../../ToolStatusBadge";
 import styles from "./BriefingLayout.module.css";
 import { ART, FEATURED } from "./featuredArt";
 
-function FeatureCard({ tool, hasAssets }: { tool: ToolDefinition; hasAssets: boolean }) {
+function FeatureCard({ tool, hasAssets, priority }: { tool: ToolDefinition; hasAssets: boolean; priority: boolean }) {
   const art = ART[tool.id];
   return (
     <Link to={`/${tool.id}`} className={styles.feature}>
       <span className={art?.kind === "map" ? styles.artMap : styles.art}>
         {hasAssets && art ? (
-          <img src={`${import.meta.env.BASE_URL}assets/${art.path}`} alt="" loading="lazy" />
+          <img
+            src={`${import.meta.env.BASE_URL}assets/${art.path}`}
+            alt=""
+            fetchPriority={priority ? "high" : undefined}
+          />
         ) : (
           <Icon name={toolIcon(tool)} size={48} className={styles.fallbackIcon} />
         )}
@@ -43,8 +47,8 @@ export function BriefingLayout({ tools }: { tools: readonly ToolDefinition[] }) 
     <div className={styles.briefing}>
       {featured.length > 0 && (
         <section aria-label="Featured tools" className={styles.features}>
-          {featured.map((tool) => (
-            <FeatureCard key={tool.id} tool={tool} hasAssets={hasAssets} />
+          {featured.map((tool, index) => (
+            <FeatureCard key={tool.id} tool={tool} hasAssets={hasAssets} priority={index === 0} />
           ))}
         </section>
       )}
