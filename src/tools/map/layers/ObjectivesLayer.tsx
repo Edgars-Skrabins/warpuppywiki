@@ -1,5 +1,5 @@
 import { divIcon, type DivIcon } from "leaflet";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { Circle, Marker, Popup, Tooltip, useMap } from "react-leaflet";
 import type { MapFile, ObjectiveConfig } from "@/core/data";
 import { classNames } from "../components/classNames";
@@ -86,7 +86,7 @@ function Zone({ map, config, placement, variant, title }: ZoneProps) {
   );
 }
 
-export function ObjectivesLayer({ map, config, variant, title }: ObjectivesLayerProps) {
+export const ObjectivesLayer = memo(function ObjectivesLayer({ map, config, variant, title }: ObjectivesLayerProps) {
   const placements = useMemo(() => zonePlacements(config), [config]);
   return (
     <>
@@ -95,4 +95,4 @@ export function ObjectivesLayer({ map, config, variant, title }: ObjectivesLayer
       ))}
     </>
   );
-}
+});
