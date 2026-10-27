@@ -1,6 +1,6 @@
 import type { Map as LeafletMap } from "leaflet";
-import { useEffect, useRef, useState } from "react";
-import { MapContainer, useMap, useMapEvents } from "react-leaflet";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MapContainer, Pane, useMap, useMapEvents } from "react-leaflet";
 import { useAssetsManifest, useWorldData, type MapFile } from "@/core/data";
 import { useHeightmap, type Vec2 } from "@/core/maps";
 import { DataStateView, ErrorState, LoadingState } from "@/ui";
@@ -15,10 +15,20 @@ import { mapCrs, MAX_ZOOM, PAN_MARGIN, worldBounds } from "../leaflet/crs";
 import { latLngToWorld, worldToLatLng } from "../leaflet/projection";
 import type { BuildingKind } from "../logic/buildingStyle";
 import { mapProblem, syncedNativeZoom } from "../logic/mapMeta";
+import { measurePath } from "../plan/measure";
+import { emptyPlan, removePin, removeRingSet, updatePin, type PinChanges, type Plan } from "../plan/plan";
+import { MeasureLayer, PLAN_PANE } from "../tools/MeasureLayer";
+import { ModeBar } from "../tools/ModeBar";
+import { ModeEvents } from "../tools/ModeEvents";
+import { PinsLayer } from "../tools/PinsLayer";
+import { RangeRingsLayer } from "../tools/RangeRingsLayer";
+import { useMapMode } from "../tools/useMapMode";
+import { usePlanEditor } from "../tools/usePlanEditor";
 import type { MapState } from "../state";
 import { LayersPanel } from "./LayersPanel";
 import { MapControls } from "./MapControls";
 import { MissingImagery } from "./MissingImagery";
+import { PlanPanel } from "./PlanPanel";
 import { Readout } from "./Readout";
 import styles from "./MapView.module.css";
 
@@ -28,7 +38,11 @@ export interface MapViewProps {
   onGridChange: (grid: boolean) => void;
   onLayerChange: (id: LayerId, on: boolean) => void;
   onBuildingKindChange: (kind: BuildingKind, on: boolean) => void;
+  onPlanChange: (update: (plan: Plan) => Plan) => void;
+  shareUrl: string | null;
 }
+
+const PLAN_PANE_STYLE = { zIndex: 620 };
 
 const OBJECT_LAYERS = LAYERS.filter((definition) => definition.objectKinds.length > 0);
 
@@ -133,10 +147,37 @@ function LoadedMap({
   onGridChange,
   onLayerChange,
   onBuildingKindChange,
+  onPlanChange,
+  shareUrl,
 }: LoadedMapProps) {
   const heightmap = useHeightmap(state.world);
   const layerData = useLayerData(state.world);
   const { layers } = state;
+  const plan = state.plans[state.world];
+  const [mode, setMode] = useMapMode();
+  const editor = usePlanEditor({ plan, onPlanChange, mode, setMode });
+  const { setEditingPinId } = editor;
+  const [threeD, setThreeD] = useState(false);
+  const heightData = heightmap.status === "success" ? heightmap.data : null;
+  const measurement = useMemo(
+    () =>
+      measurePath(
+        plan.measure,
+        threeD && heightData !== null ? (x: number, y: number) => heightData.heightAt(x, y) : null,
+      ),
+    [plan.measure, threeD, heightData],
+  );
+  const changePin = useCallback(
+    (id: number, changes: PinChanges) => onPlanChange((current) => updatePin(current, id, changes)),
+    [onPlanChange],
+  );
+  const deletePin = useCallback(
+    (id: number) => {
+      setEditingPinId(null);
+      onPlanChange((current) => removePin(current, id));
+    },
+    [onPlanChange, setEditingPinId],
+  );
   const [leafletMap, setLeafletMap] = useState<LeafletMap | null>(null);
   const [ready, setReady] = useState(false);
   const [zoom, setZoom] = useState<number | null>(null);
@@ -189,6 +230,19 @@ function LoadedMap({
                     <ObjectsLayer key={definition.id} map={map} objects={layerData.objects[definition.id] ?? []} />
                   ),
               )}
+              <Pane name={PLAN_PANE} style={PLAN_PANE_STYLE}>
+                <RangeRingsLayer map={map} rings={plan.rings} />
+                <MeasureLayer map={map} points={plan.measure} measurement={measurement} />
+                <PinsLayer
+                  map={map}
+                  pins={plan.pins}
+                  editingPinId={editor.editingPinId}
+                  onEditingChange={setEditingPinId}
+                  onChange={changePin}
+                  onDelete={deletePin}
+                />
+              </Pane>
+              <ModeEvents map={map} mode={mode} onClick={editor.onMapClick} onDoubleClick={editor.onMapDoubleClick} />
               <CursorTracker map={map} onCursor={setCursor} />
             </>
           )}
@@ -208,6 +262,28 @@ function LoadedMap({
         {maxNativeZoom === null && <MissingImagery />}
       </div>
       <Readout map={map} cursor={cursor} heightmap={heightmap} zoom={zoom} />
+      <div className={styles.tools}>
+        <ModeBar mode={mode} onModeChange={setMode} editor={editor} />
+        <PlanPanel
+          plan={plan}
+          measurement={measurement}
+          threeD={threeD}
+          threeDAvailable={heightData !== null}
+          onThreeDChange={setThreeD}
+          onClearMeasure={() => onPlanChange((current) => ({ ...current, measure: [] }))}
+          onRemoveRingSet={(id) => onPlanChange((current) => removeRingSet(current, id))}
+          onEditPin={(id) => {
+            const pin = plan.pins.find((candidate) => candidate.id === id);
+            if (pin !== undefined && leafletMap !== null) {
+              leafletMap.panTo(worldToLatLng(map, pin.position[0], pin.position[1], leafletMap));
+            }
+            setEditingPinId(id);
+          }}
+          onRemovePin={deletePin}
+          onClearPlan={() => onPlanChange(() => emptyPlan())}
+          shareUrl={shareUrl}
+        />
+      </div>
     </div>
   );
 }

@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { decodeState, encodeState } from "@/core/state";
 import { defaultLayers } from "./layers/layerDefinitions";
+import { emptyPlans } from "./plan/plan";
 import {
   defaultBuildingKinds,
   mapStateCodec,
   withBuildingKind,
   withLayer,
+  withPlan,
   withView,
   withWorld,
   type MapState,
@@ -13,7 +15,15 @@ import {
 
 const layers = defaultLayers();
 const buildingKinds = defaultBuildingKinds();
-const view: MapState = { world: "europe", center: [-8123, -12001], zoom: 4.5, grid: false, layers, buildingKinds };
+const view: MapState = {
+  world: "europe",
+  center: [-8123, -12001],
+  zoom: 4.5,
+  grid: false,
+  layers,
+  buildingKinds,
+  plans: emptyPlans(),
+};
 
 describe("mapStateCodec", () => {
   it("defaults to Bakurani with the grid on and the whole map in view", () => {
@@ -39,6 +49,12 @@ describe("mapStateCodec", () => {
   it("decodes a map link from before layers existed with the default layers", () => {
     const old = { world: "europe", center: [-8123, -12001], zoom: 4.5, grid: false };
     const text = encodeState({ ...mapStateCodec, version: 1 } as never, old);
+    expect(decodeState(mapStateCodec, text)).toEqual({ state: view, error: false });
+  });
+
+  it("decodes a map link from before plans existed with empty plans", () => {
+    const old = { world: "europe", center: [-8123, -12001], zoom: 4.5, grid: false, layers, buildingKinds };
+    const text = encodeState({ ...mapStateCodec, version: 2 } as never, old);
     expect(decodeState(mapStateCodec, text)).toEqual({ state: view, error: false });
   });
 
@@ -72,5 +88,13 @@ describe("withWorld", () => {
 describe("withView", () => {
   it("rounds the centre to whole meters and the zoom to two decimals", () => {
     expect(withView(view, [-100.4, 250.6], 5.12345)).toEqual({ ...view, center: [-100, 251], zoom: 5.12 });
+  });
+});
+
+describe("withPlan", () => {
+  it("changes only the given world's plan", () => {
+    const next = withPlan(view, "kavkazi", (plan) => ({ ...plan, measure: [[1, 2]] }));
+    expect(next.plans.kavkazi.measure).toEqual([[1, 2]]);
+    expect(next.plans.europe).toBe(view.plans.europe);
   });
 });

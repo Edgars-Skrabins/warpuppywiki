@@ -1,5 +1,5 @@
 import { divIcon } from "leaflet";
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { Marker, Popup, Tooltip, useMap } from "react-leaflet";
 import type { MapFile, MapObject } from "@/core/data";
@@ -38,14 +38,18 @@ function ObjectMarker({ map, object }: ObjectMarkerProps) {
   const iconName = OBJECT_ICONS[object.kind];
   const icon = useMemo(() => markerIcon(content, faction, iconName), [content, faction, iconName]);
   const [x, y] = object.position;
-  if (!Number.isFinite(x) || !Number.isFinite(y)) {
+  const position = useMemo(
+    () => (Number.isFinite(x) && Number.isFinite(y) ? worldToLatLng(map, x, y, leafletMap) : null),
+    [map, x, y, leafletMap],
+  );
+  if (position === null) {
     return null;
   }
   const kind = OBJECT_KIND_LABELS[object.kind];
   const label = object.faction ? `${kind} · ${factionLabel(object.faction)}` : kind;
 
   return (
-    <Marker position={worldToLatLng(map, x, y, leafletMap)} icon={icon}>
+    <Marker position={position} icon={icon}>
       {createPortal(
         <>
           {iconName !== undefined && <Icon name={iconName} size={14} />}
@@ -61,7 +65,13 @@ function ObjectMarker({ map, object }: ObjectMarkerProps) {
   );
 }
 
-export function ObjectsLayer({ map, objects }: { map: MapFile; objects: readonly MapObject[] }) {
+export const ObjectsLayer = memo(function ObjectsLayer({
+  map,
+  objects,
+}: {
+  map: MapFile;
+  objects: readonly MapObject[];
+}) {
   return (
     <>
       {objects.map((object) => (
@@ -69,4 +79,4 @@ export function ObjectsLayer({ map, objects }: { map: MapFile; objects: readonly
       ))}
     </>
   );
-}
+});
