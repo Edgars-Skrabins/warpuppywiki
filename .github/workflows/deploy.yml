@@ -31,10 +31,10 @@ jobs:
       - run: pnpm data:sync
       - name: Compute the asset cache key
         id: cache-key
-        run: echo "key=wardogs-full-$(jq -r .latest public/data/builds.json)" >> "$GITHUB_OUTPUT"
+        run: echo "key=wardogs-assets-$(jq -r .latest public/data/builds.json)-z6-${{ hashFiles('scripts/sync-assets.ts', 'scripts/lib/**') }}" >> "$GITHUB_OUTPUT"
       - uses: actions/cache@v6
         with:
-          path: ~/.cache/warpuppywiki
+          path: public/assets
           key: ${{ steps.cache-key.outputs.key }}
       - run: pnpm assets:sync --max-zoom 6
       - run: pnpm build

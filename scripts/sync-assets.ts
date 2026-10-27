@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { parseArgs } from "node:util";
+import { type AssetRequest, assetsUpToDate } from "./lib/assetsState";
 import { cacheDir } from "./lib/cache";
 import { downloadVerified } from "./lib/download";
 import {
@@ -71,7 +72,7 @@ async function presentMaxZoom(world: string): Promise<number | null> {
   return levels.length > 0 ? Math.max(...levels) : null;
 }
 
-async function writeManifest(build: string): Promise<void> {
+async function writeManifest(request: AssetRequest): Promise<void> {
   const mapsDir = join(assetsRoot, "maps");
   const worlds: Record<string, { maxZoom: number }> = {};
   if (existsSync(mapsDir)) {
@@ -80,8 +81,29 @@ async function writeManifest(build: string): Promise<void> {
       if (maxZoom !== null) worlds[world] = { maxZoom };
     }
   }
-  const manifest = { schemaVersion: 1, build, worlds, icons: existsSync(join(assetsRoot, "icons")) };
+  const manifest = {
+    schemaVersion: 1,
+    build: request.build,
+    worlds,
+    icons: existsSync(join(assetsRoot, "icons")),
+    sync: { maxZoom: request.maxZoom, worlds: request.worlds },
+  };
   await writeFile(join(assetsRoot, "manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
+}
+
+async function readManifest(): Promise<unknown> {
+  const path = join(assetsRoot, "manifest.json");
+  if (!existsSync(path)) return null;
+  try {
+    return JSON.parse(await readFile(path, "utf8")) as unknown;
+  } catch {
+    return null;
+  }
+}
+
+function hasHeightmap(world: string): boolean {
+  const worldDir = join(assetsRoot, "maps", world);
+  return existsSync(join(worldDir, "heightmap.u16")) && existsSync(join(worldDir, "heightmap.json"));
 }
 
 async function previousBuild(): Promise<string | null> {
@@ -97,6 +119,16 @@ async function main(): Promise<void> {
   const release = args.build === null ? builds[0] : builds.find((candidate) => candidate.build === args.build);
   if (!release) {
     throw new Error(args.build === null ? "No release has a full zip." : `Build ${args.build} has no full zip.`);
+  }
+
+  const request: AssetRequest = {
+    build: release.build,
+    maxZoom: args.maxZoom,
+    worlds: args.worlds === null ? null : [...args.worlds].sort(),
+  };
+  if (assetsUpToDate(await readManifest(), request, hasHeightmap)) {
+    console.log(`${release.build} assets up to date`);
+    return;
   }
 
   const zipPath = join(cacheDir(), release.assets.zip.name);
@@ -147,7 +179,7 @@ async function main(): Promise<void> {
     await writeFile(join(assetsRoot, "maps", world, "heightmap.json"), `${JSON.stringify(meta, null, 2)}\n`);
   }
 
-  await writeManifest(release.build);
+  await writeManifest(request);
   console.log(`${release.build} assets synced: ${copied} files extracted, ${heightmaps.size} heightmaps converted`);
 }
 
