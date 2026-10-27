@@ -1,10 +1,11 @@
 import { fileURLToPath, URL } from "node:url";
 import react from "@vitejs/plugin-react";
 import { configDefaults, defineConfig } from "vitest/config";
+import { preloadsPlugin } from "./vite/preloads.ts";
 
 export default defineConfig({
   base: "./",
-  plugins: [react()],
+  plugins: [react(), preloadsPlugin()],
   build: {
     rolldownOptions: {
       treeshake: {
