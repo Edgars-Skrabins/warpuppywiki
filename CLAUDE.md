@@ -53,6 +53,7 @@ specs/              specs (see below)
 - Named exports only, except the lazy tool page, which is the default export of `src/tools/<tool>/Tool.tsx`.
 - Domain logic is pure functions in `src/core` or in a tool's `logic/` folder, tested without React. Components stay thin.
 - Tests use trimmed real game data. Shared fixtures in `src/test/fixtures/data/` belong to the core; a tool keeps any extra records in `src/tools/<tool>/fixtures/` and passes them to `renderWithData` (with `fixtureWith`), so tools never edit shared fixtures.
+- Tests rely on the global timeouts, 30 s per test in `vite.config.ts` and 10 s for `findBy*` and `waitFor` in `src/test/setup.ts`, so test files carry no timeout values of their own except for deliberate time-based waits. Vitest's file-system module cache is off, so `import.meta.glob` always sees the current files.
 - A tool that links into another tool builds the URL itself and pins the format with a contract test (see the TTK link contract), since it may not import the other tool.
 - Use the `@/` path alias for `src/`.
 - Numbers shown to users go through the formatters in `src/ui/format.ts`.
