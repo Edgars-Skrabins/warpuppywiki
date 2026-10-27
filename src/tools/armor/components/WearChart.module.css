@@ -1,0 +1,11 @@
+.controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3);
+  max-width: 900px;
+}
+
+.summary {
+  margin: 0;
+  color: var(--color-text-muted);
+}
