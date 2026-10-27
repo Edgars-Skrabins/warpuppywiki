@@ -9,11 +9,23 @@ export interface SlotCardProps {
   slot: SlotDefinition;
   item: Item | null;
   catalog: Catalog;
+  summary?: string | null;
+  showNotice?: boolean;
   onChoose: () => void;
   onRemove: () => void;
+  onCustomize?: () => void;
 }
 
-export function SlotCard({ slot, item, catalog, onChoose, onRemove }: SlotCardProps) {
+export function SlotCard({
+  slot,
+  item,
+  catalog,
+  summary = null,
+  showNotice = false,
+  onChoose,
+  onRemove,
+  onCustomize,
+}: SlotCardProps) {
   const subtitle = item === null ? null : (catalog.archetype(item)?.label ?? item.subtitle ?? null);
   return (
     <article className={styles.card} aria-label={slot.label} data-filled={item !== null || undefined}>
@@ -43,7 +55,13 @@ export function SlotCard({ slot, item, catalog, onChoose, onRemove }: SlotCardPr
               weight={item.weight ?? null}
               unlock={catalog.unlock(item)}
             />
+            {summary !== null && <p className={styles.summary}>{summary}</p>}
           </>
+        )}
+        {showNotice && (
+          <p role="status" className={styles.notice}>
+            Some parts of this setup no longer fit and were removed
+          </p>
         )}
       </div>
       <footer className={styles.actions}>
@@ -53,6 +71,11 @@ export function SlotCard({ slot, item, catalog, onChoose, onRemove }: SlotCardPr
           </Button>
         ) : (
           <>
+            {onCustomize !== undefined && (
+              <Button size="sm" onPress={onCustomize} aria-label={`Customize ${slot.label}`}>
+                Customize
+              </Button>
+            )}
             <Button size="sm" onPress={onChoose} aria-label={`Change ${slot.label}`}>
               Change
             </Button>

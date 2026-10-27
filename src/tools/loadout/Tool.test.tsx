@@ -39,14 +39,15 @@ async function choosePrimary(name: string) {
 }
 
 describe("Loadout builder", () => {
-  it("fills a slot from the dialog and adds its price to the total", async () => {
+  it("fills a slot from the dialog and adds its price and starting ammo to the total", async () => {
     renderTool();
     await choosePrimary("M4");
     const primary = screen.getByRole("article", { name: "Primary" });
     expect(within(primary).getByText("M4", { selector: "p" })).toBeInTheDocument();
     expect(within(primary).getByText("Assault 28")).toBeInTheDocument();
-    expect(sheetValue("Total cost")).toBe("$2,800");
-    expect(sheetValue("Remaining")).toBe("$7,200");
+    expect(within(primary).getByText("10 RND 5.56mm")).toBeInTheDocument();
+    expect(sheetValue("Total cost")).toBe("$2,815");
+    expect(sheetValue("Remaining")).toBe("$7,185");
   });
 
   it("searches the dialog", async () => {
@@ -100,6 +101,6 @@ describe("Loadout builder", () => {
     renderTool(search);
     const primary = await screen.findByRole("article", { name: "Primary" });
     expect(within(primary).getByText("SV98", { selector: "p" })).toBeInTheDocument();
-    expect(sheetValue("Total cost")).toBe("$5,200");
+    expect(sheetValue("Total cost")).toBe("$5,230");
   });
 });
