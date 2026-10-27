@@ -1,9 +1,9 @@
-import { map as createLeafletMap, type Map as LeafletMap } from "leaflet";
+import { circle, map as createLeafletMap, type Map as LeafletMap } from "leaflet";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import type { MapFile } from "@/core/data";
 import mapJson from "@/test/fixtures/data/25937608/maps/kavkazi/map.json";
 import { imageBounds, mapCrs, worldBounds } from "./crs";
-import { latLngToWorld, worldToLatLng } from "./projection";
+import { latLngToWorld, metersToLatLngDistance, worldToLatLng } from "./projection";
 
 const kavkazi = mapJson as MapFile;
 
@@ -69,5 +69,24 @@ describe("bounds", () => {
     expect(topLeft.y).toBeCloseTo(-1632);
     expect(bottomRight.x).toBeCloseTo(16320 + 1632);
     expect(bottomRight.y).toBeCloseTo(16320 + 1632);
+  });
+});
+
+describe("metersToLatLngDistance", () => {
+  it("gives a circle radius that spans the meters at native zoom", () => {
+    const zone = circle(worldToLatLng(kavkazi, -8360, -11233, leafletMap), {
+      radius: metersToLatLngDistance(kavkazi, 500, leafletMap),
+    }).addTo(leafletMap);
+    leafletMap.setZoom(6, { animate: false });
+    const center = leafletMap.project(zone.getLatLng(), 6);
+    const east = leafletMap.project(zone.getBounds().getNorthEast(), 6);
+    expect(east.x - center.x).toBeCloseTo(500);
+  });
+
+  it("scales by metersPerPixel", () => {
+    const coarse: MapFile = { ...kavkazi, image: { ...kavkazi.image, metersPerPixel: 2 } };
+    expect(metersToLatLngDistance(coarse, 500, leafletMap)).toBeCloseTo(
+      metersToLatLngDistance(kavkazi, 250, leafletMap),
+    );
   });
 });

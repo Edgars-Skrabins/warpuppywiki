@@ -48,6 +48,11 @@ const paths: Record<IconName, ReactNode> = {
   list: <path d="M9 6h11M9 12h11M9 18h11M4 5h2v2H4zM4 11h2v2H4zM4 17h2v2H4z" />,
   hammer: <path d="M4 4h11v5H4zM15 5l5-1v5l-5-1M9.5 9v12" />,
   scroll: <path d="M6 3h9l4 4v14H6zM15 3v4h4M9 11h7M9 15h7" />,
+  store: <path d="M3 9h18M5 9l1-5h12l1 5M5 9v11h14V9M10 20v-6h4v6" />,
+  garage: <path d="M3 10l9-6 9 6v10H3zM7 20v-7h10v7M7 16.5h10" />,
+  flag: <path d="M6 21V3M6 4h12l-3 4 3 4H6" />,
+  fuel: <path d="M4 21V4h9v17M2.5 21h12M7 7h3v4H7zM13 9h3l2 2v6.5a1.5 1.5 0 0 0 3 0V8l-3-3" />,
+  tent: <path d="M2 20h20M4 20l8-15 8 15M12 5v15M9 20l3-6 3 6" />,
 };
 
 export interface IconProps extends Omit<SVGProps<SVGSVGElement>, "name"> {

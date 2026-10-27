@@ -1,0 +1,56 @@
+.marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 2px solid var(--marker-color);
+  background: var(--color-surface);
+  color: var(--color-text);
+  transition: background-color var(--duration-fast) var(--easing);
+}
+
+.marker > span {
+  display: flex;
+}
+
+.marker:hover {
+  background: var(--color-surface-hover);
+}
+
+.marker:focus-visible,
+.volume:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.volume {
+  box-sizing: border-box;
+  border: 1px solid var(--color-bg);
+  background: var(--marker-color);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.alpha {
+  --marker-color: var(--faction-alpha);
+}
+
+.bravo {
+  --marker-color: var(--faction-bravo);
+}
+
+.charlie {
+  --marker-color: var(--faction-charlie);
+}
+
+.neutral {
+  --marker-color: var(--faction-neutral);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

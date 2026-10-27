@@ -1,0 +1,29 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-4);
+  align-items: start;
+  padding-top: var(--space-4);
+}
+
+.chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  min-width: 15rem;
+}
+
+.effects {
+  display: inline-block;
+  min-width: 18rem;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+@media (width < 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25937608",
+  "vehicles": [
+    {
+      "id": "Vehicle.Variant.Air.Rotary.Havoc.Default",
+      "name": "Havoc",
+      "asset": "Plugins/GameFeatures/Vehicles/ROT_02/Content/Data/DA_ROT_02_Stats",
+      "maxSpeed": 400,
+      "maxFuel": 130,
+      "fuelEconomy": 4.4,
+      "seats": 2,
+      "weapons": ["2A42 Autocannon", "B-13 Rocket Pods"],
+      "weaponIcons": {
+        "2A42 Autocannon": "UI/Shared/Icons/Vehicles/3D/T_UI_Vehicle_WPN_AutoCannon.png",
+        "B-13 Rocket Pods": "UI/Shared/Icons/Vehicles/3D/T_UI_Vehicle_WPN_RocketPod.png"
+      },
+      "counterMeasures": ["Flares"],
+      "damageEntity": "Vehicle.Air.Rotary.Havoc",
+      "health": {
+        "initial": 800,
+        "criticalThreshold": 80,
+        "bleedOutTime": 15
+      },
+      "kmPerLiter": 0.225,
+      "destroyedExplosion": {
+        "radius": 13,
+        "effectiveRadius": 6.5,
+        "falloff": 0.6
+      },
+      "mass": 7500
+    },
+    {
+      "id": "Vehicle.Variant.Land.Wheeled.Humvee.Default",
+      "name": "Humvee",
+      "asset": "Plugins/GameFeatures/Vehicles/WHL_05/Content/Data/DA_WHL_05_Humvee_Stats",
+      "maxSpeed": 113.2291,
+      "maxFuel": 65,
+      "fuelEconomy": 3.3,
+      "seats": 4,
+      "weapons": [],
+      "counterMeasures": [],
+      "damageEntity": "Vehicle.Land.Wheeled.Humvee.Default",
+      "health": {
+        "initial": 500,
+        "criticalThreshold": 50,
+        "bleedOutTime": 15
+      },
+      "kmPerLiter": 0.3,
+      "destroyedExplosion": {
+        "radius": 10,
+        "effectiveRadius": 5,
+        "falloff": 0.6
+      },
+      "mass": 7250,
+      "engine": {
+        "torqueCurve": [
+          {
+            "rpm": 800,
+            "torque": 1200
+          },
+          {
+            "rpm": 1200,
+            "torque": 1200
+          },
+          {
+            "rpm": 1600,
+            "torque": 1200
+          },
+          {
+            "rpm": 2000,
+            "torque": 1350
+          },
+          {
+            "rpm": 2500,
+            "torque": 1450
+          },
+          {
+            "rpm": 3100,
+            "torque": 1000
+          },
+          {
+            "rpm": 3750,
+            "torque": 399.99997
+          }
+        ],
+        "frictionTorque": 75,
+        "idleRpm": 700,
+        "limitRpm": 4000,
+        "inertia": 1.3,
+        "boostScale": 1.03
+      },
+      "transmission": {
+        "gearRatios": [3.6, 2.4, 1.7, 1.35, 1.12, 3.6],
+        "finalGearRatio": 6.54,
+        "changeTime": 200,
+        "clutchTime": 180,
+        "gearUpRatio": 85
+      }
+    }
+  ]
+}
