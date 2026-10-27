@@ -32,6 +32,7 @@ src/core/           shared, framework-light domain code used by more than one to
   state/            URL state codecs and local storage helpers
   tool/             the ToolDefinition type and tool categories
 src/ui/             the UI kit: tokens, theme and reusable components
+src/sw/             the service worker (built as dist/sw.js) and its pure routing and cache trim logic
 src/tools/<tool>/   one folder per tool, with an index.ts that exports its ToolDefinition
 specs/              specs (see below)
 ```
@@ -41,7 +42,8 @@ specs/              specs (see below)
 - `scripts/sync-data.ts` downloads every published build's small data zip into `public/data/<build>/` and writes `public/data/builds.json`. `scripts/sync-assets.ts` downloads the latest full zip once into a shared cache outside the repo and extracts tiles, icons and a converted heightmap into `public/assets/`.
 - `src/core/data` loads files from `public/data/<build>/`, validates them with zod and exposes typed hooks. Tools always read game data through it, never with their own `fetch`.
 - Each tool's `src/tools/<id>/index.ts` exports `tool`, its `ToolDefinition` from `@/core/tool` (id equal to the folder name, name, summary, category, an icon name from the UI kit's `Icon`, optional `status: "beta"`, and `component: lazy(() => import("./Tool"))`). `src/app/toolRegistry.ts` discovers them with `import.meta.glob`, and the router, the Tools menu and the home page are built from that list. Routes are `#/<id>`; the shell renders the tool's heading, summary and error boundary. Adding or removing a tool means adding or removing its folder; no shared file changes.
-- Import boundaries, enforced by ESLint: `src/tools/X` may import from `src/core` and `src/ui` only; `src/core` may not import from `src/ui`, `src/app` or `src/tools`; `src/ui` may not import from `src/app` or `src/tools`.
+- In production `src/main.tsx` registers a hand-written service worker (`src/sw/sw.ts`, built as `dist/sw.js` at the site root) to get around GitHub Pages' fixed 10-minute cache lifetime. It serves hashed build files, game data, icons, heightmaps and viewed map tiles (capped) cache first, and `index.html`, `data/builds.json` and `assets/manifest.json` network first. Bump `CACHE_VERSION` in `src/sw/strategy.ts` to drop old caches.
+- Import boundaries, enforced by ESLint: `src/tools/X` may import from `src/core` and `src/ui` only; `src/core` may not import from `src/ui`, `src/app` or `src/tools`; `src/ui` may not import from `src/app` or `src/tools`; `src/sw` may import only from `src/sw`.
 - Game ids and tags are compared case-insensitively through the helpers in `src/core/catalog`, never with `===` on raw strings.
 - The game data is extracted from game files and can be incomplete or contradictory. Code reading it is defensive: optional fields may be absent or `null`, lookups that can miss return `null` or an empty list instead of throwing, contradictory rules fall back to the most permissive reasonable reading, and the UI shows "—" or a short note instead of breaking. Real-data tests report anomalies rather than assume perfect data.
 - Never fill gaps in the game data with guessed or invented values. If the data has no number for something, show "—" or "Not in game data" instead of a made-up default. Values a user types in themselves are allowed, but they must be clearly labelled as the user's input.
@@ -66,7 +68,7 @@ pnpm assets:sync      download map tiles, icons and heightmaps (large, cached)
 pnpm dev              run the app
 pnpm test             run the tests once
 pnpm lint             ESLint
-pnpm typecheck        tsc on the app (tsconfig.json) and on configs and scripts (tsconfig.node.json)
+pnpm typecheck        tsc on the app (tsconfig.json), configs and scripts (tsconfig.node.json) and the service worker (src/sw/tsconfig.json)
 pnpm format           Prettier
 pnpm check            typecheck, lint, format check and tests
 pnpm build            production build into dist/
