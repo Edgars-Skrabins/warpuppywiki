@@ -15,3 +15,8 @@ export function latLngToWorld(map: MapFile, latLng: LatLng, leafletMap: LeafletM
   const point = leafletMap.project(latLng, map.tiles.maxZoom);
   return pixelToWorld(map, point.x, point.y);
 }
+
+export function metersToLatLngDistance(map: MapFile, meters: number, leafletMap: LeafletMap): number {
+  const pixels = meters / map.image.metersPerPixel;
+  return Math.abs(pixelToLatLng(map, pixels, 0, leafletMap).lng - pixelToLatLng(map, 0, 0, leafletMap).lng);
+}
