@@ -1,14 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Input, SearchField } from "react-aria-components";
-import { Link } from "react-router";
 import { useBuilds } from "@/core/data";
+import { useStoredState } from "@/core/state";
 import type { ToolDefinition } from "@/core/tool";
-import { EmptyState, Icon } from "@/ui";
+import { EmptyState, SegmentedControl } from "@/ui";
 import { buildSummary } from "../buildSummary";
 import { filterTools, groupTools } from "../groupTools";
-import { toolIcon } from "../toolIcon";
-import { ToolStatusBadge } from "../ToolStatusBadge";
+import { BriefingLayout } from "./home/BriefingLayout";
+import { ColumnsLayout } from "./home/ColumnsLayout";
+import { HOME_LAYOUTS, homeLayoutStore, type HomeLayoutId } from "./home/homeLayouts";
+import { ManualLayout } from "./home/ManualLayout";
+import { TerminalLayout } from "./home/TerminalLayout";
+import { TilesLayout } from "./home/TilesLayout";
+import type { HomeLayoutProps } from "./home/types";
 import styles from "./HomePage.module.css";
+
+const LAYOUT_COMPONENTS: Record<HomeLayoutId, (props: HomeLayoutProps) => ReactNode> = {
+  manual: ManualLayout,
+  tiles: TilesLayout,
+  terminal: TerminalLayout,
+  columns: ColumnsLayout,
+  briefing: BriefingLayout,
+};
 
 function BuildLine() {
   const builds = useBuilds();
@@ -20,26 +33,12 @@ function BuildLine() {
   );
 }
 
-function ToolCard({ tool }: { tool: ToolDefinition }) {
-  return (
-    <Link to={`/${tool.id}`} className={styles.card}>
-      <span className={styles.cardIcon}>
-        <Icon name={toolIcon(tool)} size={24} />
-      </span>
-      <span className={styles.cardText}>
-        <span className={styles.cardName}>
-          {tool.name}
-          <ToolStatusBadge status={tool.status} />
-        </span>
-        <span className={styles.cardSummary}>{tool.summary}</span>
-      </span>
-    </Link>
-  );
-}
-
 export function HomePage({ tools }: { tools: readonly ToolDefinition[] }) {
   const [query, setQuery] = useState("");
-  const groups = groupTools(filterTools(tools, query));
+  const [layout, setLayout] = useStoredState(homeLayoutStore);
+  const filtered = filterTools(tools, query);
+  const groups = groupTools(filtered);
+  const Layout = LAYOUT_COMPONENTS[layout];
 
   useEffect(() => {
     document.title = "warpuppywiki";
@@ -56,32 +55,22 @@ export function HomePage({ tools }: { tools: readonly ToolDefinition[] }) {
         <EmptyState title="No tools yet" />
       ) : (
         <>
-          <SearchField aria-label="Search tools" value={query} onChange={setQuery} className={styles.search}>
-            <Input placeholder="Search tools" className={styles.searchInput} />
-          </SearchField>
-          {groups.length === 0 ? (
-            <EmptyState title="No tool matches" />
-          ) : (
-            groups.map((group) => (
-              <section key={group.id} aria-labelledby={`category-${group.id}`} className={styles.group}>
-                <div className={styles.groupHeader}>
-                  <h2 id={`category-${group.id}`} className={styles.groupTitle}>
-                    {group.label}
-                  </h2>
-                  <span className={styles.groupCount} aria-hidden="true">
-                    {String(group.tools.length).padStart(2, "0")}
-                  </span>
-                </div>
-                <ul className={styles.cards}>
-                  {group.tools.map((tool) => (
-                    <li key={tool.id}>
-                      <ToolCard tool={tool} />
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))
-          )}
+          <div className={styles.toolbar}>
+            <SearchField aria-label="Search tools" value={query} onChange={setQuery} className={styles.search}>
+              <Input placeholder="Search tools" className={styles.searchInput} />
+            </SearchField>
+            <div className={styles.layoutPicker}>
+              <span className={styles.layoutLabel}>Layout preview</span>
+              <SegmentedControl
+                aria-label="Home layout"
+                size="sm"
+                options={HOME_LAYOUTS}
+                value={layout}
+                onChange={setLayout}
+              />
+            </div>
+          </div>
+          {groups.length === 0 ? <EmptyState title="No tool matches" /> : <Layout tools={filtered} groups={groups} />}
         </>
       )}
     </div>
