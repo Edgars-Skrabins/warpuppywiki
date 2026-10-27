@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { buildCatalog } from "@/core/catalog";
 import { AmmoFile } from "@/core/data/schemas/ammo";
 import { AttachmentsFile } from "@/core/data/schemas/attachments";
@@ -6,7 +6,7 @@ import { ItemsFile } from "@/core/data/schemas/items";
 import { RolesFile } from "@/core/data/schemas/roles";
 import { TagsFile } from "@/core/data/schemas/tags";
 import { WeaponsFile } from "@/core/data/schemas/weapons";
-import { buildWeaponIndex } from "./weaponIndex";
+import { buildWeaponIndex, type WeaponIndex } from "./weaponIndex";
 
 const files: Record<string, unknown> = import.meta.glob(
   [
@@ -28,15 +28,19 @@ function dataFile(file: string): unknown {
 }
 
 describe.skipIf(!builds)("weapon index against real data", () => {
-  const index = buildWeaponIndex({
-    weapons: WeaponsFile.parse(dataFile("weapons.json")),
-    ammo: AmmoFile.parse(dataFile("ammo.json")),
-    attachments: AttachmentsFile.parse(dataFile("attachments.json")),
-    catalog: buildCatalog({
-      items: ItemsFile.parse(dataFile("items.json")),
-      tags: TagsFile.parse(dataFile("tags.json")),
-      roles: RolesFile.parse(dataFile("roles.json")),
-    }),
+  let index: WeaponIndex;
+
+  beforeAll(() => {
+    index = buildWeaponIndex({
+      weapons: WeaponsFile.parse(dataFile("weapons.json")),
+      ammo: AmmoFile.parse(dataFile("ammo.json")),
+      attachments: AttachmentsFile.parse(dataFile("attachments.json")),
+      catalog: buildCatalog({
+        items: ItemsFile.parse(dataFile("items.json")),
+        tags: TagsFile.parse(dataFile("tags.json")),
+        roles: RolesFile.parse(dataFile("roles.json")),
+      }),
+    });
   });
 
   it("gives every player weapon with a caliber an ammo option with a projectile", () => {
