@@ -19,6 +19,11 @@ export default defineConfig({
               includeDependenciesRecursively: false,
               test: /node_modules[\\/](recharts|d3-[^\\/]+|victory-vendor|decimal\.js-light|eventemitter3|internmap|tiny-invariant|es-toolkit|immer|reselect|redux|redux-thunk|react-redux|react-is|@reduxjs[\\/]toolkit)[\\/]|src[\\/]ui[\\/]components[\\/]charts[\\/](?!chartTheme\.)/,
             },
+            {
+              name: "index",
+              tags: ["$initial"],
+              test: /\.css$/,
+            },
           ],
         },
       },
