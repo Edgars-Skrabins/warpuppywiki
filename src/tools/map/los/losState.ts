@@ -111,3 +111,18 @@ export function losHint(los: Los): string {
   }
   return "Drag the markers, or click to start again.";
 }
+
+export const NOT_IN_GAME_DATA = "Not in game data";
+
+export function losDataGap(los: Los, eyes: Record<Stance, number | null>): string | null {
+  if (eyes[los.stance] === null) {
+    return `${STANCE_LABELS[los.stance]} eye height: ${NOT_IN_GAME_DATA}.`;
+  }
+  if (los.tool === "viewshed" && eyes.stand === null) {
+    return `Standing eye height for the viewshed target: ${NOT_IN_GAME_DATA}.`;
+  }
+  if (los.tool === "line" && targetHeightMeters(los, eyes) === null) {
+    return `${TARGET_HEIGHT_LABELS[los.targetHeight]} height: ${NOT_IN_GAME_DATA}.`;
+  }
+  return null;
+}

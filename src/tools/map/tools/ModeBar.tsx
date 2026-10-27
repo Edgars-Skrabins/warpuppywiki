@@ -58,7 +58,7 @@ export function ModeBar({ mode, onModeChange, editor, hint, losAvailable, losMis
           />
           {editor.ringPreset === "custom" && (
             <TextInput
-              label="Custom distances (m)"
+              label="Your distances (m)"
               value={editor.customText}
               placeholder="150, 400, 900"
               onChange={(event) => editor.setCustomText(event.target.value)}

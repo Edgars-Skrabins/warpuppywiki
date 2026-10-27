@@ -6,6 +6,8 @@ import {
   clearLosPoints,
   CUSTOM_HEIGHT_LIMITS,
   EXTRA_LOS_NOTES,
+  losDataGap,
+  NOT_IN_GAME_DATA,
   STANCE_LABELS,
   STANCES,
   TARGET_HEIGHT_LABELS,
@@ -34,10 +36,14 @@ function meters(value: number | null): string {
   return value === null ? "—" : `${formatNumber(value, { maxFractionDigits: 2 })} m`;
 }
 
+function eyeOption(value: number | null): string {
+  return value === null ? NOT_IN_GAME_DATA : meters(value);
+}
+
 function heightOption(choice: TargetHeight, eyes: Record<Stance, number | null>): string {
   if (choice === "ground") return `${TARGET_HEIGHT_LABELS.ground} (0 m)`;
   if (choice === "custom") return TARGET_HEIGHT_LABELS.custom;
-  return `${TARGET_HEIGHT_LABELS[choice]} (${meters(eyes[choice])})`;
+  return `${TARGET_HEIGHT_LABELS[choice]} (${eyeOption(eyes[choice])})`;
 }
 
 function ViewshedStatus({ viewshed }: { viewshed: ViewshedState }) {
@@ -72,6 +78,7 @@ export function LosPanel({ los, onLosChange, eyes, observerGround, result, views
   const eye = eyes[los.stance];
   const set = (changes: Partial<Los>) => onLosChange((current) => ({ ...current, ...changes }));
   const hasPoints = los.observer !== null || los.viewshed.observer !== null;
+  const gap = losDataGap(los, eyes);
 
   return (
     <section className={styles.panel} aria-label="Line of sight">
@@ -97,7 +104,7 @@ export function LosPanel({ los, onLosChange, eyes, observerGround, result, views
             label="Observer stance"
             items={STANCES}
             getKey={(stance) => stance}
-            getLabel={(stance) => `${STANCE_LABELS[stance]} (${meters(eyes[stance])})`}
+            getLabel={(stance) => `${STANCE_LABELS[stance]} (${eyeOption(eyes[stance])})`}
             selectedKey={los.stance}
             onSelectionChange={(key) => {
               const stance = STANCES.find((candidate) => candidate === key);
@@ -132,7 +139,7 @@ export function LosPanel({ los, onLosChange, eyes, observerGround, result, views
               />
               {los.targetHeight === "custom" && (
                 <NumberField
-                  label="Custom target height"
+                  label="Your target height"
                   unit="m"
                   minValue={CUSTOM_HEIGHT_LIMITS.min}
                   maxValue={CUSTOM_HEIGHT_LIMITS.max}
@@ -154,7 +161,7 @@ export function LosPanel({ los, onLosChange, eyes, observerGround, result, views
               />
               {los.path === "indirect" && (
                 <NumberField
-                  label="Apex above the higher end"
+                  label="Your apex above the higher end"
                   unit="m"
                   minValue={APEX_LIMITS.min}
                   maxValue={APEX_LIMITS.max}
@@ -175,13 +182,17 @@ export function LosPanel({ los, onLosChange, eyes, observerGround, result, views
                 onChange={(value) => set({ viewshed: { ...los.viewshed, radius: Number(value) as ViewshedRadius } })}
                 options={VIEWSHED_RADII.map((radius) => ({ id: String(radius), label: formatDistance(radius) }))}
               />
-              <ViewshedStatus viewshed={viewshed} />
+              {gap === null ? <ViewshedStatus viewshed={viewshed} /> : <p className={styles.error}>{gap}</p>}
             </>
           )}
         </div>
         {los.tool === "line" && (
           <div className={styles.result}>
-            {los.observer === null || los.target === null ? (
+            {gap !== null ? (
+              <p className={styles.error} role="status">
+                {gap}
+              </p>
+            ) : los.observer === null || los.target === null ? (
               <p className={styles.note}>Click the map to set the observer, then the target.</p>
             ) : result === null ? (
               <p className={styles.note}>No terrain data at one of the points.</p>

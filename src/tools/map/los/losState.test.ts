@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { MovementFile } from "@/core/data";
 import movementJson from "../fixtures/movement.json";
-import { defaultLos, losClick, losHint, stanceEyeHeights, targetHeightMeters } from "./losState";
+import { defaultLos, losClick, losDataGap, losHint, stanceEyeHeights, targetHeightMeters } from "./losState";
 
 const movement = movementJson as MovementFile;
 
@@ -41,5 +41,26 @@ describe("losClick", () => {
     const next = losClick({ ...defaultLos(), tool: "viewshed" }, [5, 6]);
     expect(next.viewshed.observer).toEqual([5, 6]);
     expect(next.observer).toBeNull();
+  });
+});
+
+describe("losDataGap", () => {
+  const eyes = stanceEyeHeights(movement);
+  const noProne = { ...eyes, prone: null };
+  const noStand = { ...eyes, stand: null };
+
+  it("has no gap when the data has every height in use", () => {
+    expect(losDataGap(defaultLos(), eyes)).toBeNull();
+  });
+
+  it("says when a height the result needs is not in the game data", () => {
+    expect(losDataGap({ ...defaultLos(), stance: "prone" }, noProne)).toBe("Prone eye height: Not in game data.");
+    expect(losDataGap({ ...defaultLos(), stance: "crouch" }, noStand)).toBe(
+      "Standing person height: Not in game data.",
+    );
+    expect(losDataGap({ ...defaultLos(), stance: "crouch", tool: "viewshed" }, noStand)).toBe(
+      "Standing eye height for the viewshed target: Not in game data.",
+    );
+    expect(losDataGap({ ...defaultLos(), stance: "crouch", targetHeight: "ground" }, noStand)).toBeNull();
   });
 });
