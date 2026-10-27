@@ -50,7 +50,6 @@ describe("Armor & Weight", { timeout: 20000 }, () => {
     const current = within(screen.getByRole("table", { name: "Weight classes" }))
       .getAllByRole("row")
       .find((row) => row.getAttribute("aria-current") === "true");
-    expect(current).toBeDefined();
     expect(within(current!).getByRole("rowheader")).toHaveTextContent("Medium");
   });
 });

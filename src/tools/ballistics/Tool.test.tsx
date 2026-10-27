@@ -29,7 +29,7 @@ describe("Ballistics", { timeout: 20000 }, () => {
     setup();
     const table = await rangeCard();
     expect(within(table).getAllByRole("row").length).toBeGreaterThan(10);
-    expect(within(table).getByRole("columnheader", { name: /Hold above bore/ })).toBeTruthy();
+    expect(within(table).getByRole("columnheader", { name: /Hold above bore/ })).toBeInTheDocument();
   });
 
   it("has no sight or zero controls and no sight height in the notes", async () => {
@@ -48,7 +48,7 @@ describe("Ballistics", { timeout: 20000 }, () => {
     expect(within(table).queryByRole("columnheader", { name: /Lead/ })).toBeNull();
     await user.type(screen.getByRole("textbox", { name: "Target speed (m/s)" }), "7");
     await user.tab();
-    await waitFor(() => expect(within(table).getByRole("columnheader", { name: "Lead at 7 m/s" })).toBeTruthy());
+    await waitFor(() => expect(within(table).getByRole("columnheader", { name: "Lead at 7 m/s" })).toBeInTheDocument());
   });
 
   it("explains when the projectile has no drag data", async () => {
@@ -58,7 +58,9 @@ describe("Ballistics", { timeout: 20000 }, () => {
         projectiles: ammoJson.projectiles.map((projectile) => ({ ...projectile, drag: null })),
       },
     });
-    expect(await screen.findByText("Not enough ballistic data for this projectile", {}, LOAD_TIMEOUT)).toBeTruthy();
+    expect(
+      await screen.findByText("Not enough ballistic data for this projectile", {}, LOAD_TIMEOUT),
+    ).toBeInTheDocument();
     expect(screen.queryByRole("grid", { name: "Range card" })).toBeNull();
   });
 
@@ -68,9 +70,9 @@ describe("Ballistics", { timeout: 20000 }, () => {
     await rangeCard();
     await user.click(screen.getByRole("button", { name: "Add comparison" }));
     const table = await rangeCard();
-    await waitFor(() => expect(within(table).getByRole("columnheader", { name: /Drop B/ })).toBeTruthy());
+    await waitFor(() => expect(within(table).getByRole("columnheader", { name: /Drop B/ })).toBeInTheDocument());
     for (const header of [/Drop A/, /Flight time A/, /Flight time B/]) {
-      expect(within(table).getByRole("columnheader", { name: header })).toBeTruthy();
+      expect(within(table).getByRole("columnheader", { name: header })).toBeInTheDocument();
     }
   });
 });

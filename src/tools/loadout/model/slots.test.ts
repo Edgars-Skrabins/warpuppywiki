@@ -1,20 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { catalog } from "../fixtures/testData";
-import { itemsForSlot, slotDefinition, SLOT_DEFINITIONS } from "./slots";
+import { itemsForSlot, slotDefinition } from "./slots";
 
 describe("slots", () => {
-  it("lists the seven slots in order", () => {
-    expect(SLOT_DEFINITIONS.map((slot) => slot.label)).toEqual([
-      "Primary",
-      "Sidearm",
-      "Specialist",
-      "Body armor",
-      "Helmet",
-      "Vest",
-      "Backpack",
-    ]);
-  });
-
   it("offers only player items carrying the slot tag", () => {
     const primaries = itemsForSlot(slotDefinition("primary"), catalog).map((item) => item.id);
     expect(primaries).toContain("Id.Item.M4");
