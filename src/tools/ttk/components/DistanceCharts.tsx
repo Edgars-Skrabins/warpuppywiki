@@ -1,29 +1,11 @@
 import type { DistancePoint } from "@/core/damage";
-import {
-  Grid,
-  LineChartCard,
-  formatDistance,
-  formatNumber,
-  formatSeconds,
-  type LinePoint,
-  type ReferenceLineSpec,
-} from "@/ui";
+import { Grid, LineChartCard, formatDistance, formatNumber, formatSeconds, type ReferenceLineSpec } from "@/ui";
+import { stepPoints } from "../logic/stepPoints";
 
 export interface DistanceChartsProps {
   series: readonly DistancePoint[];
   distance: number;
   effectiveRange: number | null;
-}
-
-const STEP_EDGE = 0.01;
-
-function stepPoints(points: readonly LinePoint[]): LinePoint[] {
-  return points.flatMap((point, index) => {
-    const previous = points[index - 1];
-    return previous !== undefined && previous.y !== point.y && previous.y !== null && point.y !== null
-      ? [{ x: point.x - STEP_EDGE, y: previous.y }, point]
-      : [point];
-  });
 }
 
 export function DistanceCharts({ series, distance, effectiveRange }: DistanceChartsProps) {
