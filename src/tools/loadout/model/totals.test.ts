@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { catalog, equipmentFile } from "../fixtures/testData";
-import { emptyLoadout, setGearQuantity, setSlotItem, type Loadout } from "./loadout";
-import { armorEffects, costSummary, unlockSummary, weightClassFor, weightSummary } from "./totals";
+import { emptyLoadout, setGearQuantity, setSlotItem, setWeaponSetup, WeaponSetup, type Loadout } from "./loadout";
+import { armorEffects, costSummary, kitStatSources, unlockSummary, weightClassFor, weightSummary } from "./totals";
 
 function build(budget: number, slots: Partial<Record<keyof Loadout["slots"], string>>, gear: [string, number][] = []) {
   let loadout = emptyLoadout(budget);
@@ -23,6 +23,8 @@ describe("costSummary", () => {
     expect(summary.overBudgetBy).toBe(0);
     expect(summary.sections).toEqual([
       { id: "weapons", label: "Weapons", total: 2800 },
+      { id: "attachments", label: "Attachments", total: 0 },
+      { id: "ammo", label: "Ammunition and magazines", total: 0 },
       { id: "armor", label: "Armor", total: 2500 },
       { id: "gear", label: "Gear", total: 400 },
     ]);
@@ -37,6 +39,23 @@ describe("costSummary", () => {
     const summary = costSummary(build(1000, { primary: "Id.Item.AK74M" }), catalog);
     expect(summary.total).toBe(0);
     expect(summary.notSold.map((line) => line.item.name)).toEqual(["AK74"]);
+  });
+
+  it("adds attachments, pre-loaded magazines and loose rounds to their own sections", () => {
+    const setup = WeaponSetup.parse({
+      itemId: "Id.Item.AK74M",
+      attachments: { Sight: "Id.Item.3xScope" },
+      magazine: { id: "Id.Item.AK74MExtendedMagazine", ammoType: "HollowPoint", count: 3 },
+      looseAmmo: { itemId: "Id.Item.545mm.ArmorPiercing", rounds: 20 },
+    });
+    const summary = costSummary(setWeaponSetup(emptyLoadout(10_000), "primary", setup), catalog);
+    expect(summary.sections.find((section) => section.id === "ammo")?.total).toBe(3 * 300 + 2 * 40);
+    expect(summary.lines.find((line) => line.key === "primary:magazine")).toMatchObject({
+      section: "ammo",
+      unitPrice: 300,
+      quantity: 3,
+    });
+    expect(summary.lines.find((line) => line.key === "primary:attachment:Sight")?.section).toBe("attachments");
   });
 
   it("counts the same weapon twice in primary and secondary", () => {
@@ -89,6 +108,17 @@ describe("weightSummary", () => {
     expect(heavier.kgToNext).toBeNull();
   });
 
+  it("adds magazine weights and lists loose ammo under unknown weight", () => {
+    const setup = WeaponSetup.parse({
+      itemId: "Id.Item.AK74M",
+      magazine: { id: "Id.Item.AK74MMagazine", ammoType: "FMJ", count: 4 },
+      looseAmmo: { itemId: "Id.Item.545mm", rounds: 30 },
+    });
+    const summary = weightSummary(setWeaponSetup(emptyLoadout(0), "primary", setup), catalog, equipmentFile);
+    expect(summary.totalKg).toBe(3 + 4 * 0.55);
+    expect(summary.unknownWeight.map((item) => item.name)).toEqual(["5.45mm"]);
+  });
+
   it("lists items with unknown weight and counts them as 0", () => {
     const loadout = build(0, { helmet: "Id.Item.LightHelmet", armor: "Id.Item.LightArmor" });
     const summary = weightSummary(loadout, catalog, equipmentFile);
@@ -105,6 +135,16 @@ describe("armorEffects", () => {
     expect(effects[0]?.source).toBe("Level 3 Helmet");
     expect(effects[0]?.effects[0]?.info.label).toBe("Suppression taken");
     expect(effects[0]?.effects[0]?.result.value).toBeCloseTo(0.32, 9);
+  });
+});
+
+describe("kitStatSources", () => {
+  it("labels armor and weight class modifiers for the weapon stats", () => {
+    const loadout = build(0, { armor: "Id.Item.HeavyArmor", helmet: "Id.Item.HeavyHelmet", primary: "Id.Item.M4" });
+    expect(kitStatSources(loadout, catalog, equipmentFile).map((source) => source.label)).toEqual([
+      "Level 3 Helmet",
+      "Weight class: Light",
+    ]);
   });
 });
 
