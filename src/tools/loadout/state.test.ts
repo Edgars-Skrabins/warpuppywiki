@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { decodeState, encodeState } from "@/core/state";
 import { emptyLoadout, setGearQuantity, setSlotItem, type Loadout } from "./model/loadout";
-import { loadoutCodec } from "./state";
+import { loadoutCodec, readCompareLink, readLoadoutLink, shareLink, withCompareLink, withLoadoutLink } from "./state";
 
 describe("loadout URL codec", () => {
   const codec = loadoutCodec(10_000);
@@ -67,5 +67,57 @@ describe("loadout URL codec", () => {
   it("falls back to the defaults for an invalid loadout", () => {
     const invalid = { ...emptyLoadout(500), gear: [{ itemId: "Id.Item.Bandage", quantity: 99 }] };
     expect(decodeState(codec, encodeState(codec, invalid))).toEqual({ state: emptyLoadout(10_000), error: true });
+  });
+});
+
+describe("loadout link params", () => {
+  it("reads and writes the saved id and the shared flag", () => {
+    const params = withLoadoutLink(new URLSearchParams("l=1.abc"), { savedId: "save-1", shared: false });
+    expect(params.toString()).toBe("l=1.abc&id=save-1");
+    expect(readLoadoutLink(params)).toEqual({ savedId: "save-1", shared: false });
+    const shared = withLoadoutLink(params, { savedId: null, shared: true });
+    expect(shared.toString()).toBe("l=1.abc&shared=1");
+    expect(readLoadoutLink(shared)).toEqual({ savedId: null, shared: true });
+  });
+
+  it("builds a share link with the encoded loadout and the shared flag", () => {
+    const codec = loadoutCodec(10_000);
+    const loadout = setSlotItem(emptyLoadout(10_000), "primary", "Id.Item.M4");
+    const link = shareLink(codec, loadout, "https://example.test/wiki/#/loadout?l=old&id=x", "/loadout");
+    expect(link).toEqual({
+      ok: true,
+      url: `https://example.test/wiki/#/loadout?l=${encodeState(codec, loadout)}&shared=1`,
+    });
+  });
+
+  it("reports a loadout that is too large for a link", () => {
+    const codec = loadoutCodec(10_000);
+    let seed = 7;
+    const noise = () =>
+      Array.from({ length: 200 }, () => {
+        seed = (seed * 1_103_515_245 + 12_345) % 2_147_483_648;
+        return (Math.floor(seed / 65_536) % 16).toString(16);
+      }).join("");
+    const gear = Array.from({ length: 30 }, () => ({ itemId: noise(), quantity: 1 }));
+    expect(shareLink(codec, { ...emptyLoadout(10_000), gear }, "https://example.test/", "/loadout")).toEqual({
+      ok: false,
+      reason: "too-large",
+    });
+  });
+});
+
+describe("compare view params", () => {
+  it("opens with the current loadout against an empty one and keeps other params", () => {
+    expect(readCompareLink(new URLSearchParams("l=1.abc"))).toBeNull();
+    expect(readCompareLink(new URLSearchParams("view=compare"))).toEqual({
+      a: { kind: "current" },
+      b: { kind: "empty" },
+    });
+    const params = withCompareLink(new URLSearchParams("l=1.abc&id=x"), {
+      a: { kind: "saved", id: "save-1" },
+      b: { kind: "current" },
+    });
+    expect(params.toString()).toBe("l=1.abc&id=x&view=compare&a=saved%3Asave-1&b=current");
+    expect(withCompareLink(params, null).toString()).toBe("l=1.abc&id=x");
   });
 });

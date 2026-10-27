@@ -30,7 +30,7 @@ export interface SetupEntry {
   key: string;
   kind: SetupEntryKind;
   item: Item;
-  priceTag: string;
+  priceTag: string | null;
   quantity: number;
 }
 
@@ -207,7 +207,7 @@ export function setupEntries(setup: WeaponSetup, catalog: Catalog, keyPrefix = "
       key: `${keyPrefix}magazine`,
       kind: "magazine",
       item: magazineItem,
-      priceTag: loadedVariation(catalog, magazineItem, magazine.ammoType)?.tag ?? magazineItem.id,
+      priceTag: loadedVariation(catalog, magazineItem, magazine.ammoType)?.tag ?? null,
       quantity: magazine.count,
     });
   }
@@ -225,7 +225,7 @@ export function setupEntries(setup: WeaponSetup, catalog: Catalog, keyPrefix = "
 }
 
 export function entryTotal(entry: Pick<SetupEntry, "priceTag" | "quantity">, catalog: Catalog): number {
-  return (catalog.price(entry.priceTag)?.price ?? 0) * entry.quantity;
+  return ((entry.priceTag === null ? null : catalog.price(entry.priceTag))?.price ?? 0) * entry.quantity;
 }
 
 export function setupCost(setup: WeaponSetup, catalog: Catalog): number {
