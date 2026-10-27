@@ -1,15 +1,17 @@
 import { useCallback, useMemo, useState } from "react";
 import { useCatalog, type Catalog } from "@/core/catalog";
-import { useGameDataMany, type DataState, type EquipmentFile, type MetaFile } from "@/core/data";
+import { useGameDataMany, type DamageFile, type DataState, type EquipmentFile, type MetaFile } from "@/core/data";
 import { useUrlState } from "@/core/state";
 import { useWeaponIndex, type WeaponIndex } from "@/core/weapons";
 import { Button, DataStateView, Dialog, LoadingState, Panel } from "@/ui";
 import { GearList } from "./components/GearList";
+import { LethalityPanel } from "./components/LethalityPanel";
 import { SlotGrid } from "./components/SlotGrid";
 import { SummaryPanel } from "./components/SummaryPanel";
 import {
   emptyLoadout,
   setGearQuantity,
+  setLethalityView,
   setSlotItem,
   setWeaponSetup,
   startingBudget,
@@ -22,12 +24,13 @@ import { defaultSetup, validateLoadout } from "./model/weaponSetup";
 import { loadoutCodec } from "./state";
 import styles from "./Tool.module.css";
 
-const LOADOUT_FILES = ["equipment", "meta"] as const;
+const LOADOUT_FILES = ["equipment", "meta", "damage"] as const;
 
 interface LoadoutData {
   catalog: Catalog;
   equipment: EquipmentFile;
   meta: MetaFile;
+  damage: DamageFile;
   index: WeaponIndex;
 }
 
@@ -66,7 +69,7 @@ function LoadoutSkeleton() {
   );
 }
 
-function LoadoutBuilder({ catalog, equipment, meta, index }: LoadoutData) {
+function LoadoutBuilder({ catalog, equipment, meta, damage, index }: LoadoutData) {
   const codec = useMemo(() => loadoutCodec(startingBudget(meta)), [meta]);
   const [decoded, setDecoded] = useUrlState(codec);
   const validation = useMemo(() => validateLoadout(decoded, index), [decoded, index]);
@@ -76,6 +79,7 @@ function LoadoutBuilder({ catalog, equipment, meta, index }: LoadoutData) {
     [setDecoded, index],
   );
   const kitSources = useMemo(() => kitStatSources(loadout, catalog, equipment), [loadout, catalog, equipment]);
+  const lethalityModel = useMemo(() => ({ index, damage, equipment }), [index, damage, equipment]);
   const [confirmingClear, setConfirmingClear] = useState(false);
 
   const changeSlot = (slot: SlotId, itemId: string | null) =>
@@ -106,6 +110,11 @@ function LoadoutBuilder({ catalog, equipment, meta, index }: LoadoutData) {
             onSetupChange={(slot, setup) => setLoadout((prev) => setWeaponSetup(prev, slot, setup))}
           />
         </Panel>
+        <LethalityPanel
+          loadout={loadout}
+          model={lethalityModel}
+          onViewChange={(changes) => setLoadout((prev) => setLethalityView(prev, changes))}
+        />
         <GearList
           loadout={loadout}
           catalog={catalog}
@@ -134,7 +143,7 @@ function LoadoutBuilder({ catalog, equipment, meta, index }: LoadoutData) {
             <Button
               variant="danger"
               onPress={() => {
-                setLoadout((prev) => ({ ...emptyLoadout(prev.budget), name: prev.name }));
+                setLoadout((prev) => ({ ...emptyLoadout(prev.budget), name: prev.name, view: prev.view }));
                 close();
               }}
             >
