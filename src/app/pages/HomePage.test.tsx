@@ -17,22 +17,19 @@ const tools = [
 
 afterEach(() => {
   vi.unstubAllGlobals();
-  localStorage.clear();
 });
 
 describe("HomePage", () => {
-  it("shows the app name, the build and the tools grouped in category order", async () => {
+  it("shows the app name, the build, featured tools and the remaining tools", async () => {
     renderApp(tools);
 
     expect(screen.getByRole("heading", { level: 1, name: "warpuppywiki" })).toBeInTheDocument();
     expect(await screen.findByText("Game build 25937608, published 15 Oct 2026")).toBeInTheDocument();
-    expect(screen.getAllByRole("heading", { level: 2 }).map((heading) => heading.textContent)).toEqual([
-      "Combat",
-      "Map",
-      "Updates",
-    ]);
-    const combat = screen.getByRole("region", { name: "Combat" });
-    expect(within(combat).getByRole("link", { name: /TTK calculator/ })).toHaveAttribute("href", "/ttk");
+    const featured = screen.getByRole("region", { name: "Featured tools" });
+    expect(within(featured).getByRole("link", { name: /TTK calculator/ })).toHaveAttribute("href", "/ttk");
+    expect(within(featured).getByRole("link", { name: /Map/ })).toHaveAttribute("href", "/map");
+    const more = screen.getByRole("region", { name: "More tools" });
+    expect(within(more).getByRole("link", { name: /Patch diff/ })).toHaveAttribute("href", "/patch-diff");
   });
 
   it("filters cards by name and summary", async () => {
@@ -64,18 +61,5 @@ describe("HomePage", () => {
     renderApp([]);
 
     expect(screen.getByText("No tools yet")).toBeInTheDocument();
-  });
-
-  it("switches between the layout previews and remembers the choice", async () => {
-    const user = userEvent.setup();
-    renderApp(tools);
-
-    for (const label of ["Tiles", "Terminal", "Columns", "Briefing", "Manual"]) {
-      await user.click(screen.getByRole("radio", { name: label }));
-      expect(screen.getByRole("link", { name: /Patch diff/ })).toHaveAttribute("href", "/patch-diff");
-    }
-    await user.click(screen.getByRole("radio", { name: "Terminal" }));
-
-    expect(localStorage.getItem("wpw.homeLayout")).toContain("terminal");
   });
 });
