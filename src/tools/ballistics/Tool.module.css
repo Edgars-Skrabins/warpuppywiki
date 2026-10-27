@@ -1,0 +1,34 @@
+.tool {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.setups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.comparison {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.comparison > :first-child {
+  align-self: stretch;
+}
+
+.add {
+  align-self: flex-start;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: var(--space-4);
+}
