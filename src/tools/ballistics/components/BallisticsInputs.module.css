@@ -3,3 +3,7 @@
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: var(--space-3);
 }
+
+.targetSpeed {
+  max-width: 240px;
+}

@@ -24,29 +24,31 @@ function rangeCard() {
   return screen.findByRole("grid", { name: "Range card" }, LOAD_TIMEOUT);
 }
 
-async function dropAt(distance: string) {
-  const table = await rangeCard();
-  const row = within(table).getByRole("rowheader", { name: distance }).closest("[role=row]");
-  if (!(row instanceof HTMLElement)) throw new Error(`No row at ${distance}`);
-  return within(row).getAllByRole("gridcell")[0]?.textContent;
-}
-
 describe("Ballistics", { timeout: 20000 }, () => {
   it("shows a range card for the default weapon", async () => {
     setup();
     const table = await rangeCard();
     expect(within(table).getAllByRole("row").length).toBeGreaterThan(10);
-    expect(within(table).getByRole("columnheader", { name: /Holdover/ })).toBeInTheDocument();
+    expect(within(table).getByRole("columnheader", { name: /Hold above bore/ })).toBeInTheDocument();
   });
 
-  it("changes the drop at 300 m when the zero changes", async () => {
+  it("has no sight or zero controls and no sight height in the notes", async () => {
+    setup();
+    await rangeCard();
+    expect(screen.queryByRole("button", { name: /Sight A/ })).toBeNull();
+    expect(screen.queryByRole("button", { name: /Zero A/ })).toBeNull();
+    const notes = screen.getByRole("heading", { name: "How this is calculated" }).closest("section");
+    expect(notes?.textContent).not.toMatch(/sight|zero/i);
+  });
+
+  it("shows the lead column only after a target speed is typed", async () => {
     const user = userEvent.setup();
     setup();
-    const before = await dropAt("300 m");
-    await user.click(screen.getByRole("button", { name: /Zero A/ }));
-    await user.click(await screen.findByRole("option", { name: "300 m" }));
-    await waitFor(async () => expect(await dropAt("300 m")).not.toBe(before));
-    expect(await dropAt("300 m")).toBe("0 cm");
+    const table = await rangeCard();
+    expect(within(table).queryByRole("columnheader", { name: /Lead/ })).toBeNull();
+    await user.type(screen.getByRole("textbox", { name: "Target speed (m/s)" }), "7");
+    await user.tab();
+    await waitFor(() => expect(within(table).getByRole("columnheader", { name: "Lead at 7 m/s" })).toBeInTheDocument());
   });
 
   it("explains when the projectile has no drag data", async () => {

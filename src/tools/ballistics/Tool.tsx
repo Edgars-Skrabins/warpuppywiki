@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useUrlState } from "@/core/state";
 import { useWeaponIndex, type WeaponIndex } from "@/core/weapons";
 import { Button, DataStateView, EmptyState, Panel, SegmentedControl, formatDistance } from "@/ui";
-import { BallisticsInputs } from "./components/BallisticsInputs";
+import { BallisticsInputs, TargetSpeedField } from "./components/BallisticsInputs";
 import { BallisticsNotes, type DragModelNote } from "./components/BallisticsNotes";
 import { FlightTimeChart } from "./components/FlightTimeChart";
 import { RangeCardTable } from "./components/RangeCardTable";
@@ -23,7 +23,7 @@ import styles from "./Tool.module.css";
 const NO_DATA = "Not enough ballistic data for this projectile";
 
 function chartSetup(key: string, label: string, result: SetupResult): ChartSetup {
-  return { key, label: `${label} · ${result.setup.weapon.name}`, samples: result.samples, zero: result.setup.zero };
+  return { key, label: `${label} · ${result.setup.weapon.name}`, samples: result.samples };
 }
 
 function dragNote(label: string, result: SetupResult): DragModelNote | null {
@@ -41,12 +41,12 @@ function Ballistics({ index }: { index: WeaponIndex }) {
   );
   const maxDistance: MaxDistance = state.maxDistance ?? defaultMaxDistance(primarySetup?.weapon ?? null);
   const primary = useMemo(
-    () => (primarySetup ? computeSetup(primarySetup, maxDistance) : null),
-    [primarySetup, maxDistance],
+    () => (primarySetup ? computeSetup(primarySetup, maxDistance, state.targetSpeed) : null),
+    [primarySetup, maxDistance, state.targetSpeed],
   );
   const comparison = useMemo(
-    () => (comparisonSetup ? computeSetup(comparisonSetup, maxDistance) : null),
-    [comparisonSetup, maxDistance],
+    () => (comparisonSetup ? computeSetup(comparisonSetup, maxDistance, state.targetSpeed) : null),
+    [comparisonSetup, maxDistance, state.targetSpeed],
   );
 
   if (!primarySetup || !primary) {
@@ -108,6 +108,10 @@ function Ballistics({ index }: { index: WeaponIndex }) {
               Add comparison
             </Button>
           )}
+          <TargetSpeedField
+            value={state.targetSpeed}
+            onChange={(targetSpeed) => setState((prev) => ({ ...prev, targetSpeed }))}
+          />
         </div>
       </Panel>
 
@@ -127,10 +131,11 @@ function Ballistics({ index }: { index: WeaponIndex }) {
             <TrajectoryChart setups={charted.map(({ key, label, result }) => chartSetup(key, label, result))} />
             <FlightTimeChart setups={charted.map(({ key, label, result }) => chartSetup(key, label, result))} />
           </div>
-          <Panel title="Range card" description="Approximate values at each distance for the chosen zero.">
+          <Panel title="Range card" description="Approximate values at each distance, relative to the bore line.">
             <RangeCardTable
               rows={primary.projectile ? primary.rows : (comparison?.rows ?? [])}
               comparison={primary.projectile ? comparisonRows : undefined}
+              targetSpeed={state.targetSpeed}
             />
           </Panel>
         </>
