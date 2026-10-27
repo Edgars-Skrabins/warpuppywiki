@@ -1,0 +1,42 @@
+[
+  {
+    "id": "Id.Item.GhillieArmor",
+    "name": "Ghillie Suit",
+    "slot": "Armor",
+    "damageContext": "Armor.Ghillie",
+    "coveredLocations": [],
+    "stages": [],
+    "modifiers": [
+      {
+        "attribute": "Character.AdsTimeMultiplier",
+        "op": "multiplyCompound",
+        "value": 0.8
+      },
+      {
+        "attribute": "Character.AimSwayScaleMultiplier",
+        "op": "multiplyCompound",
+        "value": 1.15
+      },
+      {
+        "attribute": "Movement.LeanTimeMultiplier",
+        "op": "multiplyCompound",
+        "value": 1.15
+      },
+      {
+        "attribute": "Movement.UnleanTimeMultiplier",
+        "op": "multiplyCompound",
+        "value": 1.15
+      },
+      {
+        "attribute": "Movement.MaxSpeedMultiplier",
+        "op": "multiplyCompound",
+        "value": 0.95
+      },
+      {
+        "attribute": "Movement.JumpVelocityMultiplier",
+        "op": "multiplyCompound",
+        "value": 0.95
+      }
+    ]
+  }
+]

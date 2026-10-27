@@ -1,0 +1,129 @@
+[
+  {
+    "id": "Id.Item.93mm",
+    "kind": "item",
+    "asset": "Content/Items/Resources/Ammo/93mm/ID_93mm",
+    "name": "93mm",
+    "subtitle": "Ammunition",
+    "description": "- Un-guided self-propelled rocket\n- 16M minimum arming distance",
+    "icon": "UI/Shared/Icons/Attachments/3D/T_UI_Icon_Attachment_93mm_Round_Textured_512x512.png",
+    "tags": ["Item.Ammo", "Item.Caliber.93mm"],
+    "grid": [3, 1],
+    "maxStack": 1,
+    "weight": 2.6,
+    "unlock": {
+      "role": "Support",
+      "level": 6,
+      "cost": 0
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.93mm",
+        "price": 200,
+        "amount": 1,
+        "categories": ["Vendor.Category.Ammo", "Vendor.Category.AmmoLoose"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.LMG_02",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Weapons/LMG/LMG_02/Content/Data/ID_LMG_02",
+    "name": "PKM",
+    "subtitle": "Light Machine Gun",
+    "description": "- Semi / Full Auto\n- 7.62x54mm",
+    "icon": "UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_019.png",
+    "tags": [
+      "Inventory.Slot.Primary",
+      "Inventory.Slot.Secondary",
+      "Item.Archetype.LMG",
+      "Item.Context.Equippable",
+      "Item.Context.Animation.Type.Rifle",
+      "Item.Context.Animation.Archetype.Rifle",
+      "Item.Weapon"
+    ],
+    "grid": [6, 2],
+    "maxStack": 1,
+    "weight": 7.5,
+    "unlock": {
+      "role": "Support",
+      "level": 15,
+      "cost": 100000
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.LMG_02",
+        "price": 4100,
+        "amount": 1,
+        "categories": ["Vendor.Category.Weapon.Primary"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.RPG7",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Weapons/Launchers/RPG7/Content/Data/ID_RPG7",
+    "name": "RPG-7",
+    "subtitle": "Launcher",
+    "description": "- 93mm Self-Propelled Rocket\n- Reusable launch tube",
+    "icon": "UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_022.png",
+    "tags": [
+      "Item.Archetype.Launcher",
+      "Item.Weapon",
+      "Inventory.Slot.Specialist",
+      "Item.Context.Equippable",
+      "Item.Context.Animation.Type.Rifle",
+      "Item.Context.Animation.Archetype.Launcher",
+      "Item.Context.LooseAmmoReload"
+    ],
+    "grid": [6, 2],
+    "maxStack": 1,
+    "weight": 6.3,
+    "unlock": {
+      "role": "Support",
+      "level": 6,
+      "cost": 30000
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.RPG7",
+        "price": 1800,
+        "amount": 1,
+        "categories": ["Vendor.Category.Weapon.Specialist"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.WEPN_026",
+    "kind": "item",
+    "asset": "Plugins/GameFeatures/Weapons/Platforms/WEPN_026/Content/Data/ID_WEPN_026",
+    "name": "M1911",
+    "subtitle": "Pistol",
+    "description": "- Semi automatic\n- .45 ACP",
+    "icon": "UI/Shared/Icons/Vendor/Weapons/T_UI_Vendor_WEPN_026.png",
+    "tags": [
+      "Item.Context.Equippable",
+      "Item.Archetype.Pistol",
+      "Inventory.Slot.Sidearm",
+      "Item.Context.Animation.Type.Pistol",
+      "Item.Context.Animation.Archetype.Pistol",
+      "Item.Weapon"
+    ],
+    "grid": [2, 2],
+    "maxStack": 1,
+    "weight": 1.1,
+    "unlock": {
+      "role": "Wardog",
+      "level": 40,
+      "cost": 25000
+    },
+    "vendor": [
+      {
+        "tag": "Id.Item.WEPN_026",
+        "price": 300,
+        "amount": 1,
+        "categories": ["Vendor.Category.Weapon.Sidearm"]
+      }
+    ]
+  }
+]
