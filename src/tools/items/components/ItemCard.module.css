@@ -1,0 +1,99 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  text-align: start;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--easing);
+}
+
+.card:hover {
+  border-color: var(--color-border-control);
+}
+
+.card:hover .name {
+  color: var(--color-accent);
+}
+
+.art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 112px;
+  padding: var(--space-3);
+  background: var(--color-surface-raised);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.icon {
+  max-width: 100%;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  min-width: 0;
+}
+
+.name {
+  overflow: hidden;
+  font-family: var(--font-condensed);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-caps);
+  line-height: var(--line-height-tight);
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color var(--duration-fast) var(--easing);
+}
+
+.subtitle {
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
+
+.price {
+  font-family: var(--font-condensed);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.lot {
+  color: var(--color-text-muted);
+  font-size: var(--text-md);
+}
+
+.notSold {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}

@@ -1,0 +1,73 @@
+[
+  {
+    "id": "Id.Item.Bandage",
+    "kind": "item",
+    "asset": "Content/Items/Consumables/Bandage/ID_Bandage",
+    "name": "Bandage",
+    "subtitle": "Medical // Quick Slot",
+    "description": "- Used to heal Self/Teammates\n- Heals a Small Amount",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Vendor_Bandage.png",
+    "tags": [
+      "Item.Context.QuickSlot",
+      "Item.Context.Medical",
+      "Item.Context.Animation.Archetype.EquipRightHand",
+      "Item.Context.Animation.Type.Unarmed"
+    ],
+    "grid": [1, 1],
+    "maxStack": 5,
+    "weight": 0.08,
+    "unlock": null,
+    "vendor": [
+      {
+        "tag": "Id.Item.Bandage",
+        "price": 200,
+        "amount": 1,
+        "categories": ["Vendor.Category.Utility"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.SmallBackpack",
+    "kind": "item",
+    "asset": "Content/Items/Clothing/Backpacks/ID_SmallBackpack",
+    "name": "Small Backpack",
+    "subtitle": "Backpack",
+    "description": "- Grid: 4x2 Item Storage Slots\n- Number of Slots: 8",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Icon_SmallBackpack.png",
+    "tags": ["Inventory.Slot.Backpack", "Item.Context.Equippable"],
+    "grid": [2, 4],
+    "maxStack": 1,
+    "weight": 0.5,
+    "unlock": null,
+    "vendor": [
+      {
+        "tag": "Id.Item.SmallBackpack",
+        "price": 350,
+        "amount": 1,
+        "categories": ["Vendor.Category.Gear.Backpack"]
+      }
+    ]
+  },
+  {
+    "id": "Id.Item.SmallTacVest",
+    "kind": "item",
+    "asset": "Content/Items/Clothing/Vests/ID_SmallTacVest",
+    "name": "Small Tac Vest",
+    "subtitle": "Vest",
+    "description": "- Unlocks Quickslots 5 and 6\n- Minor Increase to Reload Speed\n- Minor Increase to Utility Equip & Holster Speed\n- Does not give extra item storage",
+    "icon": "UI/Shared/Icons/Utility/3D/T_UI_Icon_Utility_SmallWebbing_Textured_512x512.png",
+    "tags": ["Inventory.Slot.Vest", "Item.Context.Equippable"],
+    "grid": [4, 3],
+    "maxStack": 1,
+    "weight": 0.82,
+    "unlock": null,
+    "vendor": [
+      {
+        "tag": "Id.Item.SmallTacVest",
+        "price": 100,
+        "amount": 1,
+        "categories": ["Vendor.Category.Gear.Vest"]
+      }
+    ]
+  }
+]
