@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "gameBuild": "25937608",
+  "units": "meters",
+  "buildables": [
+    {
+      "id": "Id.Buildable.AirRaidShelter",
+      "name": "Indirect Fire Shelter",
+      "icon": "Buildables/Data/Buildables/AirRaidShelter/T_UI_Buildable_AirRaidShelter_BC.png",
+      "cost": 200,
+      "maxHealth": 5000,
+      "repairSpeedMultiplier": 6.67,
+      "maxStack": 1,
+      "damageEntity": "Buildable.AirRaidShelter",
+      "size": [7.5, 7.5, 4.6],
+      "tools": ["LargeHammer"],
+      "placementRules": ["WithinFobBounds", "WithinLadderBounds", "SafeZone"]
+    },
+    {
+      "id": "Id.Buildable.SandbagWall",
+      "name": "Sandbag Wall",
+      "icon": "Buildables/Data/Buildables/SandbagWall/T_UI_Buildable_SandbagWall.png",
+      "cost": 15,
+      "maxHealth": 735,
+      "maxStack": 100,
+      "damageEntity": "Buildable.SandbagWall",
+      "size": [2.96, 0.3, 1.05],
+      "tools": ["LargeHammer", "MediumHammer", "SmallHammer"],
+      "placementRules": ["SafeZone", "WithinLadderBounds", "NotInsideEnemyFobBounds"]
+    }
+  ]
+}
