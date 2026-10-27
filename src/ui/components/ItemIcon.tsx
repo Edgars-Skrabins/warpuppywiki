@@ -20,7 +20,9 @@ function initials(name: string): string {
 export function ItemIcon({ icon, name, size = 48, shape = "square", className }: ItemIconProps) {
   const manifest = useAssetsManifest();
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
-  const src = icon ? `${import.meta.env.BASE_URL}assets/icons/${icon}` : null;
+  const webp = manifest.status === "success" && manifest.data?.iconFormat === "webp";
+  const iconPath = icon && webp ? icon.replace(/\.png$/i, ".webp") : icon;
+  const src = iconPath ? `${import.meta.env.BASE_URL}assets/icons/${iconPath}` : null;
   const showImage =
     src !== null && src !== failedSrc && manifest.status === "success" && manifest.data !== null && manifest.data.icons;
   const style = { height: size, width: shape === "wide" ? undefined : size };

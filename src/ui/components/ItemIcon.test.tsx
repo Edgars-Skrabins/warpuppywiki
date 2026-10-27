@@ -51,6 +51,20 @@ describe("ItemIcon", () => {
     expect(image()).toHaveAttribute("alt", "Field Dressing");
   });
 
+  it("requests the WebP file when the manifest says the icons are WebP", async () => {
+    renderIcon({ ...manifest, iconFormat: "webp" });
+
+    await waitFor(() => expect(image()).not.toBeNull());
+    expect(image()).toHaveAttribute("src", `${import.meta.env.BASE_URL}assets/icons/Weapons/AK74M.webp`);
+  });
+
+  it("requests the path as given when the manifest says the icons are PNG", async () => {
+    renderIcon({ ...manifest, iconFormat: "png" });
+
+    await waitFor(() => expect(image()).not.toBeNull());
+    expect(image()).toHaveAttribute("src", `${import.meta.env.BASE_URL}assets/icons/Weapons/AK74M.png`);
+  });
+
   it("falls back to the placeholder when the image fails to load", async () => {
     renderIcon(manifest);
 

@@ -8,6 +8,7 @@ const manifest = {
   build: "25937608",
   worlds: { europe: { maxZoom: 6 }, kavkazi: { maxZoom: 5 } },
   icons: true,
+  iconFormat: "webp",
   sync: { maxZoom: 6, worlds: null },
 };
 
@@ -55,6 +56,18 @@ describe("assetsUpToDate", () => {
 
   it("is not up to date without icons", () => {
     expect(assetsUpToDate({ ...manifest, icons: false }, request, allHeightmaps)).toBe(false);
+  });
+
+  it("is not up to date when the icons are not WebP", () => {
+    const older = {
+      schemaVersion: 1,
+      build: manifest.build,
+      worlds: manifest.worlds,
+      icons: true,
+      sync: manifest.sync,
+    };
+    expect(assetsUpToDate(older, request, allHeightmaps)).toBe(false);
+    expect(assetsUpToDate({ ...manifest, iconFormat: "png" }, request, allHeightmaps)).toBe(false);
   });
 
   it("is not up to date when a world's heightmap is missing", () => {

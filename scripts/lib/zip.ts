@@ -4,8 +4,10 @@ import { dirname, isAbsolute, relative, resolve } from "node:path";
 import type { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
 import yauzl, { type Entry, type ZipFile } from "yauzl";
+import { iconTargetPath } from "./icons";
 
-export type AssetTarget = { kind: "copy"; path: string } | { kind: "heightmap"; world: string };
+export type AssetTarget =
+  { kind: "copy"; path: string } | { kind: "icon"; path: string } | { kind: "heightmap"; world: string };
 
 export interface AssetFilter {
   maxZoom: number;
@@ -39,7 +41,12 @@ export function dataEntryTarget(entryPath: string): string | null {
 export function assetEntryTarget(entryPath: string, filter: AssetFilter): AssetTarget | null {
   const path = stripTopFolder(entryPath);
   if (path.endsWith("/")) return null;
-  if (path.startsWith("assets/icons/")) return { kind: "copy", path: path.slice("assets/".length) };
+  if (path.startsWith("assets/icons/")) {
+    const iconPath = path.slice("assets/".length);
+    return /\.png$/i.test(iconPath)
+      ? { kind: "icon", path: iconTargetPath(iconPath) }
+      : { kind: "copy", path: iconPath };
+  }
 
   const map = /^assets\/maps\/([^/]+)\/(.+)$/.exec(path);
   if (!map) return null;
