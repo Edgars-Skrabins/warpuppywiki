@@ -1,0 +1,3 @@
+.panel[data-focus-visible]:not(:focus) {
+  box-shadow: none;
+}

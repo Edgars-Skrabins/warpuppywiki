@@ -1,0 +1,34 @@
+.view {
+  display: flex;
+  flex-direction: column;
+}
+
+.frame {
+  position: relative;
+  min-height: 70vh;
+  border: 1px solid var(--color-border);
+}
+
+.map:global(.leaflet-container) {
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg);
+  font-family: var(--font-sans);
+  outline: none;
+}
+
+.map:global(.leaflet-container):focus-visible:not([data-pointer]) {
+  box-shadow: inset 0 0 0 2px var(--focus-ring-color);
+}
+
+.map:global(.leaflet-container)[data-pointer]:focus-visible {
+  box-shadow: none;
+}
+
+.map:global(.leaflet-grab) {
+  cursor: crosshair;
+}
+
+.map:global(.leaflet-dragging .leaflet-grab) {
+  cursor: grabbing;
+}
